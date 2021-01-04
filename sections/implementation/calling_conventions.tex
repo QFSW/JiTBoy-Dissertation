@@ -1,0 +1,115 @@
+\subsubsection{Calling Conventions}
+
+The calling convention of a function specifies both how arguments are passed to it from the caller and how it returns its values to the caller. When the stack is used for argument passing or return values, it also dictates which function out of the caller and callee is responsible for the stack setup/cleanup.
+
+Typically, this detail is not of a concern to the programmer and is left as a compiler implementation detail, but this is not true in our case. The caller and callee must match their calling convention or else the function invocation will be catastrophic. Normally, this is guaranteed by the compiler, but since we are hand generating x86 code that needs to communicate with compiler generated C++ code, we are not afforded this luxury. Due to this, we need to pay close attention to the calling conventions used whenever we encounter one of these JIT - C++ interop barriers.
+
+Fundementally, there are two distinct cases that are of importance:
+\begin{enumerate}
+    \item The runtime executing blocks of JIT code
+    
+    In this case we are generating the callee code, and thus only need to take care that return values are handled appropriately. When reinterpreting the generated block of memory as a function pointer, we can specify the calling convention, causing the compiler to generate the appropriate caller code that will allow it to call our function correctly.
+    
+    \item The JIT code making a call into the runtime
+    
+    This is required as some aspects of the emulation may be provided by the C++ written runtime, as opposed to being replicated natively in the generated x86. In this case we are generating the caller code, and thus need to take care that the arguments passed to the callee are done correctly, as well as any \code{prolog-epilog} code. We can specify the calling convention on the C++ function, causing the compiler to generate function with the appropriate callee code, which we can then design our JIT caller code against appropriately.
+\end{enumerate}
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l l l l}
+        \toprule
+        Calling Convention & Stack Cleanup & Parameter Passing \\
+        \midrule
+        \code{\_\_cdecl} \cite{__cdecl} & Caller & Pushed on stack in reverse order \\
+        \code{\_\_clrcall} \cite{__clrcall} & N/A & Pushed on CLR expression stack \\
+        \code{\_\_stdcall} \cite{__stdcall} & Callee & Pushed on stack in reverse order \\
+        \code{\_\_fastcall} \cite{__fastcall} & Callee & \code{ECX}, \code{EDX}, then pushed on stack in reverse order \\
+        \code{\_\_thiscall} \cite{__thiscall} & Callee & Pushed on stack in reverse order, \code{ECX = this ptr} \\
+        \code{\_\_vectorcall} \cite{__vectorcall} & Callee & Registers, then pushed on stack in reverse order \\
+        \bottomrule
+    \end{tabular}
+    \caption{Breakdown of calling conventions supported by MSVC \cite{msvc-calling-conventions}}
+    \label{tbl:calling-convs}
+\end{table}
+
+There are some unique points of interest concerning the different calling conventions listed in \autoref{tbl:calling-convs}:
+
+\begin{itemize}
+    \item \code{\_\_cdecl} is required for \code{vararg} as it uses caller stack cleanup
+    \item \code{\_\_clrcall} is only usable for managed function calls and thus is not a consideration
+    \item \code{\_\_stdcall} is required for Win32 API calls
+    \item \code{\_\_thiscall} is only usable for member function calls
+    \item \code{\_\_vectorcall} has restricted argument types and is typically only useful for floating point and SIMD. For integer arguments, it is equivalent to \code{\_\_fastcall}
+\end{itemize}
+
+Outside of previously aforementioned unique cases and properties, the calling convention used was of little importance, as long as both the caller and callee are consistent with one another. All calling conventions available under MSVC utilised \code{EAX} as the return register. I introduced a set of macros in the config that would define a symbol, \code{CALLING\_CONV}, to match the selected calling convention. This symbol was then used throughout the project, whenever a JIT - C++ interop barrier occurred, allowing me to globally change the calling convention with ease if required.
+
+Furthermore, these calling conventions are specifically for x86, and are ignored when compiling for x64. x64 uses a \code{\_\_fastcall} like calling convention \cite{msvc-x64-calling-conv} and thus generated caller code will need to be modified if built for x64 platforms.
+
+Another related challenge is trying to call member functions from our JIT code. This is required as the runtime component of the emulator, which we may need to call into from our JIT code, is a class instance. Unfortunately, member function pointers cannot be reinterpreted in C++; this is due to the fact that their structure and representation is implementation defined, and may not be that of a typical pointer \cite{ptrs_to_member_funcs}. Furthermore, the calling convention would be less trivial to develop against, as we would be forced into \code{\_\_thiscall}. Fortunately we can work around this using templates.
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}[language=c++]
+template <typename...Args>
+struct instance_proxy
+{
+    template <typename T, typename R, R(T::* F)(Args...)>
+    static R CALLING_CONV call(T* obj, Args...args)
+    {
+        return (obj->*F)(args...);
+    }
+};
+    \end{lstlisting}
+    \caption{\code{instance\_proxy} template}
+    \label{code:instance-proxy}
+\end{lstfloat}
+
+The usage of the struct in \autoref{code:instance-proxy} is to avoid a limitation of C++ templates. Variadic parameter packs, such as \code{template...Args}, must be the last argument in the parameter list, yet \code{R(T::* F)(Args...)} requires that parameter pack to already exist. For this reason, the struct is required so that \code{Args...} Can be defined as the final argument of the template, which can then later be used in the inner function template by \code{R(T::* F)(Args...)}, circumventing the limitation.
+
+This template allows us, at compile time, to make a non member function that proxies us to the invocation of the actual member function. By utilising, our JIT generated code only needs to invoke a free function as normal, providing a pointer to the instance as the first argument. It is decorated with \code{CALLING\_CONV} such that it has a known strict calling convention for our JIT to generate against.
+
+For example, if we had the following member function
+
+\code{int Runtime::func(int x);}
+
+We can generate a proxy function as follows
+
+\code{instance\_proxy<int>::call<Runtime, int, \&Runtime::func>}
+
+Which we can then link against and compile a call to from our JIT code, passing along a \code{Runtime*} and \code{int} as dictated by \code{CALLING\_CONV}
+
+Initially, I decided to use the \code{\_\_fastcall} calling convention; by utilising registers over the stack when possible the generated caller code can be simpler and faster. To make a more informed decision, I analysed how fast \code{\_\_fastcall} would be compared to \code{\_\_stdcall}. \code{\_\_stdcall} was considered over \code{\_\_cdecl} as the callee cleans the stack, reducing the amount of code generation required in the caller. I analysed the cost of calling a 3 argument function, as this is required to invoke \code{memory\_map::write<T>(this, addr, value)}
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{|p{7cm}|p{7cm}|}
+        \toprule
+        \code{\_\_fastcall} & \code{\_\_stdcall} \\
+        \midrule
+        \begin{lstlisting}[numbers=none]
+        MOV ECX this
+        MOV EDX addr
+        PUSH value
+        CALL f
+        \end{lstlisting}
+        
+        &
+        
+        \begin{lstlisting}[numbers=none]
+        PUSH value
+        PUSH addr
+        PUSH this
+        CALL f
+        \end{lstlisting} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of generated caller code for different calling conventions}
+    \label{code:calling-convs-caller}
+\end{table}
+
+From \autoref{code:calling-convs-caller}, it appears that \code{\_\_fastcall} would be faster. Both cause the JIT to emit 4 instructions, however the \code{\_\_fastcall} ones would be faster to execute. This is because only the last \code{PUSH} requires a corresponding \code{POP} on the callee code, resulting in 5 instructions executed as opposed to the 7 required by \code{\_\_stdcall}. Furthermore, \code{\_\_stdcall} incurs more memory operations which tend to be slower than ALU operations.
+
+It might appear that this analysis is incorrect, as it does not account for the fact that \code{\_\_fastcall} writes to \code{ECX} and \code{EDX} which may be managed by the runtime for other use cases, such as the register file pointer. In this case extra instructions would be needed to restore \code{ECX} and \code{EDX}. The analysis however, is correct, as \code{EAX}, \code{ECX}, and \code{EDX} are volatile \cite{msvc-registers} and may be overwritten by the callee: given this, they will need to be restored regardless of the calling convention used.
+
+This analysis assume that the args are ready and can be moved or pushed directly, however in some cases, such as offset loading/storing, the arg first needs to be computed. If the destination is a register, as in the case of the first 2 \code{\_\_fastcall} arguments, then the move can potentially be avoided by using the destination register as the accumulator for the calculation. In the case of a stack destination, such as in \code{\_\_stdcall}, this optimisation cannot be made.

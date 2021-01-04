@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{subfiles}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{biblatex}
+\usepackage{tabularx}
+\usepackage[colorlinks]{hyperref}
+\usepackage[section]{placeins}
+\pgfplotsset{width=7cm,compat=1.3}
+
+% Colors
+\definecolor{success-green}{RGB}{85, 154, 11}
+\definecolor{fail-red}{RGB}{234, 84, 80}
+
+% Altering some default settings
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+
+% Make floats stay within their subsection
+\makeatletter
+\AtBeginDocument{%
+  \expandafter\renewcommand\expandafter\subsection\expandafter{%
+    \expandafter\@fb@secFB\subsection%
+  }%
+}
+\makeatother
+
+% make inline code cmd
+\newcommand{\code}[1]{\texttt{#1}}
+
+% set the default code style
+\lstset{
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+}
+
+\newfloat{lstfloat}{htbp}{lop}
+\floatname{lstfloat}{Listing}
+\def\lstfloatautorefname{Listing} % needed for hyperref/auroref
+
+% Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addbibresource{bibliography.bib}
+
+\title{JITBoy - Exploring JIT Binary Translation as an Accelerated Means of Emulation}
+\author{Yusuf Ismail - 01345818}
+
+\begin{document}
+ 
+\maketitle
+\thispagestyle{empty}
+
+\newpage \tableofcontents
+% \newpage \subfile{sections/acknowledgments}
+% \newpage \subfile{sections/abstract}
+\newpage \subfile{sections/introduction/introduction}
+\newpage \subfile{sections/background}
+\newpage \subfile{sections/requirements}
+\newpage \subfile{sections/analysis}
+\newpage \subfile{sections/implementation/implementation}
+\newpage \subfile{sections/plan/plan}
+\newpage \subfile{sections/testing}
+\newpage \subfile{sections/results}
+\newpage \subfile{sections/evaluation}
+\newpage \subfile{sections/conclusions}
+\newpage \subfile{sections/bibliography}
+\newpage \subfile{sections/appendix}
+
+\end{document}
