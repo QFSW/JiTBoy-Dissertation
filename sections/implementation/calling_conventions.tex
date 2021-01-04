@@ -67,7 +67,7 @@ struct instance_proxy
 
 The usage of the struct in \autoref{code:instance-proxy} is to avoid a limitation of C++ templates. Variadic parameter packs, such as \code{template...Args}, must be the last argument in the parameter list, yet \code{R(T::* F)(Args...)} requires that parameter pack to already exist. For this reason, the struct is required so that \code{Args...} Can be defined as the final argument of the template, which can then later be used in the inner function template by \code{R(T::* F)(Args...)}, circumventing the limitation.
 
-This template allows us, at compile time, to make a non member function that proxies us to the invocation of the actual member function. By utilising, our JIT generated code only needs to invoke a free function as normal, providing a pointer to the instance as the first argument. It is decorated with \code{CALLING\_CONV} such that it has a known strict calling convention for our JIT to generate against.
+This template allows us, at compile time, to make a non member function that proxies us to the invocation of the actual member function. By utilising this, our JIT generated code only needs to invoke a free function as normal, providing a pointer to the instance as the first argument. It is decorated with \code{CALLING\_CONV} such that it has a known strict calling convention for our JIT to generate against.
 
 For example, if we had the following member function
 
