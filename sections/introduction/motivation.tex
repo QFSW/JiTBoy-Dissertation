@@ -9,29 +9,3 @@ More widespread, however, is the requirement to emulate legacy software, that ca
 Recently, this has become important as ever for many average consumers. With recent industry events, notably including Apple moving their desktop line to use ARM based CPUs, many consumers are now finding themselves needing the ability to emulate old, foreign software on their new hardware. It is in the industry's upmost interest that this emulation is fast and accurate, otherwise the user experience of their new hardware offerings will be severely affected.
 
 Another large motivation for efficient emulation of foreign code is in the enthusiast space; many enthusiasts want to run deprecated software such as old video games written for hardware that is no longer manufactured, and thus must resort to emulation. In this case performance is key due to the real-time nature of video games.
-
-\subsubsection{Why a JIT?}
-
-Binary translation, and in general, execution of any program, can be handled with one of 3 fundamental techniques.
-
-\begin{itemize}
-    \item Interpretation
-    \item Ahead of Time (AOT) Compilation
-    \item Just in Time (JIT) Compilation
-\end{itemize}
-
-Binary translators are typically implemented as interpreters. This is the easiest and most widespread way to emulate a system as interpreting is fairly easy and is largely agnostic of the host system. It however has a large per instruction overhead as the interpretation needs to be executed every time the instruction is emulated.
-
-AOT compilation is typically the fastest technique of execution, as the program is fully translated to the native host machine code before execution. Since compilation is only needed once, much more time can be spent on aggressive optimisations to improve the performance of the generated code. In practice, it is impossible to statically and comprehensively determine which contents of a program correspond to instructions and what corresponds to data, especially with the possibility of self modifying code. Given this, an AOT compiler is not a solution that could be extended to commercial grade emulators as its emulation correctness is fundamentally limited.
-
-JIT compilation strikes a balance between the two. Some unit of source code, which I will refer to as a source block, is compiled just before it is needed for execution. This is not as fast as a full AOT compiler as the full compilation needs to occur at runtime; it can, however, have a much lower per instruction execution overhead than an interpreter, if implemented well. It provides the following advantages over an AOT compiler
-
-\begin{itemize}
-	\item Self modifying programs can be supported as the compiler exists and is present at the time of execution
-	\item The latency of execution, or the time to first execution, is lower as the entire program does not need to be compiled before execution can begin
-	\item The machine code can be generated specifically for the host system, allowing system specific optimisations to be made such as the use of modern ISA extensions, e.g. SIMD
-	\item Tiered compilation techniques can be supported as the execution can be analysed for hotpaths, which can then be recompiled with greater optimisations
-	\item Highly dynamic language features, such as those involving runtime code generation, can be supported. An example of this is allowing a regex to be JIT compiled to an extremely fast FSM
-\end{itemize}
-
-With everything considered, a JIT compiler is the best option to achieve greater performance over an interpreter without fundamentally sacrificing correctness.
