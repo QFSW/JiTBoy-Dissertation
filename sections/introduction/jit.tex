@@ -19,7 +19,7 @@ JIT compilation strikes a balance between the two. Some unit of source code, whi
 	\item The latency of execution, or the time to first execution, is lower because the entire program does not need to be compiled before execution can begin
 	\item The machine code can be generated specifically for the host system, allowing system-specific optimisations to be made such as the use of modern ISA extensions, e.g. SIMD
 	\item Tiered compilation techniques can be supported as the execution can be analysed for hotpaths, which can then be recompiled with greater optimisations
-	\item Highly dynamic language features, such as those involving runtime code generation, can be supported. An example of this is allowing a regex to be JIT compiled to an extremely fast FSM
+	\item Highly dynamic language features, such as those involving runtime code generation, can be supported. An example of this is allowing a regex to be JIT compiled to an extremely fast finite state machine (FSM)
 \end{itemize}
 
 With everything considered, a JIT compiler is the best option to achieve greater performance over an interpreter without fundamentally sacrificing correctness.
