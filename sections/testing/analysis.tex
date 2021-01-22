@@ -1,0 +1,29 @@
+\subsection{Analysis}
+
+The aggregated test statistics are then consumed by the analysis framework written in Python. In addition to generating all of the graphs and analyses, it also calculates the following composite statistics:
+
+\begin{itemize}
+    \item \textbf{$\text{mips} = \frac{\text{source instructions emulated}}{\text{time}}$}
+    
+    Mega instructions per second (mips), not to be confused with MIPS. Defines the performance of a given test run in a quantity invariant of the duration of the test itself.
+
+    \item \textbf{$\text{hotness} = \frac{\text{blocks executed}}{\text{blocks}}$}
+    
+    How frequently the compiled host blocks are executed on average, or how hot they are.
+
+    \item \textbf{$\text{host block size} = \frac{\text{host instructions}}{\text{blocks}}$}
+    
+    Average block size in host instructions.
+
+    \item \textbf{$\text{source block size} = \frac{\text{source instructions}}{\text{blocks}}$}
+
+    Average number of source instructions represented by a single host block.
+
+    \item \textbf{$\text{compilation inefficiency} = \frac{\text{host instructions}}{\text{source instructions}}$}
+    
+    Average number of host instructions required to translate a single source instruction.
+    
+    \item \textbf{$\text{execution inefficiency} = \frac{\text{host instructions executed}}{\text{source instructions emulated}}$}
+    
+    Average number of host instruction executions required to emulate a single source instruction.
+\end{itemize}
