@@ -1,0 +1,43 @@
+\subsection{Output}
+
+The test runner aggregates the results and statistics of all the tests run on an SUT and outputs the aggregate to a csv for further processing and analysis. Some statistics are only present on specific SUTs (such as the JIT system). The collected statistics are:
+
+\begin{itemize}
+    \item \textbf{name}
+    
+    The name of the test.
+
+    \item \textbf{status}
+    
+    The termination status of the test, taking on either \texttt{pass}, \texttt{fail} or \texttt{faulted}.
+
+    \item \textbf{time}
+    
+    The execution time of the test in microseconds. The test is re-run in batches to avoid timer errors. The cumulative average execution time is calculated and the benchmarking is terminated once average execution time stops deviating by a defined precision, for a defined number of batches. This is to improve the statistical robustness of the execution time. Further work will develop this to yield quantifiable statistical certainties and error margins for the results. Only populated for passing tests.
+
+    \item \textbf{blocks}
+    
+    The number of blocks compiled. Only populated by the JIT.
+
+    \item \textbf{blocks executed}
+    
+    The number of times blocks are executed. Only populated by the JIT.
+
+    \item \textbf{host instructions}
+    
+    The number of host instructions compiled. Only populated by the JIT.
+
+    \item \textbf{source instructions}
+    
+    The number of source instructions touched. Only populated by the JIT.
+
+    \item \textbf{host instructions executed}
+    
+    The number of times host instructions are executed. Only populated by the JIT.
+
+    \item \textbf{source instructions emulated}
+    
+    The number of times source instructions are emulated. Only populated by the JIT.
+\end{itemize}
+
+Further statistics will be collected as necessary for future developments.
