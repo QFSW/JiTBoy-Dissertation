@@ -1,6 +1,6 @@
 \subsection{Academia}
 
-Several papers have investigated utilising JIT compilation to accelerate binary emulation, otherwise known as dynamic binary translation (DBT). Mark Probst \cite{mark-probst-dbt} investigates a JIT-Interpreter hybrid to emulate foriegn binary programs. Unlike the hybrid model proposed, I will be exploring a concurrent architecture to exploit the multiple cores present on modern CPUs.
+Several papers have investigated utilising JIT compilation to accelerate binary emulation, otherwise known as dynamic binary translation (DBT). Mark Probst \cite{mark-probst-dbt} and others \cite{nigel-jit} investigate a JIT-Interpreter hybrid to emulate foriegn binary programs. Unlike the hybrid model proposed, I will be exploring a concurrent architecture to exploit the multiple cores present on modern CPUs.
 
 Typically, a well writen JIT system's bottleneck will be the compilation latency as opposed to the execution time. Several papers \cite{js-concurrent-trace, dynamic-compilation-early} explored a hybrid model to mitigate this in which the execution and compilation are decoupled from the main thread. In this hybrid system one or more worker threads are responsible for compiling blocks in the background, with a fallback emulator used on the main thread when compiled blocks are not ready. This is a technique I will be exploring with my JIT-Interpreter hybrid. Böhm \cite{igor-phd} explores optimisations to a concurrent system including how to determine when and what to compile; my project does not aim to explore this in depth.
 
