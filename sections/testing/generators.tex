@@ -1,0 +1,7 @@
+\subsection{Generators}
+
+In some cases, test suites may be difficult and time consuming to write and mantain by hand, such as when multiple permutations are required of the same test. One example of this is the \texttt{fibonnaci(n)} test suite, which contains tests \texttt{fibonnaci(0)} to \texttt{fibonnaci(20)}.
+
+To automate and mitigate this, I am writing test generators in Python where applicable. These programatically build the tests, usually using a prefined test template with marked substitution points. This is much more maintanable as the entire suite can be modified at once.
+
+In other cases a completely programatic approach is taken to generating the tests. This is the case for the \texttt{unroll} test suite.
