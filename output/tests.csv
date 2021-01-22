@@ -1,0 +1,354 @@
+name, description, src
+addiu_0, adds a value into a zero initialized register, tests/mips/basic/addiu_0.s
+addiu_1, adds a value into a register multiple times, tests/mips/basic/addiu_1.s
+addiu_2, adds over multiple registers, tests/mips/basic/addiu_2.s
+addiu_3, adds a negative value into a zero initialized register, tests/mips/basic/addiu_3.s
+addiu_4, overflow, tests/mips/basic/addiu_4.s
+addi_0, adds a value into a zero initialized register, tests/mips/basic/addi_0.s
+addi_1, adds a value into a register multiple times, tests/mips/basic/addi_1.s
+addi_2, adds over multiple registers, tests/mips/basic/addi_2.s
+addi_3, adds a negative value into a zero initialized register, tests/mips/basic/addi_3.s
+addu_0, adds values into a zero initialized register, tests/mips/basic/addu_0.s
+addu_1, adds values into a zero initialized register, tests/mips/basic/addu_1.s
+addu_2, adds values into a register, checks optimisation when rd == rt, tests/mips/basic/addu_2.s
+addu_3, adds values into a register, checks optimisation when rd == rs, tests/mips/basic/addu_3.s
+addu_4, adds values into a register, checks optimisation when rt == $zero, tests/mips/basic/addu_4.s
+addu_5, adds values into a register, checks optimisation when rs == $zero, tests/mips/basic/addu_5.s
+addu_6, overflow, tests/mips/basic/addu_6.s
+add_0, adds values into a zero initialized register, tests/mips/basic/add_0.s
+add_1, adds values into a zero initialized register, tests/mips/basic/add_1.s
+add_2, adds values into a register, checks optimisation when rd == rt, tests/mips/basic/add_2.s
+add_3, adds values into a register, checks optimisation when rd == rs, tests/mips/basic/add_3.s
+add_4, adds values into a register, checks optimisation when rt == $zero, tests/mips/basic/add_4.s
+add_5, adds values into a register, checks optimisation when rs == $zero, tests/mips/basic/add_5.s
+andi_0, 0b00 & 0b00, tests/mips/basic/andi_0.s
+andi_1, 0b01 & 0b10, tests/mips/basic/andi_1.s
+andi_2, 0b11 & 0b01, tests/mips/basic/andi_2.s
+andi_3, 0b11 & 0b11, tests/mips/basic/andi_3.s
+andi_4, 0b11 & -1, tests/mips/basic/andi_4.s
+and_0, 0b00 & 0b00, tests/mips/basic/and_0.s
+and_1, 0b01 & 0b10, tests/mips/basic/and_1.s
+and_2, 0b11 & 0b01, tests/mips/basic/and_2.s
+and_3, 0b11 & 0b11, tests/mips/basic/and_3.s
+and_4, 0b11 & -1, tests/mips/basic/and_4.s
+divu_0, 30 / 6, tests/mips/basic/divu_0.s
+divu_1, 30 / 50, tests/mips/basic/divu_1.s
+divu_2, 30 / 7, tests/mips/basic/divu_2.s
+divu_3, 30 / -6, tests/mips/basic/divu_3.s
+divu_4, -30 / 6, tests/mips/basic/divu_4.s
+divu_5, -30 / -6, tests/mips/basic/divu_5.s
+divu_6, 30 / -7, tests/mips/basic/divu_6.s
+divu_7, 0 / -7, tests/mips/basic/divu_7.s
+div_0, 30 / 6, tests/mips/basic/div_0.s
+div_1, 30 / 50, tests/mips/basic/div_1.s
+div_2, 30 / 7, tests/mips/basic/div_2.s
+div_3, 30 / -6, tests/mips/basic/div_3.s
+div_4, -30 / 6, tests/mips/basic/div_4.s
+div_5, -30 / -6, tests/mips/basic/div_5.s
+div_6, 30 / -7, tests/mips/basic/div_6.s
+div_7, 0 / -7, tests/mips/basic/div_7.s
+lui_0, loads an upper immediate into an uninitialized register, tests/mips/basic/lui_0.s
+lui_1, loads an upper immediate into an initialized register, tests/mips/basic/lui_1.s
+multu_0, 5 * 6, tests/mips/basic/multu_0.s
+multu_1, 5 * 0, tests/mips/basic/multu_1.s
+multu_2, 5 * -1, tests/mips/basic/multu_2.s
+multu_3, -5 * 1, tests/mips/basic/multu_3.s
+multu_4, -5 * -1, tests/mips/basic/multu_4.s
+multu_5, 0xFFFFFFFF * 2, tests/mips/basic/multu_5.s
+multu_6, 0xFFFFFFFF * 0xFFFFFFFF, tests/mips/basic/multu_6.s
+multu_7, 0x7FFFFFFF * 0x7FFFFFFF, tests/mips/basic/multu_7.s
+mult_0, 5 * 6, tests/mips/basic/mult_0.s
+mult_1, 5 * 0, tests/mips/basic/mult_1.s
+mult_2, 5 * -1, tests/mips/basic/mult_2.s
+mult_3, -5 * 1, tests/mips/basic/mult_3.s
+mult_4, -5 * -1, tests/mips/basic/mult_4.s
+mult_5, 0xFFFFFFFF * 2, tests/mips/basic/mult_5.s
+mult_6, 0xFFFFFFFF * 0xFFFFFFFF, tests/mips/basic/mult_6.s
+mult_7, 0x7FFFFFFF * 0x7FFFFFFF, tests/mips/basic/mult_7.s
+mxhi_0, moves to and from the hi register, tests/mips/basic/mxhi_0.s
+mxlo_0, moves to and from the lo register, tests/mips/basic/mxlo_0.s
+nop, ensures that nothing happens after nops, tests/mips/basic/nop.s
+nor_0, nors together two zero registers, tests/mips/basic/nor_0.s
+nor_1, nors together one zero and one high register, tests/mips/basic/nor_1.s
+nor_2, nors together one zero and one high register, tests/mips/basic/nor_2.s
+nor_3, nors together two high registers, tests/mips/basic/nor_3.s
+ori_0, 0b00 | 0b00, tests/mips/basic/ori_0.s
+ori_1, 0b01 | 0b10, tests/mips/basic/ori_1.s
+ori_2, 0b11 | 0b01, tests/mips/basic/ori_2.s
+ori_3, 0b11 | 0b11, tests/mips/basic/ori_3.s
+ori_4, 0b11 | -1, tests/mips/basic/ori_4.s
+or_0, 0b00 | 0b00, tests/mips/basic/or_0.s
+or_1, 0b01 | 0b10, tests/mips/basic/or_1.s
+or_2, 0b11 | 0b01, tests/mips/basic/or_2.s
+or_3, 0b11 | 0b11, tests/mips/basic/or_3.s
+or_4, 0b11 | -1, tests/mips/basic/or_4.s
+sllv_0, 0b00011010 << 0, tests/mips/basic/sllv_0.s
+sllv_1, 0b00011011 << 0, tests/mips/basic/sllv_1.s
+sllv_10, 0b00011011 << 32, tests/mips/basic/sllv_10.s
+sllv_11, 0b00011010 << 37, tests/mips/basic/sllv_11.s
+sllv_12, 0b00011011 << 37, tests/mips/basic/sllv_12.s
+sllv_2, 0b00011010 << 1, tests/mips/basic/sllv_2.s
+sllv_3, 0b00011011 << 1, tests/mips/basic/sllv_3.s
+sllv_4, 0b00011010 << 5, tests/mips/basic/sllv_4.s
+sllv_5, 0b00011011 << 5, tests/mips/basic/sllv_5.s
+sllv_6, 0xFF000000 << 4, tests/mips/basic/sllv_6.s
+sllv_7, 0xFFFFFFFF << 31, tests/mips/basic/sllv_7.s
+sllv_8, 0xFFFFFFFF << -1, tests/mips/basic/sllv_8.s
+sllv_9, 0b00011010 << 32, tests/mips/basic/sllv_9.s
+sll_0, 0b00011010 << 0, tests/mips/basic/sll_0.s
+sll_1, 0b00011011 << 0, tests/mips/basic/sll_1.s
+sll_2, 0b00011010 << 1, tests/mips/basic/sll_2.s
+sll_3, 0b00011011 << 1, tests/mips/basic/sll_3.s
+sll_4, 0b00011010 << 5, tests/mips/basic/sll_4.s
+sll_5, 0b00011011 << 5, tests/mips/basic/sll_5.s
+sll_6, 0xFF000000 << 4, tests/mips/basic/sll_6.s
+sll_7, 0xFFFFFFFF << 31, tests/mips/basic/sll_7.s
+sltiu_0, 1 < 2, tests/mips/basic/sltiu_0.s
+sltiu_1, 2 < 1, tests/mips/basic/sltiu_1.s
+sltiu_2, 2 < 2, tests/mips/basic/sltiu_2.s
+sltiu_3, -2 < -1, tests/mips/basic/sltiu_3.s
+sltiu_4, -1 < -2, tests/mips/basic/sltiu_4.s
+sltiu_5, -1 < 1, tests/mips/basic/sltiu_5.s
+slti_0, 1 < 2, tests/mips/basic/slti_0.s
+slti_1, 2 < 1, tests/mips/basic/slti_1.s
+slti_2, 2 < 2, tests/mips/basic/slti_2.s
+slti_3, -2 < -1, tests/mips/basic/slti_3.s
+slti_4, -1 < -2, tests/mips/basic/slti_4.s
+slti_5, -1 < 1, tests/mips/basic/slti_5.s
+sltu_0, 1 < 2, tests/mips/basic/sltu_0.s
+sltu_1, 2 < 1, tests/mips/basic/sltu_1.s
+sltu_2, 2 < 2, tests/mips/basic/sltu_2.s
+sltu_3, -2 < -1, tests/mips/basic/sltu_3.s
+sltu_4, -1 < -2, tests/mips/basic/sltu_4.s
+sltu_5, -1 < 1, tests/mips/basic/sltu_5.s
+slt_0, 1 < 2, tests/mips/basic/slt_0.s
+slt_1, 2 < 1, tests/mips/basic/slt_1.s
+slt_2, 2 < 2, tests/mips/basic/slt_2.s
+slt_3, -2 < -1, tests/mips/basic/slt_3.s
+slt_4, -1 < -2, tests/mips/basic/slt_4.s
+slt_5, -1 < 1, tests/mips/basic/slt_5.s
+srav_0, 0b00011010 >> 0, tests/mips/basic/srav_0.s
+srav_1, 0b00011011 >> 0, tests/mips/basic/srav_1.s
+srav_10, 0b00011011 >> 32, tests/mips/basic/srav_10.s
+srav_11, 0b01011100110000000111000100000101 >> 37, tests/mips/basic/srav_11.s
+srav_12, 0b11011100110000000111000100000101 >> 37, tests/mips/basic/srav_12.s
+srav_2, 0b01011100110000000111000100000101 >> 1, tests/mips/basic/srav_2.s
+srav_3, 0b11011100110000000111000100000101 >> 1, tests/mips/basic/srav_3.s
+srav_4, 0b01011100110000000111000100000101 >> 5, tests/mips/basic/srav_4.s
+srav_5, 0b11011100110000000111000100000101 >> 5, tests/mips/basic/srav_5.s
+srav_6, 0x000000FF >> 4, tests/mips/basic/srav_6.s
+srav_7, 0xFFFFFFFF >> 31, tests/mips/basic/srav_7.s
+srav_8, 0xFFFFFFFF >> -1, tests/mips/basic/srav_8.s
+srav_9, 0b00011010 >> 32, tests/mips/basic/srav_9.s
+sra_0, 0b00011010 >> 0, tests/mips/basic/sra_0.s
+sra_1, 0b00011011 >> 0, tests/mips/basic/sra_1.s
+sra_2, 0b01011100110000000111000100000101 >> 1, tests/mips/basic/sra_2.s
+sra_3, 0b11011100110000000111000100000101 >> 1, tests/mips/basic/sra_3.s
+sra_4, 0b01011100110000000111000100000101 >> 5, tests/mips/basic/sra_4.s
+sra_5, 0b11011100110000000111000100000101 >> 5, tests/mips/basic/sra_5.s
+sra_6, 0x000000FF >> 4, tests/mips/basic/sra_6.s
+sra_7, 0xFFFFFFFF >> 31, tests/mips/basic/sra_7.s
+srlv_0, 0b00011010 >> 0, tests/mips/basic/srlv_0.s
+srlv_1, 0b00011011 >> 0, tests/mips/basic/srlv_1.s
+srlv_10, 0b00011011 >> 32, tests/mips/basic/srlv_10.s
+srlv_11, 0b01011100110000000111000100000101 >> 37, tests/mips/basic/srlv_11.s
+srlv_12, 0b11011100110000000111000100000101 >> 37, tests/mips/basic/srlv_12.s
+srlv_2, 0b01011100110000000111000100000101 >> 1, tests/mips/basic/srlv_2.s
+srlv_3, 0b11011100110000000111000100000101 >> 1, tests/mips/basic/srlv_3.s
+srlv_4, 0b01011100110000000111000100000101 >> 5, tests/mips/basic/srlv_4.s
+srlv_5, 0b11011100110000000111000100000101 >> 5, tests/mips/basic/srlv_5.s
+srlv_6, 0x000000FF >> 4, tests/mips/basic/srlv_6.s
+srlv_7, 0xFFFFFFFF >> 31, tests/mips/basic/srlv_7.s
+srlv_8, 0xFFFFFFFF >> -1, tests/mips/basic/srlv_8.s
+srlv_9, 0b00011010 >> 32, tests/mips/basic/srlv_9.s
+srl_0, 0b00011010 >> 0, tests/mips/basic/srl_0.s
+srl_1, 0b00011011 >> 0, tests/mips/basic/srl_1.s
+srl_2, 0b01011100110000000111000100000101 >> 1, tests/mips/basic/srl_2.s
+srl_3, 0b11011100110000000111000100000101 >> 1, tests/mips/basic/srl_3.s
+srl_4, 0b01011100110000000111000100000101 >> 5, tests/mips/basic/srl_4.s
+srl_5, 0b11011100110000000111000100000101 >> 5, tests/mips/basic/srl_5.s
+srl_6, 0x000000FF >> 4, tests/mips/basic/srl_6.s
+srl_7, 0xFFFFFFFF >> 31, tests/mips/basic/srl_7.s
+subu_0, subtracts values into a zero initialized register, tests/mips/basic/subu_0.s
+subu_1, subtracts values into a zero initialized register, tests/mips/basic/subu_1.s
+subu_2, subtracts values into a register, checks optimisation when rd == rt, tests/mips/basic/subu_2.s
+subu_3, subtracts values into a register, checks optimisation when rd == rs, tests/mips/basic/subu_3.s
+subu_4, subtracts values into a register, checks optimisation when rt == $zero, tests/mips/basic/subu_4.s
+subu_5, subtracts values into a register, checks optimisation when rs == $zero, tests/mips/basic/subu_5.s
+sub_0, subtracts values into a zero initialized register, tests/mips/basic/sub_0.s
+sub_1, subtracts values into a zero initialized register, tests/mips/basic/sub_1.s
+sub_2, subtracts values into a register, checks optimisation when rd == rt, tests/mips/basic/sub_2.s
+sub_3, subtracts values into a register, checks optimisation when rd == rs, tests/mips/basic/sub_3.s
+sub_4, subtracts values into a register, checks optimisation when rt == $zero, tests/mips/basic/sub_4.s
+sub_5, subtracts values into a register, checks optimisation when rs == $zero, tests/mips/basic/sub_5.s
+xori_0, 0b00 ^ 0b00, tests/mips/basic/xori_0.s
+xori_1, 0b01 ^ 0b10, tests/mips/basic/xori_1.s
+xori_2, 0b11 & 0b01, tests/mips/basic/xori_2.s
+xori_3, 0b11 & 0b11, tests/mips/basic/xori_3.s
+xori_4, 0x0000000F & 0xFFFFFFFF, tests/mips/basic/xori_4.s
+xor_0, 0b00 ^ 0b00, tests/mips/basic/xor_0.s
+xor_1, 0b01 ^ 0b10, tests/mips/basic/xor_1.s
+xor_2, 0b11 & 0b01, tests/mips/basic/xor_2.s
+xor_3, 0b11 & 0b11, tests/mips/basic/xor_3.s
+xor_4, 0x0000000F & 0xFFFFFFFF, tests/mips/basic/xor_4.s
+beq_0, beq taken, tests/mips/branch/beq_0.s
+beq_1, beq not taken, tests/mips/branch/beq_1.s
+beq_2, beq backwards taken, tests/mips/branch/beq_2.s
+beq_3, beq backwards not taken, tests/mips/branch/beq_3.s
+bgezal_0, bgezal taken, tests/mips/branch/bgezal_0.s
+bgezal_1, bgezal taken, tests/mips/branch/bgezal_1.s
+bgezal_2, bgezal not taken, tests/mips/branch/bgezal_2.s
+bgezal_3, bgezal backwards taken, tests/mips/branch/bgezal_3.s
+bgezal_4, bgezal backwards taken, tests/mips/branch/bgezal_4.s
+bgezal_5, bgezal backwards taken, tests/mips/branch/bgezal_5.s
+bgezal_6, tests that $ra is set, tests/mips/branch/bgezal_6.s
+bgezal_7, tests that $ra is set when the branch is not taken, tests/mips/branch/bgezal_7.s
+bgez_0, bgez taken, tests/mips/branch/bgez_0.s
+bgez_1, bgez taken, tests/mips/branch/bgez_1.s
+bgez_2, bgez not taken, tests/mips/branch/bgez_2.s
+bgez_3, bgez backwards taken, tests/mips/branch/bgez_3.s
+bgez_4, bgez backwards taken, tests/mips/branch/bgez_4.s
+bgez_5, bgez backwards taken, tests/mips/branch/bgez_5.s
+bgtz_0, bgtz taken, tests/mips/branch/bgtz_0.s
+bgtz_1, bgtz not taken, tests/mips/branch/bgtz_1.s
+bgtz_2, bgtz not taken, tests/mips/branch/bgtz_2.s
+bgtz_3, bgtz backwards taken, tests/mips/branch/bgtz_3.s
+bgtz_4, bgtz backwards not taken, tests/mips/branch/bgtz_4.s
+bgtz_5, bgtz backwards not taken, tests/mips/branch/bgtz_5.s
+blez_0, blez taken, tests/mips/branch/blez_0.s
+blez_1, blez taken, tests/mips/branch/blez_1.s
+blez_2, blez not taken, tests/mips/branch/blez_2.s
+blez_3, blez backwards taken, tests/mips/branch/blez_3.s
+blez_4, blez backwards taken, tests/mips/branch/blez_4.s
+blez_5, blez backwards taken, tests/mips/branch/blez_5.s
+bltzal_0, bltzal taken, tests/mips/branch/bltzal_0.s
+bltzal_1, bltzal not taken, tests/mips/branch/bltzal_1.s
+bltzal_2, bltzal not taken, tests/mips/branch/bltzal_2.s
+bltzal_3, bltzal backwards taken, tests/mips/branch/bltzal_3.s
+bltzal_4, bltzal backwards not taken, tests/mips/branch/bltzal_4.s
+bltzal_5, bltzal backwards not taken, tests/mips/branch/bltzal_5.s
+bltzal_6, tests that $ra is set, tests/mips/branch/bltzal_6.s
+bltzal_7, tests that $ra is set when the branch is not taken, tests/mips/branch/bltzal_7.s
+bltz_0, bltz taken, tests/mips/branch/bltz_0.s
+bltz_1, bltz not taken, tests/mips/branch/bltz_1.s
+bltz_2, bltz not taken, tests/mips/branch/bltz_2.s
+bltz_3, bltz backwards taken, tests/mips/branch/bltz_3.s
+bltz_4, bltz backwards not taken, tests/mips/branch/bltz_4.s
+bltz_5, bltz backwards not taken, tests/mips/branch/bltz_5.s
+bne_0, bne taken, tests/mips/branch/bne_0.s
+bne_1, bne not taken, tests/mips/branch/bne_1.s
+bne_2, bne backwards taken, tests/mips/branch/bne_2.s
+bne_3, bne backwards not taken, tests/mips/branch/bne_3.s
+jal_0, , tests/mips/branch/jal_0.s
+jal_1, tests that $ra is set, tests/mips/branch/jal_1.s
+j_0, , tests/mips/branch/j_0.s
+long_mul, basic long multiply algorithm without carry, tests/mips/func/long_mul.s
+lbu_0, stores and loads max sized uint8_t, tests/mips/mem/lbu_0.s
+lbu_1, stores and loads max sized int8_t, tests/mips/mem/lbu_1.s
+lbu_2, stores and loads max sized uint16_t, tests/mips/mem/lbu_2.s
+lbu_3, stores and loads max sized int16_t, tests/mips/mem/lbu_3.s
+lbu_4, stores and loads max sized uint32_t, tests/mips/mem/lbu_4.s
+lbu_5, stores and loads max sized int32_t, tests/mips/mem/lbu_5.s
+lbu_6, stores and loads in parts, tests/mips/mem/lbu_6.s
+lb_0, stores and loads max sized uint8_t, tests/mips/mem/lb_0.s
+lb_1, stores and loads max sized int8_t, tests/mips/mem/lb_1.s
+lb_2, stores and loads max sized uint16_t, tests/mips/mem/lb_2.s
+lb_3, stores and loads max sized int16_t, tests/mips/mem/lb_3.s
+lb_4, stores and loads max sized uint32_t, tests/mips/mem/lb_4.s
+lb_5, stores and loads max sized int32_t, tests/mips/mem/lb_5.s
+lb_6, stores and loads in parts, tests/mips/mem/lb_6.s
+lhu_0, stores and loads max sized uint8_t, tests/mips/mem/lhu_0.s
+lhu_1, stores and loads max sized int8_t, tests/mips/mem/lhu_1.s
+lhu_2, stores and loads max sized uint16_t, tests/mips/mem/lhu_2.s
+lhu_3, stores and loads max sized int16_t, tests/mips/mem/lhu_3.s
+lhu_4, stores and loads max sized uint32_t, tests/mips/mem/lhu_4.s
+lhu_5, stores and loads max sized int32_t, tests/mips/mem/lhu_5.s
+lhu_6, stores and loads in parts, tests/mips/mem/lhu_6.s
+lh_0, stores and loads max sized uint8_t, tests/mips/mem/lh_0.s
+lh_1, stores and loads max sized int8_t, tests/mips/mem/lh_1.s
+lh_2, stores and loads max sized uint16_t, tests/mips/mem/lh_2.s
+lh_3, stores and loads max sized int16_t, tests/mips/mem/lh_3.s
+lh_4, stores and loads max sized uint32_t, tests/mips/mem/lh_4.s
+lh_5, stores and loads max sized int32_t, tests/mips/mem/lh_5.s
+lh_6, stores and loads in parts, tests/mips/mem/lh_6.s
+lw_0, stores and loads max sized uint8_t, tests/mips/mem/lw_0.s
+lw_1, stores and loads max sized int8_t, tests/mips/mem/lw_1.s
+lw_2, stores and loads max sized uint16_t, tests/mips/mem/lw_2.s
+lw_3, stores and loads max sized int16_t, tests/mips/mem/lw_3.s
+lw_4, stores and loads max sized uint32_t, tests/mips/mem/lw_4.s
+lw_5, stores and loads max sized int32_t, tests/mips/mem/lw_5.s
+sb_0, stores in parts and loads, tests/mips/mem/sb_0.s
+sb_lbu_0, stores then loads a memory value, tests/mips/mem/sb_lbu_0.s
+sb_lbu_1, stores then loads a memory value multiple times, tests/mips/mem/sb_lbu_1.s
+sb_lbu_2, stores then loads multiple memory values, tests/mips/mem/sb_lbu_2.s
+sb_lbu_3, stores multiple memory values then loads multiple memory values, tests/mips/mem/sb_lbu_3.s
+sb_lbu_4, loops over a 1 KiB of memory, tests/mips/mem/sb_lbu_4.s
+sb_lb_0, stores then loads a memory value, tests/mips/mem/sb_lb_0.s
+sb_lb_1, stores then loads a memory value multiple times, tests/mips/mem/sb_lb_1.s
+sb_lb_2, stores then loads multiple memory values, tests/mips/mem/sb_lb_2.s
+sb_lb_3, stores multiple memory values then loads multiple memory values, tests/mips/mem/sb_lb_3.s
+sb_lb_4, loops over a 1 KiB of memory, tests/mips/mem/sb_lb_4.s
+sh_0, stores in parts and loads, tests/mips/mem/sh_0.s
+sh_lhu_0, stores then loads a memory value, tests/mips/mem/sh_lhu_0.s
+sh_lhu_1, stores then loads a memory value multiple times, tests/mips/mem/sh_lhu_1.s
+sh_lhu_2, stores then loads multiple memory values, tests/mips/mem/sh_lhu_2.s
+sh_lhu_3, stores multiple memory values then loads multiple memory values, tests/mips/mem/sh_lhu_3.s
+sh_lhu_4, loops over a 1 KiB of memory, tests/mips/mem/sh_lhu_4.s
+sh_lh_0, stores then loads a memory value, tests/mips/mem/sh_lh_0.s
+sh_lh_1, stores then loads a memory value multiple times, tests/mips/mem/sh_lh_1.s
+sh_lh_2, stores then loads multiple memory values, tests/mips/mem/sh_lh_2.s
+sh_lh_3, stores multiple memory values then loads multiple memory values, tests/mips/mem/sh_lh_3.s
+sh_lh_4, loops over a 1 KiB of memory, tests/mips/mem/sh_lh_4.s
+sw_lw_0, stores then loads a memory value, tests/mips/mem/sw_lw_0.s
+sw_lw_1, stores then loads a memory value multiple times, tests/mips/mem/sw_lw_1.s
+sw_lw_2, stores then loads multiple memory values, tests/mips/mem/sw_lw_2.s
+sw_lw_3, stores multiple memory values then loads multiple memory values, tests/mips/mem/sw_lw_3.s
+sw_lw_4, loops over a 1 KiB of memory, tests/mips/mem/sw_lw_4.s
+$0, ensures that $zero is hardwired to 0, tests/mips/misc/$0.s
+register pressure, utilizes every register, tests/mips/misc/pressure.s
+comment-post, tests post comments, does not test runtime functionality, tests/mips/parser/comment-post.s
+comment, tests basic comments, does not test runtime functionality, tests/mips/parser/comment.s
+literal_bin, tests binary literals in assembly, tests/mips/parser/literal_bin.s
+literal_hex, tests hex literals in assembly, tests/mips/parser/literal_hex.s
+factorial(0), recursive factorial using stack, computes 0!, tests/mips/perf/recursion/factorial/factorial_00.s
+factorial(1), recursive factorial using stack, computes 1!, tests/mips/perf/recursion/factorial/factorial_01.s
+factorial(2), recursive factorial using stack, computes 2!, tests/mips/perf/recursion/factorial/factorial_02.s
+factorial(3), recursive factorial using stack, computes 3!, tests/mips/perf/recursion/factorial/factorial_03.s
+factorial(4), recursive factorial using stack, computes 4!, tests/mips/perf/recursion/factorial/factorial_04.s
+factorial(5), recursive factorial using stack, computes 5!, tests/mips/perf/recursion/factorial/factorial_05.s
+factorial(6), recursive factorial using stack, computes 6!, tests/mips/perf/recursion/factorial/factorial_06.s
+factorial(7), recursive factorial using stack, computes 7!, tests/mips/perf/recursion/factorial/factorial_07.s
+factorial(8), recursive factorial using stack, computes 8!, tests/mips/perf/recursion/factorial/factorial_08.s
+factorial(9), recursive factorial using stack, computes 9!, tests/mips/perf/recursion/factorial/factorial_09.s
+factorial(10), recursive factorial using stack, computes 10!, tests/mips/perf/recursion/factorial/factorial_10.s
+factorial(11), recursive factorial using stack, computes 11!, tests/mips/perf/recursion/factorial/factorial_11.s
+fibonacci(0), recursive fibonacci using stack, computes fib(0), tests/mips/perf/recursion/fibonacci/fibonacci_00.s
+fibonacci(1), recursive fibonacci using stack, computes fib(1), tests/mips/perf/recursion/fibonacci/fibonacci_01.s
+fibonacci(2), recursive fibonacci using stack, computes fib(2), tests/mips/perf/recursion/fibonacci/fibonacci_02.s
+fibonacci(3), recursive fibonacci using stack, computes fib(3), tests/mips/perf/recursion/fibonacci/fibonacci_03.s
+fibonacci(4), recursive fibonacci using stack, computes fib(4), tests/mips/perf/recursion/fibonacci/fibonacci_04.s
+fibonacci(5), recursive fibonacci using stack, computes fib(5), tests/mips/perf/recursion/fibonacci/fibonacci_05.s
+fibonacci(6), recursive fibonacci using stack, computes fib(6), tests/mips/perf/recursion/fibonacci/fibonacci_06.s
+fibonacci(7), recursive fibonacci using stack, computes fib(7), tests/mips/perf/recursion/fibonacci/fibonacci_07.s
+fibonacci(8), recursive fibonacci using stack, computes fib(8), tests/mips/perf/recursion/fibonacci/fibonacci_08.s
+fibonacci(9), recursive fibonacci using stack, computes fib(9), tests/mips/perf/recursion/fibonacci/fibonacci_09.s
+fibonacci(10), recursive fibonacci using stack, computes fib(10), tests/mips/perf/recursion/fibonacci/fibonacci_10.s
+fibonacci(11), recursive fibonacci using stack, computes fib(11), tests/mips/perf/recursion/fibonacci/fibonacci_11.s
+fibonacci(12), recursive fibonacci using stack, computes fib(12), tests/mips/perf/recursion/fibonacci/fibonacci_12.s
+fibonacci(13), recursive fibonacci using stack, computes fib(13), tests/mips/perf/recursion/fibonacci/fibonacci_13.s
+fibonacci(14), recursive fibonacci using stack, computes fib(14), tests/mips/perf/recursion/fibonacci/fibonacci_14.s
+fibonacci(15), recursive fibonacci using stack, computes fib(15), tests/mips/perf/recursion/fibonacci/fibonacci_15.s
+fibonacci(16), recursive fibonacci using stack, computes fib(16), tests/mips/perf/recursion/fibonacci/fibonacci_16.s
+fibonacci(17), recursive fibonacci using stack, computes fib(17), tests/mips/perf/recursion/fibonacci/fibonacci_17.s
+fibonacci(18), recursive fibonacci using stack, computes fib(18), tests/mips/perf/recursion/fibonacci/fibonacci_18.s
+fibonacci(19), recursive fibonacci using stack, computes fib(19), tests/mips/perf/recursion/fibonacci/fibonacci_19.s
+unroll(512/1), loop of 512 unrolled into chunks of 512, tests/mips/perf/unroll/unroll_0.s
+unroll(512/2), loop of 512 unrolled into chunks of 256, tests/mips/perf/unroll/unroll_1.s
+unroll(512/4), loop of 512 unrolled into chunks of 128, tests/mips/perf/unroll/unroll_2.s
+unroll(512/8), loop of 512 unrolled into chunks of 64, tests/mips/perf/unroll/unroll_3.s
+unroll(512/16), loop of 512 unrolled into chunks of 32, tests/mips/perf/unroll/unroll_4.s
+unroll(512/32), loop of 512 unrolled into chunks of 16, tests/mips/perf/unroll/unroll_5.s
+unroll(512/64), loop of 512 unrolled into chunks of 8, tests/mips/perf/unroll/unroll_6.s
+unroll(512/128), loop of 512 unrolled into chunks of 4, tests/mips/perf/unroll/unroll_7.s
+unroll(512/256), loop of 512 unrolled into chunks of 2, tests/mips/perf/unroll/unroll_8.s
+unroll(512/512), loop of 512 unrolled into chunks of 1, tests/mips/perf/unroll/unroll_9.s
