@@ -1,0 +1,17 @@
+\subsection{Methodology}
+
+I designed a single test framework to verify the functionality of both the JIT system and the Interpret system, otherwise known as the systems under test (SUT). The test coverage aims to cover 3 key areas:
+
+\begin{itemize}
+    \item \textbf{Functionality}
+    
+    Tests are written to verify that the functionality of every instruction is as defined by the MIPS-1 ISA \cite{mips-1-isa}. All interesting edge cases have specific tests written to improve the functional coverage of the test suite. Some tests are also designed to verify edge cases of the SUT. This includes tests containing MIPS code that would be optimised or handled uniquely by the SUT, to verify that the optimisations do not cause functional defects.
+    
+    \item \textbf{Performance}
+    
+    Tests are written to observe the performance characteristics of the SUT. These allow me to evaluate the performance of an SUT and make analytical conclusions about a given SUT; a necessity, given that this project is about accelerating emulation.
+    
+    \item \textbf{Regression}
+    
+    If any defects are detected, tests are written specifically to induce the incorrect behaviour. This is an invaluable tool for detecting regressions should the defects reappear.
+\end{itemize}
