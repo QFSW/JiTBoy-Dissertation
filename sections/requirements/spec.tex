@@ -1,0 +1,19 @@
+\subsection{Project Specification}
+
+The project will consist of building a JIT based emulator, an interpreter and a JIT-Interpreter hybrid. The interpreter will serve as performance baseline for evaluating the JIT system. The hybrid system intends to combine the best aspects of the JIT and the interpreter systems.
+
+The following criterion have been defined for the emulators:
+
+\begin{itemize}
+    \item \textbf{Source Architecture}: MIPS-1
+    
+    MIPS-1 has been selected as the ISA for the source architecture as it is a simple ISA. \YIComment{Talk about emulating to the register/memory level.}
+    
+    \item \textbf{Host Architecture}: x86
+    
+    x86 has been selected as the host ISA as it is the most frequently used ISA on modern desktop computers. This allows the project to demonstrate its potential use in a commercial product designed for x86 systems. x64 is not considered or supported at this time as it provides extra implementation complexity without providing evaluation results of extra interest.
+    
+    \item \textbf{Host System}: Windows 10
+    \item \textbf{Emulator Input}: MIPS-1 binaries, MIPS-1 assembly
+    \item \textbf{Microarchitecture Simulation}: None
+\end{itemize}
