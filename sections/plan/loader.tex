@@ -1,0 +1,3 @@
+\subsection{Binary Loader}
+
+The binary loader present assumes that the entire binary is instructions and decodes them as such, yielding a contiguous stream of instructions. This is incorrect as binaries can also contain data and symbols. The loader needs to be modified to properly account for this so that binaries produced by compilers can be consumed directly. This will be complete by the end of February.
