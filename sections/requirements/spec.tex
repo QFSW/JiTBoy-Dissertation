@@ -16,6 +16,11 @@ The following criterion have been defined for the emulators:
     x86 has been selected as the host ISA as it is the most frequently used ISA on modern desktop computers. This allows the project to demonstrate its potential use in a commercial product designed for x86 systems. x64 is not considered or supported at this time as it provides extra implementation complexity without providing evaluation results of extra interest.
     
     \item \textbf{Host System}: Windows 10
+    
+    Due to project details such as calling conventions and executable memory allocation, the project is not cross platform out of the box without further work. For this reason only a single host system will be supported for the initial implementation to keep the scope manageable. Windows 10 has been selected due to it being the majority OS on desktops in consumer use.
+    
     \item \textbf{Emulator Input}: MIPS-1 binaries, MIPS-1 assembly
     \item \textbf{Microarchitecture Simulation}: None
+    
+    Microarchitecture simulation can be of great use in research for simulating different CPU designs and investigating their performance and power characteristics. Having said this, it does not aid in the emulation of a foriegn ISA and will introduce a large and unecessary overhead and complexity. Given this, no microarchitecture simulation will be considered for this project.
 \end{itemize}
