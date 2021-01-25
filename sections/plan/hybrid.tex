@@ -1,1 +1,13 @@
 \subsection{Hybrid Runtime}
+
+The JIT excels when the compiled output is executed many times, however for less hot programs the overhead of compiling blocks becomes a substantial factor in the execution time and outweighs in the decrease in execution time. In these cases an interpreter is a much better choice.
+
+A solution to this is to hybridize the two emulators and create a JIT-Interpreter hybrid. With this hybrid I aim to exploit the multiple cores present in modern CPUs to yield better average performance than either system alone.
+
+In the JIT emulator, when a not yet translated source block is encountered, the JIT runtime stalls until the compiler has generated the compiled host block before executing this. Whilst this compiled host block has high execution performance, the latency of the compilation is relatively extremely slow, causing bad overall performance. In the hybrid, the compiler will run asynchronously on the worker thread. On encountering a new source block, its translation will be queued onto one of these worker threads; in the meantime, the interpreter will be used for the immediate execution.
+
+This minimizes the latency associated with JIT compilation as it is deferred into a non-blocking task. At the same time, the high execution performance of the JIT is \emph{eventually} present. This system can be expanded to have \texttt{N-1} worker threads, where \texttt{N} is the number of logical processors on the CPU, allowing full utilization of the systems CPU for maximum compilation throughput.
+
+In some programs the compiler threads may be overloaded with compilation jobs being queued faster than they can be processed. Whilst not a disaster, this is non-ideal as very frequently executed blocks may be left in the queue for a long time due to the queue being filled with unimportant and infrequently used blocks. This would result in worse performance as the interpreter will be used more than necessary. Methods to mitigate this such as prioritising which blocks to translate (for example, only after they have been executed more than \texttt{x} times will be explored).
+
+This hybrid will be complete by the end of March.
