@@ -310,6 +310,26 @@ comment-post, tests post comments, does not test runtime functionality, tests/mi
 comment, tests basic comments, does not test runtime functionality, tests/mips/parser/comment.s
 literal_bin, tests binary literals in assembly, tests/mips/parser/literal_bin.s
 literal_hex, tests hex literals in assembly, tests/mips/parser/literal_hex.s
+primal(1), simple iterative primal test, tests/mips/perf/iteration/primal/primal_00.s
+primal(2), simple iterative primal test, tests/mips/perf/iteration/primal/primal_01.s
+primal(5), simple iterative primal test, tests/mips/perf/iteration/primal/primal_02.s
+primal(11), simple iterative primal test, tests/mips/perf/iteration/primal/primal_03.s
+primal(17), simple iterative primal test, tests/mips/perf/iteration/primal/primal_04.s
+primal(37), simple iterative primal test, tests/mips/perf/iteration/primal/primal_05.s
+primal(67), simple iterative primal test, tests/mips/perf/iteration/primal/primal_06.s
+primal(131), simple iterative primal test, tests/mips/perf/iteration/primal/primal_07.s
+primal(257), simple iterative primal test, tests/mips/perf/iteration/primal/primal_08.s
+primal(521), simple iterative primal test, tests/mips/perf/iteration/primal/primal_09.s
+primal(1031), simple iterative primal test, tests/mips/perf/iteration/primal/primal_10.s
+primal(2053), simple iterative primal test, tests/mips/perf/iteration/primal/primal_11.s
+primal(4099), simple iterative primal test, tests/mips/perf/iteration/primal/primal_12.s
+primal(8209), simple iterative primal test, tests/mips/perf/iteration/primal/primal_13.s
+primal(16411), simple iterative primal test, tests/mips/perf/iteration/primal/primal_14.s
+primal(32771), simple iterative primal test, tests/mips/perf/iteration/primal/primal_15.s
+primal(65537), simple iterative primal test, tests/mips/perf/iteration/primal/primal_16.s
+primal(131101), simple iterative primal test, tests/mips/perf/iteration/primal/primal_17.s
+primal(262147), simple iterative primal test, tests/mips/perf/iteration/primal/primal_18.s
+primal(524309), simple iterative primal test, tests/mips/perf/iteration/primal/primal_19.s
 factorial(0), recursive factorial using stack, computes 0!, tests/mips/perf/recursion/factorial/factorial_00.s
 factorial(1), recursive factorial using stack, computes 1!, tests/mips/perf/recursion/factorial/factorial_01.s
 factorial(2), recursive factorial using stack, computes 2!, tests/mips/perf/recursion/factorial/factorial_02.s
