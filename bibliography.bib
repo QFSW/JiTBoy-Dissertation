@@ -348,6 +348,26 @@ on Multicore Architectures",
     addendum = "(accessed: 25.1.2021)"
 }
 
+@article{csmith-paper,
+    author = {Yang, Xuejun and Chen, Yang and Eide, Eric and Regehr, John},
+    title = {Finding and Understanding Bugs in C Compilers},
+    year = {2011},
+    issue_date = {June 2011},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {46},
+    number = {6},
+    issn = {0362-1340},
+    url = {https://doi.org/10.1145/1993316.1993532},
+    doi = {10.1145/1993316.1993532},
+    abstract = {Compilers should be correct. To improve the quality of C compilers, we created Csmith, a randomized test-case generation tool, and spent three years using it to find compiler bugs. During this period we reported more than 325 previously unknown bugs to compiler developers. Every compiler we tested was found to crash and also to silently generate wrong code when presented with valid input. In this paper we present our compiler-testing tool and the results of our bug-hunting study. Our first contribution is to advance the state of the art in compiler testing. Unlike previous tools, Csmith generates programs that cover a large subset of C while avoiding the undefined and unspecified behaviors that would destroy its ability to automatically find wrong-code bugs. Our second contribution is a collection of qualitative and quantitative results about the bugs we have found in open-source C compilers.},
+    journal = {SIGPLAN Not.},
+    month = jun,
+    pages = {283–294},
+    numpages = {12},
+    keywords = {random testing, compiler testing, automated testing, compiler defect, random program generation}
+}
+
 @online{gcc,
     title = "GCC, the GNU Compiler Collection \- Free Software Foundation (FSF)",
     url  = "https://gcc.gnu.org",
