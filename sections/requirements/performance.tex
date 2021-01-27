@@ -4,7 +4,13 @@ The performance of the JIT will need to be evaluated in comparison to the JIT em
 
 \begin{itemize}
     \item \textbf{Short Simple Programs}
+    
+    In short and simple programs, especially those without many jumps, the fixed overhead costs of the emulator such as initialization time will become more significant. Many test suites will be written for this including basic single instruction suites, such as the \texttt{xor} suite, will be written to investigate the performance characteristics.
+    
     \item \textbf{Long Complex Programs}
+    
+    Conversely, in longer running tests initialization time and fixed overheads become amortized. These tests are of particular importance as the performance of the emulator becomes more important for longer tests. Test suites will be written with long running times and large source codes to investigate the performance characteristics.
+
     \item \textbf{Arithmetic Intensive}
     \item \textbf{Memory Intensive}
     \item \textbf{Iteration}
