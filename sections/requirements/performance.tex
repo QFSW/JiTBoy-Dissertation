@@ -11,8 +11,14 @@ The performance of the JIT will need to be evaluated in comparison to the JIT em
     
     Conversely, in longer running tests initialization time and fixed overheads become amortized. These tests are of particular importance as the performance of the emulator becomes more important for longer tests. Test suites will be written with long running times and large source codes to investigate the performance characteristics.
 
-    \item \textbf{Arithmetic Intensive}
     \item \textbf{Memory Intensive}
+    
+    Memory instructions can be difficult to accelerate due to the abstraction required to fully emulate the entire memory space whilst running in the same process as the emulator. Because of this, the JIT emulator may see little speedup over the emulator. Test suites such as \texttt{memcpy(n)} will be written to investigate the performance characteristics.
+
+    \item \textbf{Arithmetic Intensive}
+    
+    Conversely, arithmetic operations can be executed very close to the metal with minimal abstraction, providing the JIT emulator with an opportunity for a large speedup over the interpreter. Test suites such as \texttt{primal(n)} will be written to investigate the performance characteristics.
+
     \item \textbf{Iteration}
     
     Programs and functions with a high degree of iteration, such as those with hot loops, tend to invoke the same blocks of code over and over again. This will be interesting to investigate as it's expected that the JIT's relative performance to the interpreter will increase. To test this, test suites designed with hot loops, such as \texttt{primal(n)} will be designed. The suite will cover the same loops being executed from a few times to very many times, allowing us to see how the performance characteristics of the JIT and emulator systems evolve as the loops get more frequently executed, and at which point, if any, the JIT emulator surpasses the interpreter.
