@@ -11,6 +11,10 @@ Currently, the test framework is not directly compatible with the output of GCC 
     
     The parser will be upgraded to consume the compiler directives either ignoring them or actioning them if applicable.
 
+    \item \textbf{Pseudoinstructions}
+    
+    GCC makes use of MIPS pseudoinstructions such as \texttt{mov}. The parser will be extended to support these.
+
     \item \textbf{No Entry Point}
     
     The generated assembly does not have a compiled entry point and instead the \texttt{.ent} directive is used to indicate the main function as being an entry point. A simple post processor script can be used to auto generate entry point assembly at the beginning of the file that calls the main function appropriately.
