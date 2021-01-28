@@ -1,6 +1,6 @@
 \subsection{Performance}
 
-\autoref{figure:time-jit-interpreter} shows that the interpreter has far better performance than the JIT for short tests. As the test duration increases the JIT increases in performance, eventually stabilising at approxiamately 2x faster execution time than the interpreter.
+\autoref{figure:time-jit-interpreter} shows that the interpreter has far better performance than the JIT for short tests. As the test duration increases the JIT increases in performance, eventually stabilising at approximately 2x faster execution time than the interpreter.
 
 \begin{figure}
     \centering
@@ -9,16 +9,22 @@
     \label{figure:time-jit-interpreter}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics{output/graphs/tests/fibonacci/mips.png}
-    \caption{Performance in mips of the fibonacci test suite.}
-    \label{figure:fibonacci-mips}
-\end{figure}
+\subsubsection{Memory Intensive}
+
+\subsubsection{Iteration}
 
 \begin{figure}
     \centering
     \includegraphics{output/graphs/tests/primal/mips.png}
     \caption{Performance in mips of the primal test suite.}
     \label{figure:primal-mips}
+\end{figure}
+
+\subsubsection{Recursion}
+
+\begin{figure}
+    \centering
+    \includegraphics{output/graphs/tests/fibonacci/mips.png}
+    \caption{Performance in mips of the fibonacci test suite.}
+    \label{figure:fibonacci-mips}
 \end{figure}
