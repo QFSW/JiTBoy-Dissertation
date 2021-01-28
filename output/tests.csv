@@ -310,6 +310,46 @@ comment-post, tests post comments, does not test runtime functionality, tests/mi
 comment, tests basic comments, does not test runtime functionality, tests/mips/parser/comment.s
 literal_bin, tests binary literals in assembly, tests/mips/parser/literal_bin.s
 literal_hex, tests hex literals in assembly, tests/mips/parser/literal_hex.s
+memcpy(1), copies 1 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_00.s
+memcpy(2), copies 2 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_01.s
+memcpy(4), copies 4 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_02.s
+memcpy(8), copies 8 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_03.s
+memcpy(16), copies 16 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_04.s
+memcpy(32), copies 32 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_05.s
+memcpy(64), copies 64 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_06.s
+memcpy(128), copies 128 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_07.s
+memcpy(256), copies 256 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_08.s
+memcpy(512), copies 512 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_09.s
+memcpy(1024), copies 1024 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_10.s
+memcpy(2048), copies 2048 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_11.s
+memcpy(4096), copies 4096 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_12.s
+memcpy(8192), copies 8192 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_13.s
+memcpy(16384), copies 16384 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_14.s
+memcpy(32768), copies 32768 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_15.s
+memcpy(65536), copies 65536 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_16.s
+memcpy(131072), copies 131072 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_17.s
+memcpy(262144), copies 262144 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_18.s
+memcpy(524288), copies 524288 bytes of memory to the destination, tests/mips/perf/iteration/memcpy/memcpy_19.s
+memcpyw(1), copies 1 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_00.s
+memcpyw(2), copies 2 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_01.s
+memcpyw(4), copies 4 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_02.s
+memcpyw(8), copies 8 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_03.s
+memcpyw(16), copies 16 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_04.s
+memcpyw(32), copies 32 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_05.s
+memcpyw(64), copies 64 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_06.s
+memcpyw(128), copies 128 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_07.s
+memcpyw(256), copies 256 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_08.s
+memcpyw(512), copies 512 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_09.s
+memcpyw(1024), copies 1024 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_10.s
+memcpyw(2048), copies 2048 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_11.s
+memcpyw(4096), copies 4096 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_12.s
+memcpyw(8192), copies 8192 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_13.s
+memcpyw(16384), copies 16384 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_14.s
+memcpyw(32768), copies 32768 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_15.s
+memcpyw(65536), copies 65536 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_16.s
+memcpyw(131072), copies 131072 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_17.s
+memcpyw(262144), copies 262144 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_18.s
+memcpyw(524288), copies 524288 words of memory to the destination, tests/mips/perf/iteration/memcpyw/memcpyw_19.s
 primal(1), simple iterative primal test, tests/mips/perf/iteration/primal/primal_00.s
 primal(2), simple iterative primal test, tests/mips/perf/iteration/primal/primal_01.s
 primal(5), simple iterative primal test, tests/mips/perf/iteration/primal/primal_02.s
@@ -362,6 +402,11 @@ fibonacci(16), recursive fibonacci using stack, computes fib(16), tests/mips/per
 fibonacci(17), recursive fibonacci using stack, computes fib(17), tests/mips/perf/recursion/fibonacci/fibonacci_17.s
 fibonacci(18), recursive fibonacci using stack, computes fib(18), tests/mips/perf/recursion/fibonacci/fibonacci_18.s
 fibonacci(19), recursive fibonacci using stack, computes fib(19), tests/mips/perf/recursion/fibonacci/fibonacci_19.s
+fibonacci(20), recursive fibonacci using stack, computes fib(20), tests/mips/perf/recursion/fibonacci/fibonacci_20.s
+fibonacci(21), recursive fibonacci using stack, computes fib(21), tests/mips/perf/recursion/fibonacci/fibonacci_21.s
+fibonacci(22), recursive fibonacci using stack, computes fib(22), tests/mips/perf/recursion/fibonacci/fibonacci_22.s
+fibonacci(23), recursive fibonacci using stack, computes fib(23), tests/mips/perf/recursion/fibonacci/fibonacci_23.s
+fibonacci(24), recursive fibonacci using stack, computes fib(24), tests/mips/perf/recursion/fibonacci/fibonacci_24.s
 unroll(512/1), loop of 512 unrolled into chunks of 512, tests/mips/perf/unroll/unroll_0.s
 unroll(512/2), loop of 512 unrolled into chunks of 256, tests/mips/perf/unroll/unroll_1.s
 unroll(512/4), loop of 512 unrolled into chunks of 128, tests/mips/perf/unroll/unroll_2.s
