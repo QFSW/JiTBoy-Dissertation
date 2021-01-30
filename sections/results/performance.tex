@@ -4,16 +4,16 @@
 
 \autoref{figure:hotness} illustrates the relationship between program hotness and emulation performance. It shows that for the JIT emulator, performance rapidly increases as the hotness does. This is because each block has a fixed compilation cost, which is further amortized the hotter it is, resulting in higher performance. The interpreter on the other hand is unable to see the same improvement as the associated costs for a given block are required for every execution and cannot be amortized.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics{output/graphs/scatter/time.png}
+    \includegraphics[scale=0.75]{output/graphs/scatter/time.png}
     \caption{Execution time of all tests for the JIT against the interpreter.}
     \label{figure:time-jit-interpreter}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics{output/graphs/scatter/hotness.png}
+    \includegraphics[scale=0.75]{output/graphs/scatter/hotness.png}
     \caption{Performance against hotness for all tests.}
     \label{figure:hotness}
 \end{figure}
@@ -26,9 +26,9 @@ The interpreter has higher initial performance but stabilizes at a lower peak pe
 
 The JIT emulator on the other hand sees a far higher peak performance, but much worse initial performance and takes longer to achieve high performance. This is because, in addition to the higher overhead costs for the JIT emulator, each block of source code also has a high associated compilation costs. As \texttt{n} increases the same blocks are executed many times, amortizing the fixed compilation costs. This allows the JIT emulator to achieve a very high performance due to its far superior execution performance.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics{output/graphs/tests/primal/mips.png}
+    \includegraphics[scale=0.75]{output/graphs/tests/primal/mips.png}
     \caption{Performance in mips of the primal test suite.}
     \label{figure:primal-mips}
 \end{figure}
@@ -41,9 +41,9 @@ The overall performance for both SUTs is significantly lower. This is due to the
 
 The JIT emulator takes significantly longer to reach peak performance whereas the interpreter does not. This is because the interpreters fixed costs, such as initialization, do not change with the program being executed. The JIT emulator on the other hand has additional costs for every block that needs compiling, and the \texttt{fibonacci(n)} program contains more source blocks. This means there is a larger initial cost which takes longer to amortize.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics{output/graphs/tests/fibonacci/mips.png}
+    \includegraphics[scale=0.75]{output/graphs/tests/fibonacci/mips.png}
     \caption{Performance in mips of the fibonacci test suite.}
     \label{figure:fibonacci-mips}
 \end{figure}
@@ -56,9 +56,9 @@ This is because the more memory copied by the test, the more insertions and acce
 
 Despite this continuous decrease in performance of the memory map, the overall emulator performance does not monotonically decrease and instead peaks. This is because, for low \texttt{n}, initialization and overhead costs are still being amortized, yielding a performance increase that outweighs the decrease in memory map performance. The JIT emulator has higher overhead costs and thus takes longer to peak. Overall the JIT emulator has higher performance once peaked due to its superior execution performance.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics{output/graphs/tests/memcpyw/mips.png}
+    \includegraphics[scale=0.75]{output/graphs/tests/memcpyw/mips.png}
     \caption{Performance in mips of the memcpyw test suite.}
     \label{figure:memcpyw-mips}
 \end{figure}

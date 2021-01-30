@@ -1,0 +1,26 @@
+\subsection{Configuration}
+
+The test runner has been made configurable with the following options:
+
+\begin{itemize}
+    \item \textbf{timing}
+    
+    Various timing configurations used for performance benchmarking.
+
+    \begin{itemize}
+        \item \textbf{precision}
+        
+        The precision used when measuring benchmark time. Benchmarks will be performed until the proportional error deviation is smaller the \texttt{precision}.
+
+        \item \textbf{batch\_size}
+        
+        The number of times to run the test in a single benchmark. Used  for reducing timing inaccuracies.
+
+        \item \textbf{threshold}
+        
+        The number of benchmarks that must occur, with the precision met, before the performance collection is complete. Used to reduce the probability of a random low error causing early termination.
+
+    \end{itemize}
+\end{itemize}
+
+Further options will be developed as required.

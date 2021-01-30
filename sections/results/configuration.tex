@@ -18,3 +18,22 @@
     \caption{The machine used to produce the test results.}
     \label{tbl:results-sys-specs}
 \end{table}
+
+The program was invoked with the \texttt{--timing=final} flag resulting in the test runner configuration detailed in \autoref{tbl:results-config}.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l|r}
+        \toprule
+        Item & Value \\
+        \midrule
+
+        \texttt{timing.precision} & 0.0001 \\
+        \texttt{timing.batch\_size} & 100 \\
+        \texttt{timing.threshold} & 10 \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{The configuration used for the test runner.}
+    \label{tbl:results-config}
+\end{table}
