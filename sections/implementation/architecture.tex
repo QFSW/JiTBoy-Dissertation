@@ -20,6 +20,8 @@ The assembler is responsible for encoding the desired \texttt{x86} instructions 
 
 The register file provides the runtime and compiler with a means of emulating the MIPS register file. The current implementation uses an in memory model, where a C++ array represents the MIPS register bank. Translated x86 instructions load and store this array when they need to emulate a MIPS register modification. The special \texttt{hi} and \texttt{lo} registers in MIPS are mapped internal to \texttt{\$32} and \texttt{\$33} respectively so the same compilation architecture can be used. This memory model provides for fast compile times but subpar execution times, as the contents must be written back after every instruction, causing in some cases large overhead. Other solutions will be explored such as direct register mapping or a hybrid model \cite{mark-probst-dbt}; these should yield increase execution performance, but potentially at the cost of worse compiler performance.
 
+The compiler omits any instructions that would cause a write to \texttt{\$0}, preserving its constant zero value.
+
 \subsubsection{Memory Map}
 
 The memory map uses an associative model powered by an unordered hash table. This allows for the entire 32-bit address space to be emulated without requiring it to be pre-allocated, something that might prove difficult in a 32 bit process. The current implementation allows for \texttt{O(1)} read and write times. Despite this, the performance is substandard compared to a raw array due to the extra overhead and being less cache friendly; further work will explore a hybrid model to utilise additional data structures to accelerate portions of the memory space.

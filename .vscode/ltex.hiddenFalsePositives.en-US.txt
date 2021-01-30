@@ -1,1 +1,2 @@
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qstdcall was considered over cdecl as the callee cleans the stack, reducing the amount of code generation required in the caller.\\E$"}
+{"rule":"A_INFINITIVE","sentence":"^\\QThe compiler omits any instructions that would cause a write to $0, preserving its constant zero value.\\E$"}
