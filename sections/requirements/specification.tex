@@ -17,13 +17,13 @@ The following criterion have been defined for the emulators:
     
     \item \textbf{Host System}: Windows 10
     
-    Due to project details such as calling conventions and executable memory allocation, the project is not cross platform out of the box without further work. For this reason only a single host system will be supported for the initial implementation to keep the scope manageable. Windows 10 has been selected due to it being the majority OS on desktops in consumer use \cite{desktop-os-share, win-os-share}.
+    Due to project details such as calling conventions and executable memory allocation, the project is not cross-platform out of the box without further work. For this reason only a single host system will be supported for the initial implementation to keep the scope manageable. Windows 10 has been selected due to it being the majority OS on desktops in consumer use \cite{desktop-os-share, win-os-share}.
     
     \item \textbf{Emulator Input}: MIPS-1 binaries, MIPS-1 assembly
     
-    MIPS-1 binaries will be supported as this allows for compatability with built binaries from various sources and tools. Direct support for assembly makes development and testing much easier as the emulator can then directly consume the source code. Pseudoinstructions such as \texttt{mov} will be supported for convenience.
+    MIPS-1 binaries will be supported as this allows for compatibility with built binaries from various sources and tools. Direct support for assembly makes development and testing much easier as the emulator can then directly consume the source code. Pseudoinstructions such as \texttt{mov} will be supported for convenience.
 
     \item \textbf{Microarchitecture Simulation}: None
     
-    Microarchitecture simulation can be of great use in research for simulating different CPU designs and investigating their performance and power characteristics. Having said this, it does not aid in the emulation of a foriegn ISA and will introduce a large and unecessary overhead and complexity. Given this, no microarchitecture simulation will be considered for this project.
+    Microarchitecture simulation can be of great use in research for simulating different CPU designs and investigating their performance and power characteristics. Having said this, it does not aid in the emulation of a foreign ISA and will introduce a large and unnecessary overhead and complexity. Given this, no microarchitecture simulation will be considered for this project.
 \end{itemize}
