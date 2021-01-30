@@ -7,13 +7,17 @@ The following criterion have been defined for the emulators:
 \begin{itemize}
     \item \textbf{Source Architecture}: MIPS-1
     
-    MIPS-1 has been selected as the ISA for the source architecture as it is a simple ISA. \YIComment{Talk about emulating to the register/memory level.}
+    MIPS-1 has been selected as the ISA for the source architecture as it is a simple ISA. The MIPS-1 CPU will be simulated to the register and memory level.
+
+    No operating system features will initially be emulated and the project will serve to emulate MIPS-1 programs running on bare metal. Methods to explore abstracting the OS layer in the emulator is left for future work.
 
     None of the co-processors will be supported as they increase the complexity of the implementation without providing increased insight of value. This means no floating point operations will be supported.
     
     \item \textbf{Host Architecture}: x86
     
-    x86 has been selected as the host ISA as it is the most frequently used ISA on modern desktop computers. This allows the project to demonstrate its potential use in a commercial product designed for x86 systems. x64 is not considered or supported at this time as it provides extra implementation complexity without providing evaluation results of extra interest.
+    x86 has been selected as the host ISA as it is the most frequently used ISA on modern desktop computers. This allows the project to demonstrate its potential use in a commercial product designed for x86 systems. Furthermore, x86 is a complex instruction set computer (CISC) architecture in contrast to MIPS's reduced instruction set computer (RISC) architecture. This difference allows me to explore more demanding emulation as the more abstraction will be required due to the different natures of the ISAs.
+    
+    x64 is not considered or supported at this time as it provides extra implementation complexity without providing evaluation results of extra interest.
     
     \item \textbf{Host System}: Windows 10
     
