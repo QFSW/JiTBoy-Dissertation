@@ -1,1 +1,9 @@
 \subsection{Automatic Verification}
+
+All tests generated are deterministic and do not exhibit any undefined behaviour. Given this, a single test should produce the exact same results no matter what SUT it is run on, given that the SUT is correct.
+
+This can be used for a form of automatic verification. All tests can be run on all SUTs, and the results can be cross compared. Any tests that do not exhibit consistent behaviour on all SUTs will be flagged for manual testing to detect the issue.
+
+This can help detect defects in the test themselves (such as containing undefined behaviour) or as a basic form of functionality testing for tests without any assertions defined; this can be useful for the output of Csmith.
+
+This automatic verification will be finished by late May.
