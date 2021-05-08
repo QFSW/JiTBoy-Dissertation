@@ -8,7 +8,7 @@ Fundementally, there are two distinct cases that are of importance:
 \begin{enumerate}
     \item The runtime executing blocks of JIT code
     
-    In this case we are generating the callee code, and thus only need to take care that return values are handled appropriately. When reinterpreting the generated block of memory as a function pointer, we can specify the calling convention, causing the compiler to generate the appropriate caller code that will allow it to call our function correctly.
+    In this case we are generating the callee code, and since our compiled blocks do not take any arguments, we only need to take care that return values are handled appropriately. When reinterpreting the generated block of memory as a function pointer, we can specify the calling convention, causing the compiler to generate the appropriate caller code that will allow it to call our function correctly.
     
     \item The JIT code making a call into the runtime
     
