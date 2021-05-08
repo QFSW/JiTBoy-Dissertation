@@ -1,2 +1,4 @@
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qstdcall was considered over cdecl as the callee cleans the stack, reducing the amount of code generation required in the caller.\\E$"}
 {"rule":"A_INFINITIVE","sentence":"^\\QThe compiler omits any instructions that would cause a write to $0, preserving its constant zero value.\\E$"}
+{"rule":"PUNCTUATION_PARAGRAPH_END","sentence":"^\\QFor integer arguments, it is equivalent to fastcall\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qcdecl is required for vararg as it uses caller stack cleanup clrcall is only usable for managed function calls and thus is not a consideration stdcall is required for Win32 API calls thiscall is only usable for member function calls vectorcall has restricted argument types and is typically only useful for floating point and SIMD.\\E$"}

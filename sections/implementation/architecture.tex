@@ -2,6 +2,13 @@
 
 The JIT emulator functions by partitioning the program, as it is executed, into source blocks. These blocks are compiled into corresponding x86 host blocks. Each host block terminates by returning an address, corresponding to the exiting MIPS program counter (PC). For blocks without a terminating jump, this will be the subsequent instruction. The system will then execute the block at the desired PC, compiling a new host block if required.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{diagrams/jit.png}
+    \caption{Top level architecture of the JIT emulator.}
+    \label{figure:jit-arch}
+\end{figure}
+
 This architecture was chosen as compiled host blocks cannot have a jump compiled directly to the desired PC, as the destination may not be compiled yet. Further work will investigate retroactively patching a direct jump into the compiled host blocks when possible to improve performance.
 
 \subsubsection{Runtime}

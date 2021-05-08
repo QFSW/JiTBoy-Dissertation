@@ -35,3 +35,7 @@ SUT
 behaviour
 SUTs
 csv
+ECX
+cdecl
+vectorcall
+clrcall
