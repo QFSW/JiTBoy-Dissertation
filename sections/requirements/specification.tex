@@ -1,6 +1,20 @@
 \subsection{Project Specification}
 
-The project will consist of building a JIT based emulator, an interpreter and a JIT-Interpreter hybrid. The interpreter will serve as performance baseline for evaluating the JIT system. The hybrid system intends to combine the best aspects of the JIT and the interpreter systems.
+The project will consist of developing the following emulators:
+
+\begin{itemize}
+    \item \textbf{Interpreter}
+    
+    The interpreter will emulate the source instructions by inspecting each instruction as required and directly executing the equivalent behaviour. Only a single thread will be used and no translation to the host architecture will be performed. This will largely serve as a performance baseline.
+    
+    \item \textbf{JIT Runtime}
+    
+    The JIT runtime will translate each source block from the foreign ISA to the host ISA which will then be executed to emulate the foreign program. Only a single thread will be used and no interpretation will be performed.
+    
+    \item \textbf{Hybrid Runtime}
+    
+    The hybrid runtime will utilise both the interpreter and JIT components in tandem with the aim to maximize the performance. At its discretion, it will utilise additional worker threads to JIT translate foreign source blocks to native host machine code blocks. The main thread will execute the translated blocks and will fall back to the interpreter if they are unavailable.
+\end{itemize}
 
 The following criterion have been defined for the emulators:
 
