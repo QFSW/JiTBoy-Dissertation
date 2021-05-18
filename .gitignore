@@ -6,7 +6,8 @@
 *.fls
 *.log
 *.out
-*.pdf
 *.run.xml
 *.synctex.gz
 *.toc
+
+/**.pdf
