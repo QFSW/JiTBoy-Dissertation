@@ -16,7 +16,9 @@ For these reasons, a thread pool was developed, as outlined in \autoref{figure:j
     \label{figure:job-system}
 \end{figure}
 
-This job system approach has a variety of benefits. It helps decouple the asynchronous job from the main thread that requires the work; minimising the overlap of state between threads is key in concurrent programming to help avoid the array of concurrency bugs that are typical of the field. By using the results queue, instead of having the worker threads themselves act on the results, we can delegate the stateful changes to the main thread, localising the state to a single thread. \autoref{code:schedule-job} shows the typical caller code for scheduling a job on a thread pool.
+This job system approach has a variety of benefits. It helps decouple the asynchronous job from the main thread that requires the work; minimising the overlap of state between threads is key in concurrent programming to help avoid the array of concurrency bugs that are typical of the field. By using the results queue, instead of having the worker threads themselves act on the results, we can delegate the stateful changes to the main thread, localising the state to a single thread.
+
+\autoref{code:schedule-job} shows the typical caller code for scheduling a job on a thread pool. The job queue is automatically managed by the thread pool whereas the results queue is managed by the caller, as shown in \autoref{code:consume-results}.
 
 \begin{lstfloat}[H]
     \begin{lstlisting}[language=c++]
@@ -31,13 +33,23 @@ thread_pool.schedule_job(threading::Job([&]
     \label{code:schedule-job}
 \end{lstfloat}
 
+\begin{lstfloat}[H]
+    \begin{lstlisting}[language=c++]
+Result result;
+while (_result_queue.try_dequeue(result))
+{
+    // process result
+}
+    \end{lstlisting}
+    \caption{Typical caller code for consuming results produced by thread pool.}
+    \label{code:consume-results}
+\end{lstfloat}
+
 The thread pool will lazily initialize more worker threads if the number of pending jobs exceeds the number of free workers, up to a maximum of \texttt{N-1} workers, where \texttt{N} is the number of logical processors on the system. The lazy initialization helps avoid the overhead of thread creation in workloads that do not require extra workers, and the maximum worker count avoids excessive thread contention.
 
 The thread pool should be created once and used globally for the entire processes' lifetime. This avoids contention between multiple thread pools and minimises the cost associated with creating and killing threads. This was achieved by having a global \texttt{Enviornment} which was encapsulated through a lazy-initialised singleton pattern; this \texttt{Enviornment} then contains the thread pool and any other global instances required.
 
 \YIComment{maybe explain singleton}
-
-\YIComment{maybe explain how results queue is managed by caller and not thread pool}
 
 \YIComment{moodycamel} \cite{moodycamel, moodycamel-benchmark}
 
