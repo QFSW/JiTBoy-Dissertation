@@ -1,0 +1,23 @@
+\subsubsection{Worker Pool}
+
+\YIComment{Explain motivation for worker pool; managing pool of compilers, wait for jobs before destruction, controlled shutdown of workers}
+
+\YIComment{Explain worker pool}
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}[language=c++]
+const auto job = [this, addr](Compiler& compiler)
+{
+    // Compile block with provided worker
+
+    _result_queue.enqueue(Result{
+        .addr = addr,
+        .block = std::move(block),
+    });
+};
+
+_worker_pool.schedule_job(threading::WorkerJob<Compiler>(job));
+    \end{lstlisting}
+    \caption{Hybrid runtime caller code for scheduling a compilation job on its worker pool.}
+    \label{code:schedule-job-worker}
+\end{lstfloat}
