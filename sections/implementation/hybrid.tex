@@ -1,6 +1,8 @@
 \subsection{Hybrid Architecture}
 \label{section:hybrid-arch}
 
+\YIComment{Explain how hybrid works}
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{diagrams/hybrid.png}
@@ -10,9 +12,26 @@
 
 \subsubsection{Job System}
 
+For asynchronous compilation to be possible, the hybrid emulator requires multiple threads in some capacity. Spawning a new thread for every compilation would be a particuarly bad idea for several reasons, including but not limited to:
+
+\begin{itemize}
+    \item The overhead for creating and destroying threads is particuarly high
+    \item Creating more threads than the system has logical processors will lead to unecessary contention and performance degredation
+\end{itemize}
+
+For these reasons, a thread pool was developed, as outlined in \autoref{figure:job-system}. This provides a highly flexible and efficient API for deferring work, packaged as jobs, to worker threads. The caller (in this case the hybrid emulator) gives the thread pool jobs which are then stored in a concurrent job queue; the worker threads will then fetch jobs from these queue, process them, then emit the results of the job to a second concurrent results queue. The main thread can then consume results from the queue at a time that is appropriate for it.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{diagrams/thread-pool.png}
     \caption{The job system developed for offloading work from the main thread to many worker threads.}
     \label{figure:job-system}
 \end{figure}
+
+This job system approach has a vareity of benefits. It helps decouple the asynchronous job from the main thread that requires the work; minimising the overlap of state between threads is key in concurrent programming to help avoid the array of concurrency bugs that are typical of the field. By using the results queue, instead of having the worker threads themselves act on the results, we can delegate the stateful changes to the main thread, localising the state to a single thread.
+
+The thread pool will lazily initialize more worker threads if the number of pending jobs exceeds the number of free workers, up to a maximum of \texttt{N - 1} workers, where \texttt{N} is the number of logical processors on the system. The lazily initialization helps avoid the overhead of thread creation in workloads that do not require extra workers, and the maximum worker count avoids excessive thread contention.
+
+\YIComment{Talk about results queue optimisation}
+
+\YIComment{Talk about worker pool abstraction?}

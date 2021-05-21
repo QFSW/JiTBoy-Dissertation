@@ -32,6 +32,6 @@ The compiler omits any instructions that would cause a write to \texttt{\$0}, pr
 
 \subsubsection{Memory Map}
 
-The memory map uses an associative model powered by an unordered hash table. This allows for the entire 32-bit address space to be emulated without requiring it to be pre-allocated, something that might prove difficult in a 32 bit process. The current implementation allows for \texttt{O(1)} read and write times. Despite this, the performance is substandard compared to a raw array due to the extra overhead and being less cache friendly; further work will explore a hybrid model to utilise additional data structures to accelerate portions of the memory space.
+The memory map uses an associative model powered by an unordered hash table. This allows for the entire 32-bit address space to be emulated without requiring it to be pre-allocated, something that might prove difficult in a 32 bit process. The current implementation allows for $\mathcal{O}(1)$ read and write times. Despite this, the performance is substandard compared to a raw array due to the extra overhead and being less cache friendly; further work will explore a hybrid model to utilise additional data structures to accelerate portions of the memory space.
 
 After profiling, the \texttt{std::unordered\_map} originally used was found to be a bottleneck and thus was replaced with a 3rd party implementation Tessil/robin-map \cite{tessil-map, tessil-benchmark}.
