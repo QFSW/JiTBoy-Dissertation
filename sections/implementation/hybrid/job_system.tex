@@ -33,8 +33,12 @@ thread_pool.schedule_job(threading::Job([&]
 
 The thread pool will lazily initialize more worker threads if the number of pending jobs exceeds the number of free workers, up to a maximum of \texttt{N-1} workers, where \texttt{N} is the number of logical processors on the system. The lazy initialization helps avoid the overhead of thread creation in workloads that do not require extra workers, and the maximum worker count avoids excessive thread contention.
 
-The thread pool should be created once and used globally for the entire processes' lifetime. This avoids contention between multiple thread pools and minimises the cost associated with creating and killing threads. This was achieved by having a global \texttt{Enviornment} which was encapsulated through a lazy initialised singleton pattern; this \texttt{Enviornment} then contained the thread pool and any other global instances required.
+The thread pool should be created once and used globally for the entire processes' lifetime. This avoids contention between multiple thread pools and minimises the cost associated with creating and killing threads. This was achieved by having a global \texttt{Enviornment} which was encapsulated through a lazy-initialised singleton pattern; this \texttt{Enviornment} then contains the thread pool and any other global instances required.
 
-\YIComment{moodycamel}
+\YIComment{maybe explain singleton}
+
+\YIComment{maybe explain how results queue is managed by caller and not thread pool}
+
+\YIComment{moodycamel} \cite{moodycamel, moodycamel-benchmark}
 
 \YIComment{Talk about results queue optimisation}
