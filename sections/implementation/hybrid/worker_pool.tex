@@ -1,5 +1,21 @@
 \subsubsection{Worker Pool}
 
+\YIComment{Rewrite this in prose}
+
+\begin{itemize}
+    \item thread pool helps manage state merges for results
+    \item For compilation, the actual job invocation is unavoidably stateful
+    \item Need a separate compiler per concurrent job to avoid race conditions
+    \item making a new one each time is wasteful for perf + lifetime of result is tied to lifetime of compiler
+    \item worker pool abstracts this by automatically pooling worker objects
+    \item worker job is then invoked with worker
+    \item workers are preserved until the pool is shutdown, no more workers than concurrent jobs will be produced
+    \item if a job is executing when hybrid destructs -> undefined behaviour
+    \item worker pool can be shutdown before hybrid destruction in a way that cancels all pending jobs and waits on any currently executing jobs
+    \item wait process uses condition variable + mutex to efficiently signal completion across threads
+    \item this guarantees well defined behaviour and is an layer of abstraction that automatically handles all of the relevant details
+\end{itemize}
+
 \YIComment{Explain motivation for worker pool; managing pool of compilers, wait for jobs before destruction, controlled shutdown of workers}
 
 \YIComment{Explain worker pool}
