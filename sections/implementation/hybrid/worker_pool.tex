@@ -1,24 +1,14 @@
 \subsubsection{Worker Pool}
 
-\YIComment{Rewrite this in prose}
+Generally, jobs should avoid causing any stateful changes to the system; this is typically avoided with the results queue by moving the state changes to the main thread. In some cases, however, state modification is not completely avoidable.
 
-\begin{itemize}
-    \item thread pool helps manage state merges for results
-    \item For compilation, the actual job invocation is unavoidably stateful
-    \item Need a separate compiler per concurrent job to avoid race conditions
-    \item making a new one each time is wasteful for perf + lifetime of result is tied to lifetime of compiler
-    \item worker pool abstracts this by automatically pooling worker objects
-    \item worker job is then invoked with worker
-    \item workers are preserved until the pool is shutdown, no more workers than concurrent jobs will be produced
-    \item if a job is executing when hybrid destructs -> undefined behaviour
-    \item worker pool can be shutdown before hybrid destruction in a way that cancels all pending jobs and waits on any currently executing jobs
-    \item wait process uses condition variable + mutex to efficiently signal completion across threads
-    \item this guarantees well defined behaviour and is an layer of abstraction that automatically handles all of the relevant details
-\end{itemize}
+In the hybrid emulator's case, the scheduled jobs utilise the \texttt{Compiler} to generate the required x86 blocks. Not only does the compilation process utilise internal buffers for high performance, but it also needs to allocate executable memory for the final compiled block. Both of these reasons mean it is impossible to use a single compiler across all jobs.
 
-\YIComment{Explain motivation for worker pool; managing pool of compilers, wait for jobs before destruction, controlled shutdown of workers}
+Since a compiler cannot be shared between concurrent jobs, one might reason that the job itself could be responsible for creating its own compiler. In some scenarios, where the stateful object is fast to construct, this could be a viable option, even if not the most performant. For the compiler however, this would this have very poor performance, largely in part due to the non-trivial overhead associated with constructing the executable allocator. Performance aside, the approach in question is still unviable due to lifetimes. The lifetime of the compiled x86 block is tied to the lifetime of the compiler, and thus the compilers would need to be kept alive until the program execution is complete.
 
-\YIComment{Explain worker pool}
+Moreover, if the compiler or the results queue are destructed during the execution of a job then we can expect catastrophic behaviour. This is somewhat problematic as asynchronous jobs can take an unknown amount of time to complete, and the program emulation may complete while there are still currently executing or pending jobs.
+
+The worker pool is a layer of abstraction that helps avoid all of these issues by lazily creating worker objects as required, which are then provided to the executing jobs and recycled for future jobs. \autoref{code:schedule-job-worker} details an example of how the hybrid emulator uses the worker pool to schedule a worker job; this is a special type of asynchronous job that is provided with the worker as an input. Unlike the thread pool, which is global, the worker pool should be created per \textit{user}. The worker pool will internally use a provided thread pool for job scheduling.
 
 \begin{lstfloat}[H]
     \begin{lstlisting}[language=c++]
@@ -37,3 +27,7 @@ _worker_pool.schedule_job(threading::WorkerJob<Compiler>(job));
     \caption{Hybrid runtime caller code for scheduling a compilation job on its worker pool.}
     \label{code:schedule-job-worker}
 \end{lstfloat}
+
+Concurrent jobs are guaranteed to have distinct workers, yet an excess of workers will never be produced, maximising the performance by minimising the amount of wasteful worker constructions required. These workers will be kept alive until the worker pool is shutdown, ensuring that there are no unpredictable lifetime issues.
+
+Furthermore, the shutdown process will ensure that all pending jobs are discarded and that and that any current jobs are complete before the shutdown completes. This allows us to guarantee that no jobs are executing as the hybrid emulator shuts down, avoiding the race conditions. The inter-thread synchronisation required to implement the safe shutdown utilises condition variables to maximise performance.

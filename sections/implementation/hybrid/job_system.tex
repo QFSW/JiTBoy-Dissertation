@@ -47,10 +47,8 @@ while (_result_queue.try_dequeue(result))
 
 The thread pool will lazily initialize more worker threads if the number of pending jobs exceeds the number of free workers, up to a maximum of \texttt{N-1} workers, where \texttt{N} is the number of logical processors on the system. The lazy initialization helps avoid the overhead of thread creation in workloads that do not require extra workers, and the maximum worker count avoids excessive thread contention.
 
-The thread pool should be created once and used globally for the entire processes' lifetime. This avoids contention between multiple thread pools and minimises the cost associated with creating and killing threads. This was achieved by having a global \texttt{Enviornment} which was encapsulated through a lazy-initialised singleton pattern; this \texttt{Enviornment} then contains the thread pool and any other global instances required.
+The thread pool should be created once and used globally for the entire processes' lifetime. This avoids contention between multiple thread pools and minimises the cost associated with creating and killing threads. This was achieved by having a global \texttt{Environment} which was encapsulated through a lazy-initialised singleton pattern; this \texttt{Environment} then contains the thread pool and any other global instances required. The singleton pattern provides a mechanism to initialize a single, globally accessible instance of the environment, whilst avoiding the static initialization order fiasco \cite{cpp-siof}.
 
-\YIComment{maybe explain singleton}
-
-\YIComment{moodycamel} \cite{moodycamel, moodycamel-benchmark}
+The 3rd party implementation \texttt{moodycamel::ConcurrentQueue} \cite{moodycamel} was used for the concurrent queues due to its high performance \cite{moodycamel-benchmark}.
 
 \YIComment{Talk about results queue optimisation}
