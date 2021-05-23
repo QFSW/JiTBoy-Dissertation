@@ -1,7 +1,71 @@
 \subsection{Technology Stack}
 
-\YIComment{C++}
+\YIComment{For JIT compiling, manual memory allocation with control over executable permissions is required; this eliminates all languages that cannot call OS functions such as JS}
 
-\YIComment{Visual Studio/MSVC}
+\YIComment{Need to be able to invoke an arbitrary block of memory as a function pointer; eliminates all languages without sufficiently unsafe casting}
 
-\YIComment{Python for analysis}
+\YIComment{Must allow execution of binary code directly on the bare metal without any abstraction like a VM; no Java}
+
+\YIComment{Need very high performance; lower level is better as it gives more granular control over each operation}
+
+\YIComment{GC is bad for performance and potentially functionality issues, so no Haskell or C\#}
+
+\YIComment{x86 calls native functions so need unmanaged function pointers}
+
+\YIComment{Functional languages good for parsers or IR based optimisers but not for actual compiler and single proc solution is better than multiproc}
+
+\YIComment{Talk about paradigms and code quality C++ \> C}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\linewidth}{c|l|X}
+        \toprule
+        \textbf{\#} & \textbf{Requirement} & \textbf{Description} \\
+        \midrule
+        1 & Windows 10 and x86 Support & \\
+        \midrule
+        2 & Strong Typing & \\
+        \midrule
+        3 & No Garbage Collection (GC) & \\
+        \midrule
+        4 & Unmanaged Function Pointers & \\
+        \midrule
+        5 & Executable Memory Allocation & \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The various requirements under consideration for the primary programming language of the project.}
+    \label{list:req-features}
+\end{table}
+
+\newcommand{\y}{\color{success-green}{\cmark}}
+\newcommand{\n}{\color{fail-red}{\xmark}}
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{r|ccccc}
+        \toprule
+        & 1 & 2 & 3 & 4 & 5 \\
+        \midrule
+        Assembly    & \y & \n & \y & \y & \y \\
+        C           & \y & \y & \y & \y & \y \\
+        C++         & \y & \y & \y & \y & \y \\
+        C\#         & \y & \y & \n & \y & \y \\
+        Java        & \y & \y & \n & \n & \n \\
+        JavaScript  & \y & \n & \n & \n & \n \\
+        TypeScript  & \y & \y & \n & \n & \n \\
+        Python      & \y & \n & \n & \n & \n \\
+        Rust        & \y & \y & \y & \y & \y \\
+        Haskell     & \y & \y & \n & \y & \y \\
+        F\#         & \y & \y & \n & \y & \y \\
+        Go          & \y & \y & \n & \n & \y \\
+        Swift       & \n & \y & \n & \y & \y \\
+        Objective C & \n & \y & \y & \y & \y \\
+        \bottomrule
+    \end{tabular}
+    \caption{Various potential candidates for the language of implementation and the requirements they meet. The requirements are detailed in \autoref{list:req-features}.}
+    \label{tbl:lang-reqs}
+\end{table}
+
+\YIComment{Justify Visual Studio/MSVC}
+
+\YIComment{Python for analysis: performance doesn't matter, matplotlib is good, very strong scripting language with good community support}

@@ -2,7 +2,7 @@
 
 Generally, jobs should avoid causing any stateful changes to the system; this is typically avoided with the results queue by moving the state changes to the main thread. In some cases, however, state modification is not completely avoidable.
 
-In the hybrid emulator's case, the scheduled jobs utilise the \texttt{Compiler} to generate the required x86 blocks. Not only does the compilation process utilise internal buffers for high performance, but it also needs to allocate executable memory for the final compiled block. Both of these reasons mean it is impossible to use a single compiler across all jobs.
+In the hybrid emulator's case, the scheduled jobs utilise the \texttt{Compiler} to generate the required x86 blocks. Not only does the compilation process utilise internal buffers for high performance, but it also needs to allocate executable memory (which isn't thread safe with a single allocator) for the final compiled block. Both of these reasons mean it is impossible to use a single compiler across all jobs.
 
 Since a compiler cannot be shared between concurrent jobs, one might reason that the job itself could be responsible for creating its own compiler. In some scenarios, where the stateful object is fast to construct, this could be a viable option, even if not the most performant. For the compiler however, this would this have very poor performance, largely in part due to the non-trivial overhead associated with constructing the executable allocator. Performance aside, the approach in question is still unviable due to lifetimes. The lifetime of the compiled x86 block is tied to the lifetime of the compiler, and thus the compilers would need to be kept alive until the program execution is complete.
 

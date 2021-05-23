@@ -1,10 +1,10 @@
-\subsubsection{Direct Linking (-L)}
+\subsubsection{Direct Linking (\texttt{-L})}
 
 As described in \autoref{section:jit-arch}, each compiled host block terminates by returning the target MIPS address; this implementation is required for supporting branching as the desired MIPS address may not yet have a corresponding compiled x86 block. By first returning to the runtime the desired block can first be compiled if necessary.
 
 While this provides flexibility, it does lead to non-ideal performance once the necessary blocks have been compiled. \autoref{figure:jit-steady} illustrates the execution flow of the JIT emulator when all the relevant blocks have been compiled. In some cases, such as loops in the source code, this leads to an undesirably large overhead in the emulation. This is because for every iteration of the loop, the control flow must return from the compiled x86 block to the runtime which checks if the destination block has been compiled then returns control flow back to the compiled x86 block; while these dispatch overheads seem trivial, profiling has shown that they can become significant bottlenecks for hot loops.
 
-The direct linking feature, denoted by -L, was developed to remedy this. It is available for both the JIT and hybrid emulators. Direct linking allows the emulator to retroactively patch the end of the block to have a native jump to its target x86 block instead of returning to the runtime. This allows the emulated program to eventually become a native x86 program that does not require the runtime for dispatching, but is still able to use the runtime to compile and dispatch to unseen blocks.
+The direct linking feature, denoted by \texttt{-L}, was developed to remedy this. It is available for both the JIT and hybrid emulators. Direct linking allows the emulator to retroactively patch the end of the block to have a native jump to its target x86 block instead of returning to the runtime. This allows the emulated program to eventually become a native x86 program that does not require the runtime for dispatching, but is still able to use the runtime to compile and dispatch to unseen blocks.
 
 \begin{figure}[h]
     \centering
