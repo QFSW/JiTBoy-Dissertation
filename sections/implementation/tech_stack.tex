@@ -1,20 +1,6 @@
 \subsection{Technology Stack}
 
-\YIComment{For JIT compiling, manual memory allocation with control over executable permissions is required; this eliminates all languages that cannot call OS functions such as JS}
-
-\YIComment{Need to be able to invoke an arbitrary block of memory as a function pointer; eliminates all languages without sufficiently unsafe casting}
-
-\YIComment{Must allow execution of binary code directly on the bare metal without any abstraction like a VM; no Java}
-
-\YIComment{Need very high performance; lower level is better as it gives more granular control over each operation}
-
-\YIComment{GC is bad for performance and potentially functionality issues, so no Haskell or C\#}
-
-\YIComment{x86 calls native functions so need unmanaged function pointers}
-
-\YIComment{Functional languages good for parsers or IR based optimisers but not for actual compiler and single proc solution is better than multiproc}
-
-\YIComment{Talk about paradigms and code quality C++ \> C}
+\YIComment{Introduce table of features}
 
 \begin{table}[H]
     \centering
@@ -22,15 +8,17 @@
         \toprule
         \textbf{\#} & \textbf{Requirement} & \textbf{Description} \\
         \midrule
-        1 & Windows 10 and x86 Support & \\
+        1 & Windows 10 and x86 Support & Cross-platform support and portability is highly desirable for the language of choice; given the project scope is restricted to Windows 10 and x86 these are the only strict requirements. \\
         \midrule
         2 & Strong Typing & Due to the size, complexity and length of this project, I have included strong typing as a requirement. Strong typing greatly increases the readability by self documenting the codebase and the reliability improvements due to compile time type errors are paramount. \\
         \midrule
-        3 & No Garbage Collection (GC) & \\
+        3 & No Garbage Collection & Garbage collection (GC) is an automatic memory management scheme that does not require the user to manually free resources. While this is very flexible and easy to use, the unreliable performance implications of a GC are unacceptable for this project. \\
         \midrule
-        4 & Unmanaged Function Pointers & \\
+        4 & Unmanaged Function Pointers & The ability to create an unmanaged pointer to a function allows us to obtain the address of the native machine code for the function. This allows the JIT to compile direct function calls to runtime functions written in the programming language of choice. \\
         \midrule
-        5 & Executable Memory Allocation & \\
+        5 & Executable Memory Allocation & Executable memory cannot be allocated through the typical means that languages and programmers use for general memory allocation such as \texttt{malloc}. Special OS APIs are required and thus the language must be able to use these APIs. A native call will give the highest performance however an interop call with marshalling would still be viable. \\
+        \midrule
+        6 & Reinterpret Cast & The compiled block of x86 code will need to be reinterpreted as a function pointer and executed as a function in order to execute the output of the JIT compiler. \\
         \bottomrule
     \end{tabularx}
     \caption{The various requirements under consideration for the primary programming language of the project.}
@@ -42,29 +30,35 @@
 
 \begin{table}[H] 
     \centering
-    \begin{tabular}{r|ccccc}
+    \begin{tabular}{r|cccccc}
         \toprule
-        & 1 & 2 & 3 & 4 & 5 \\
+        & 1 & 2 & 3 & 4 & 5 & 6 \\
         \midrule
-        Assembly    & \y & \n & \y & \y & \y \\
-        C           & \y & \y & \y & \y & \y \\
-        C++         & \y & \y & \y & \y & \y \\
-        C\#         & \y & \y & \n & \y & \y \\
-        Java        & \y & \y & \n & \n & \n \\
-        JavaScript  & \y & \n & \n & \n & \n \\
-        TypeScript  & \y & \y & \n & \n & \n \\
-        Python      & \y & \n & \n & \n & \n \\
-        Rust        & \y & \y & \y & \y & \y \\
-        Haskell     & \y & \y & \n & \y & \y \\
-        F\#         & \y & \y & \n & \y & \y \\
-        Go          & \y & \y & \n & \n & \y \\
-        Swift       & \n & \y & \n & \y & \y \\
-        Objective C & \n & \y & \y & \y & \y \\
+        Assembly    & \y & \n & \y & \y & \y & \y \\
+        C           & \y & \y & \y & \y & \y & \y \\
+        C++         & \y & \y & \y & \y & \y & \y \\
+        C\#         & \y & \y & \n & \y & \y & \y \\
+        Java        & \y & \y & \n & \n & \n & \n \\
+        JavaScript  & \y & \n & \n & \n & \n & \n \\
+        TypeScript  & \y & \y & \n & \n & \n & \n \\
+        Python      & \y & \n & \n & \n & \n & \n \\
+        Rust        & \y & \y & \y & \y & \y & \y \\
+        Haskell     & \y & \y & \n & \y & \y & \y \\
+        F\#         & \y & \y & \n & \y & \y & \y \\
+        Go          & \y & \y & \n & \n & \y & \y \\
+        Swift       & \n & \y & \n & \y & \y & \y \\
+        Objective-C & \n & \y & \y & \y & \y & \y \\
         \bottomrule
     \end{tabular}
     \caption{Various potential candidates for the language of implementation and the requirements they meet. The requirements are detailed in \autoref{list:req-features}.}
     \label{tbl:lang-reqs}
 \end{table}
+
+\YIComment{Need very high performance; lower level is better as it gives more granular control over each operation}
+
+\YIComment{Functional languages good for parsers or IR based optimisers but not for actual compiler and single proc solution is better than multiproc}
+
+\YIComment{Talk about paradigms and code quality C++ \> C}
 
 \YIComment{Justify Visual Studio/MSVC}
 
