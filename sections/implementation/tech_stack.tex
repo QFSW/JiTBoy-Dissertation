@@ -1,8 +1,20 @@
 \subsection{Technology Stack}
 
-\YIComment{Introduce table of features}
+The technology stack used to develop the project was the first major decision required before further work could take place; the component of the highest importance was the primary programming language. \autoref{list:req-features} details a list of requirements that the language must meet in order to be a good fit for the project.
 
-\begin{table}[H]
+\autoref{tbl:lang-reqs} contains a matrix of many programming languages and which requirements they meet, including both languages that I have previous project experience in and popular \cite{stackoverflow-survey} but unfamiliar languages.
+
+The only languages that met all of the requirements were Rust, C, and C++. Rust provides a very safe yet fast memory model via its ownership model \cite{rust-ownership} and has also recently become a community favourite \cite{stackoverflow-survey}. This said, it is a very new language with little industrial presence \cite{stackoverflow-survey}.  C provides little in the way of encapsulation making it difficult to write predictable and mantainable code.
+
+This leaves us with C++, a language that provides very good performance with relatively high safety if used correctly. While the underlying memory model is just as unsafe as C's, many modern constructs such as smart pointers \cite{cpp-smart-ptrs} and RAII \cite{cpp-raii} help avoid typical issues like memory leaks while maintaning high performance. Due to these reasons, and my current experience with the language, I believed it was the best fit for this project.
+
+As the project is scoped for Windows 10, MSVC \& Visual Studio 2019 was used as the C++ compiler toolchain.
+
+Functional languages like Haskell and F\# were considered due to their natural affinity for developing components such as the parser or intermediate representation (IR) based optimisers; while they would have been a good fit for such components, they would have been less viable for core components such as the compiler due to reasons discussed previously. A multi-process solution was not desirable so they were not considered further.
+
+Python was utilised for the analysis and visualisation of the test results. Python is a very powerful scripting language with strong community support making it an ideal choice for smaller scripts that do not require high performance. The package matplotlib was used for visualisation due to its power and ease of use.
+
+\begin{table}[h]
     \centering
     \begin{tabularx}{\linewidth}{c|l|X}
         \toprule
@@ -28,7 +40,7 @@
 \newcommand{\y}{\color{success-green}{\cmark}}
 \newcommand{\n}{\color{fail-red}{\xmark}}
 
-\begin{table}[H] 
+\begin{table}[h] 
     \centering
     \begin{tabular}{r|cccccc}
         \toprule
@@ -53,13 +65,3 @@
     \caption{Various potential candidates for the language of implementation and the requirements they meet. The requirements are detailed in \autoref{list:req-features}.}
     \label{tbl:lang-reqs}
 \end{table}
-
-\YIComment{Need very high performance; lower level is better as it gives more granular control over each operation}
-
-\YIComment{Functional languages good for parsers or IR based optimisers but not for actual compiler and single proc solution is better than multiproc}
-
-\YIComment{Talk about paradigms and code quality C++ \> C}
-
-\YIComment{Justify Visual Studio/MSVC}
-
-\YIComment{Python for analysis: performance doesn't matter, matplotlib is good, very strong scripting language with good community support}
