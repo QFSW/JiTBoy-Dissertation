@@ -1,4 +1,5 @@
 \subsubsection{Direct Linking (\texttt{-L})}
+\label{section:direct-linking}
 
 As described in \autoref{section:jit-arch}, each compiled host block terminates by returning the target MIPS address; this implementation is required for supporting branching as the desired MIPS address may not yet have a corresponding compiled x86 block. By first returning to the runtime the desired block can first be compiled if necessary.
 

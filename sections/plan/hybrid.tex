@@ -1,5 +1,7 @@
 \subsection{Hybrid Runtime}
 
+\YIComment{Copy good stuff from here into \autoref{section:hybrid-arch}}
+
 The JIT excels when the compiled output is executed many times, however for less hot programs the overhead of compiling blocks becomes a substantial factor in the execution time and outweighs in the decrease in execution time. In these cases an interpreter is a much better choice.
 
 A solution to this is to hybridize the two emulators and create a JIT-Interpreter hybrid. With this hybrid I aim to exploit the multiple cores present in modern CPUs to yield better average performance than either system alone.

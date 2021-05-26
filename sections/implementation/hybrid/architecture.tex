@@ -1,9 +1,11 @@
 \subsubsection{Architecture}
 \label{section:hybrid-arch}
 
-\YIComment{Explain how hybrid works}
+The hybrid emulator aims to achieve the best of both worlds by combining the JIT compiler and the interpreter core into a single runtime. The blocks compiled by the JIT compiler have superior execution performance to the interpreter, however the overhead associated with the compilation is relatively high; this means in cases where a block is not executed very many times, the increased execution performance does not have time to pay off. Furthermore, neither the interpreter nor the JIT emulator utilise multiple threads to accelerate emulation; given that most modern systems have multi-core CPUs this leaves something to be desired.
 
-\YIComment{Talk about how state like reg file and mem map is shared between the compilers and the interpreter core}
+The general execution flow and architecture of the hybrid emulator is illustrated in \autoref{figure:hybrid-arch}. The hybrid begins operation as a traditional interpreter, using the same interpreter core that the standalone interpreter utilises. Whenever the PC `jumps' (typically as the result of executing a branch instruction) the hybrid will then inspect the translation table for compiled x86 blocks, like the JIT emulator would. If a block is found, then it will execute it natively and operate like the JIT emulator; if the block isn't found, then it will schedule it for compilation on a worker thread before continuing like a normal interpreter.
+
+This combination allows it to defer the compilation of blocks to asynchronous worker threads, leaving the main thread free to emulate the program either via the JIT compiled blocks or the interpreter fallback. The emulator contains a single state (memory map, register file etc.) that is shared between the interpreter and JIT components ensuring consistent behaviour no matter which means of emulation is used for any given block.
 
 \begin{figure}[h]
     \centering
