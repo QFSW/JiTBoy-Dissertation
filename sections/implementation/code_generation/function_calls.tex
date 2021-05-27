@@ -1,9 +1,9 @@
 \subsubsection{Function Calls}
 
+The x86 instruction \texttt{CALL} \cite{x86-call} is used for generating function calls from the JIT compiled x86 code to the C++ written runtime. This is primarily used to call into the memory map functions to emulate the MIPS instructions \texttt{LW}, \texttt{LB}, \texttt{LBU}, \texttt{LH}, \texttt{LHU}, \texttt{LWL}, \texttt{LWR}, \texttt{SW}, \texttt{SB}, \texttt{SH}.
+
+Since the memory map is non-static, we cannot directly call its member functions from the x86 code and must use the proxy call mechanism described in \autoref{section:calling-convs} and \autoref{code:instance-proxy}.
+
 \YIComment{Explain how they work}
 
-\YIComment{instance proxy and calling convention stuff}
-
 \YIComment{Linker stuff (calls are relative offsets)}
-
-\YIComment{Used for memory map operations}
