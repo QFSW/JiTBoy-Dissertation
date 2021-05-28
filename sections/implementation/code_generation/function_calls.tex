@@ -2,8 +2,10 @@
 
 The x86 instruction \texttt{CALL} \cite{x86-call} is used for generating function calls from the JIT compiled x86 code to the C++ written runtime. This is primarily used to call into the memory map functions to emulate the MIPS instructions \texttt{LW}, \texttt{LB}, \texttt{LBU}, \texttt{LH}, \texttt{LHU}, \texttt{LWL}, \texttt{LWR}, \texttt{SW}, \texttt{SB}, \texttt{SH}.
 
-Since the memory map is non-static, we cannot directly call its member functions from the x86 code and must use the proxy call mechanism described in \autoref{section:calling-convs} and \autoref{code:instance-proxy}.
+Function arguments are handled as described in \autoref{section:calling-convs}. Since the memory map is non-static, we cannot directly call its member functions from the x86 code and must use the proxy call mechanism described in \autoref{code:instance-proxy}.
 
-\YIComment{Explain how they work}
+The \texttt{CALL} instruction comes in many different forms, some of which use a register or pointer for the target destination. The encoding used has an immediate based destination; this is ideal as the destination is fixed and it avoids the extra instructions that would be required for loading the destination into the register/memory. This encoding does however have a caveat as the destination is relative and not absolute.
 
-\YIComment{Linker stuff (calls are relative offsets)}
+This may not seem like a problem, but it means that the code generated when \text{CALL} (and most jump functions) are included is not position independant code (PIC). This means that the code generated will be different based on where that code will be loaded; given that the executable memory is allocated \textit{after} all the code is generated, this is slightly problematic.
+
+In order to get around this the \texttt{Linker} component was developed. When assembling the \texttt{CALL} instruction, the linker can be provided with a symbolic destination address; the linker will then proceed to track the location in the block that should resolve to the provided symbol. After allocating the executable memory and comitting the generated binary to it, the linker can then resolve all symbolic references. This allows it to rewrite the placeholders with correct relative offsets to the symbol.
