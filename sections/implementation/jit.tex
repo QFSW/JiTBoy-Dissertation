@@ -1,7 +1,7 @@
 \subsection{JIT Architecture}
 \label{section:jit-arch}
 
-The JIT emulator functions by partitioning the program, as it is executed, into source blocks. These blocks are compiled into corresponding x86 host blocks. Each host block terminates by returning an address, corresponding to the exiting MIPS program counter (PC). For blocks without a terminating jump, this will be the subsequent instruction. The system will then execute the block at the desired PC, compiling a new host block if required.
+The JIT emulator functions by partitioning the program, as it is executed, into source blocks. These blocks are compiled into corresponding x86 host blocks and stored in the translation cache. Each host block terminates by returning an address, corresponding to the exiting MIPS program counter (PC). For blocks without a terminating jump, this will be the subsequent instruction. The system will then execute the block at the desired PC, compiling a new host block if required.
 
 \begin{figure}[h]
     \centering
@@ -10,7 +10,7 @@ The JIT emulator functions by partitioning the program, as it is executed, into 
     \label{figure:jit-arch}
 \end{figure}
 
-This architecture was chosen as compiled host blocks cannot have a jump compiled directly to the desired PC, as the destination may not be compiled yet. Further work will investigate retroactively patching a direct jump into the compiled host blocks when possible to improve performance.
+This architecture was chosen as compiled host blocks cannot have a jump compiled directly to the desired PC, as the destination may not be compiled yet.
 
 \subsubsection{Runtime}
 
@@ -32,6 +32,4 @@ The compiler omits any instructions that would cause a write to \texttt{\$0}, pr
 
 \subsubsection{Memory Map}
 
-The memory map uses an associative model powered by an unordered hash table. This allows for the entire 32-bit address space to be emulated without requiring it to be pre-allocated, something that might prove difficult in a 32 bit process. The current implementation allows for $\mathcal{O}(1)$ read and write times. Despite this, the performance is substandard compared to a raw array due to the extra overhead and being less cache friendly; further work will explore a hybrid model to utilise additional data structures to accelerate portions of the memory space.
-
-After profiling, the \texttt{std::unordered\_map} originally used was found to be a bottleneck and thus was replaced with a 3rd party implementation Tessil/robin-map \cite{tessil-map, tessil-benchmark}.
+Instead of attempting to generate native x86 code to model the MIPS memory space, the JIT emulator re-uses the same \texttt{MemoryMap} component created for the interpreter runtime described in \autoref{section:interpreter-mem-map} to emulate the memory space. The x86 code is then compiled with calls to the existing C++ implementations.
