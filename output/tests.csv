@@ -76,7 +76,7 @@ ori_0, 0b00 | 0b00, tests/mips/basic/ori_0.s
 ori_1, 0b01 | 0b10, tests/mips/basic/ori_1.s
 ori_2, 0b11 | 0b01, tests/mips/basic/ori_2.s
 ori_3, 0b11 | 0b11, tests/mips/basic/ori_3.s
-ori_4, 0b11 | -1, tests/mips/basic/ori_4.s
+ori_4, 0b11 | 0xFFFF, tests/mips/basic/ori_4.s
 or_0, 0b00 | 0b00, tests/mips/basic/or_0.s
 or_1, 0b01 | 0b10, tests/mips/basic/or_1.s
 or_2, 0b11 | 0b01, tests/mips/basic/or_2.s
@@ -185,7 +185,7 @@ xori_0, 0b00 ^ 0b00, tests/mips/basic/xori_0.s
 xori_1, 0b01 ^ 0b10, tests/mips/basic/xori_1.s
 xori_2, 0b11 & 0b01, tests/mips/basic/xori_2.s
 xori_3, 0b11 & 0b11, tests/mips/basic/xori_3.s
-xori_4, 0x0000000F & 0xFFFFFFFF, tests/mips/basic/xori_4.s
+xori_4, 0x0000000F & 0xFFFF, tests/mips/basic/xori_4.s
 xor_0, 0b00 ^ 0b00, tests/mips/basic/xor_0.s
 xor_1, 0b01 ^ 0b10, tests/mips/basic/xor_1.s
 xor_2, 0b11 & 0b01, tests/mips/basic/xor_2.s
@@ -239,10 +239,73 @@ bne_0, bne taken, tests/mips/branch/bne_0.s
 bne_1, bne not taken, tests/mips/branch/bne_1.s
 bne_2, bne backwards taken, tests/mips/branch/bne_2.s
 bne_3, bne backwards not taken, tests/mips/branch/bne_3.s
+delay_beq_0, beq taken with delay slot, tests/mips/branch/delay_beq_0.s
+delay_beq_1, beq not taken with delay slot, tests/mips/branch/delay_beq_1.s
+delay_beq_2, beq backwards taken with delay slot, tests/mips/branch/delay_beq_2.s
+delay_beq_3, beq backwards not taken with delay slot, tests/mips/branch/delay_beq_3.s
+delay_beq_4, beq backwards taken with delay slot, tests/mips/branch/delay_beq_4.s
+delay_bgezal_0, bgezal taken with delay slot, tests/mips/branch/delay_bgezal_0.s
+delay_bgezal_1, bgezal taken with delay slot, tests/mips/branch/delay_bgezal_1.s
+delay_bgezal_2, bgezal not taken with delay slot, tests/mips/branch/delay_bgezal_2.s
+delay_bgezal_3, bgezal backwards taken with delay slot, tests/mips/branch/delay_bgezal_3.s
+delay_bgezal_4, bgezal backwards taken with delay slot, tests/mips/branch/delay_bgezal_4.s
+delay_bgezal_5, bgezal backwards taken with delay slot, tests/mips/branch/delay_bgezal_5.s
+delay_bgezal_6, tests that $ra is set with delay slots, tests/mips/branch/delay_bgezal_6.s
+delay_bgezal_7, tests that $ra is set when the branch is not taken, tests/mips/branch/delay_bgezal_7.s
+delay_bgezal_8, tests edge cases of delay slot (load in slot), tests/mips/branch/delay_bgezal_8.s
+delay_bgezal_9, tests edge cases of delay slot (modify conditional registers), tests/mips/branch/delay_bgezal_9.s
+delay_bgez_0, bgez taken with delay slot, tests/mips/branch/delay_bgez_0.s
+delay_bgez_1, bgez taken with delay slot, tests/mips/branch/delay_bgez_1.s
+delay_bgez_2, bgez not taken with delay slot, tests/mips/branch/delay_bgez_2.s
+delay_bgez_3, bgez backwards taken with delay slot, tests/mips/branch/delay_bgez_3.s
+delay_bgez_4, bgez backwards taken with delay slot, tests/mips/branch/delay_bgez_4.s
+delay_bgez_5, bgez backwards taken with delay slot, tests/mips/branch/delay_bgez_5.s
+delay_bgtz_0, bgtz taken with delay slot, tests/mips/branch/delay_bgtz_0.s
+delay_bgtz_1, bgtz not taken with delay slot, tests/mips/branch/delay_bgtz_1.s
+delay_bgtz_2, bgtz not taken with delay slot, tests/mips/branch/delay_bgtz_2.s
+delay_bgtz_3, bgtz backwards taken with delay slot, tests/mips/branch/delay_bgtz_3.s
+delay_bgtz_4, bgtz backwards not taken with delay slot, tests/mips/branch/delay_bgtz_4.s
+delay_bgtz_5, bgtz backwards not taken with delay slot, tests/mips/branch/delay_bgtz_5.s
+delay_blez_0, blez taken with delay slot, tests/mips/branch/delay_blez_0.s
+delay_blez_1, blez taken with delay slot, tests/mips/branch/delay_blez_1.s
+delay_blez_2, blez not taken with delay slot, tests/mips/branch/delay_blez_2.s
+delay_blez_3, blez backwards taken with delay slot, tests/mips/branch/delay_blez_3.s
+delay_blez_4, blez backwards taken with delay slot, tests/mips/branch/delay_blez_4.s
+delay_blez_5, blez backwards taken with delay slot, tests/mips/branch/delay_blez_5.s
+delay_bltzal_0, bltzal taken with delay slot, tests/mips/branch/delay_bltzal_0.s
+delay_bltzal_1, bltzal not taken with delay slot, tests/mips/branch/delay_bltzal_1.s
+delay_bltzal_2, bltzal not taken with delay slot, tests/mips/branch/delay_bltzal_2.s
+delay_bltzal_3, bltzal backwards taken with delay slot, tests/mips/branch/delay_bltzal_3.s
+delay_bltzal_4, bltzal backwards not taken with delay slot, tests/mips/branch/delay_bltzal_4.s
+delay_bltzal_5, bltzal backwards not taken with delay slot, tests/mips/branch/delay_bltzal_5.s
+delay_bltzal_6, tests that $ra is set with delay slot, tests/mips/branch/delay_bltzal_6.s
+delay_bltzal_7, tests that $ra is set when the branch is not taken with delay slots, tests/mips/branch/delay_bltzal_7.s
+delay_bltz_0, bltz taken with delay slot, tests/mips/branch/delay_bltz_0.s
+delay_bltz_1, bltz not taken with delay slot, tests/mips/branch/delay_bltz_1.s
+delay_bltz_2, bltz not taken with delay slot, tests/mips/branch/delay_bltz_2.s
+delay_bltz_3, bltz backwards taken with delay slot, tests/mips/branch/delay_bltz_3.s
+delay_bltz_4, bltz backwards taken with delay slot, tests/mips/branch/delay_bltz_4.s
+delay_bltz_5, bltz backwards taken with delay slot, tests/mips/branch/delay_bltz_5.s
+delay_bne_0, bne taken with delay slot, tests/mips/branch/delay_bne_0.s
+delay_bne_1, bne not taken with delay slot, tests/mips/branch/delay_bne_1.s
+delay_bne_2, bne backwards taken with delay slot, tests/mips/branch/delay_bne_2.s
+delay_bne_3, bne backwards not taken with delay slot, tests/mips/branch/delay_bne_3.s
+delay_jalr_0, uses jalr with default link register with delay slot, tests/mips/branch/delay_jalr_0.s
+delay_jalr_1, uses jalr with custom link register with delay slot, tests/mips/branch/delay_jalr_1.s
+delay_jalr_2, edge cases of jalr (jumping) with delay slot, tests/mips/branch/delay_jalr_2.s
+delay_jalr_3, edge cases of jalr (linking) with delay slot, tests/mips/branch/delay_jalr_3.s
+delay_jal_0, , tests/mips/branch/delay_jal_0.s
+delay_jal_jr_0, tests that $ra is set with delay slot, tests/mips/branch/delay_jal_jr_0.s
+delay_jal_jr_1, tests edge cases of delay slot with JR, tests/mips/branch/delay_jal_jr_1.s
+delay_jal_jr_2, tests edge cases of delay slot with JAL, tests/mips/branch/delay_jal_jr_2.s
+delay_j_0, , tests/mips/branch/delay_j_0.s
+jalr_0, uses jalr with default link register, tests/mips/branch/jalr_0.s
+jalr_1, uses jalr with custom link register, tests/mips/branch/jalr_1.s
 jal_0, , tests/mips/branch/jal_0.s
-jal_1, tests that $ra is set, tests/mips/branch/jal_1.s
+jal_jr_0, tests that $ra is set, tests/mips/branch/jal_jr_0.s
 j_0, , tests/mips/branch/j_0.s
 long_mul, basic long multiply algorithm without carry, tests/mips/func/long_mul.s
+long_mul_o3, basic long multiply algorithm without carry using optimisations, tests/mips/func/long_mul_o3.s
 lbu_0, stores and loads max sized uint8_t, tests/mips/mem/lbu_0.s
 lbu_1, stores and loads max sized int8_t, tests/mips/mem/lbu_1.s
 lbu_2, stores and loads max sized uint16_t, tests/mips/mem/lbu_2.s
@@ -271,12 +334,38 @@ lh_3, stores and loads max sized int16_t, tests/mips/mem/lh_3.s
 lh_4, stores and loads max sized uint32_t, tests/mips/mem/lh_4.s
 lh_5, stores and loads max sized int32_t, tests/mips/mem/lh_5.s
 lh_6, stores and loads in parts, tests/mips/mem/lh_6.s
+lwl_0, lwl to zero initialized register, tests/mips/mem/lwl_0.s
+lwl_1, lwl to zero initialized register, tests/mips/mem/lwl_1.s
+lwl_2, lwl to zero initialized register, tests/mips/mem/lwl_2.s
+lwl_3, lwl to zero initialized register, tests/mips/mem/lwl_3.s
+lwl_4, lwl to zero initialized register, tests/mips/mem/lwl_4.s
+lwl_5, lwl to non-zero initialized register, tests/mips/mem/lwl_5.s
+lwl_6, lwl to non-zero initialized register, tests/mips/mem/lwl_6.s
+lwl_7, lwl to non-zero initialized register, tests/mips/mem/lwl_7.s
+lwl_8, lwl to non-zero initialized register, tests/mips/mem/lwl_8.s
+lwl_9, lwl to non-zero initialized register, tests/mips/mem/lwl_9.s
+lwl_lwr_0, misaligned read using lwl and lwr, tests/mips/mem/lwl_lwr_0.s
+lwl_lwr_1, misaligned read using lwl and lwr, tests/mips/mem/lwl_lwr_1.s
+lwl_lwr_2, misaligned read using lwl and lwr, tests/mips/mem/lwl_lwr_2.s
+lwl_lwr_3, misaligned read using lwl and lwr, tests/mips/mem/lwl_lwr_3.s
+lwl_lwr_4, misaligned read using lwl and lwr, tests/mips/mem/lwl_lwr_4.s
+lwr_0, lwr to zero initialized register, tests/mips/mem/lwr_0.s
+lwr_1, lwr to zero initialized register, tests/mips/mem/lwr_1.s
+lwr_2, lwr to zero initialized register, tests/mips/mem/lwr_2.s
+lwr_3, lwr to zero initialized register, tests/mips/mem/lwr_3.s
+lwr_4, lwr to zero initialized register, tests/mips/mem/lwr_4.s
+lwr_5, lwr to non-zero initialized register, tests/mips/mem/lwr_5.s
+lwr_6, lwr to non-zero initialized register, tests/mips/mem/lwr_6.s
+lwr_7, lwr to non-zero initialized register, tests/mips/mem/lwr_7.s
+lwr_8, lwr to non-zero initialized register, tests/mips/mem/lwr_8.s
+lwr_9, lwr to non-zero initialized register, tests/mips/mem/lwr_9.s
 lw_0, stores and loads max sized uint8_t, tests/mips/mem/lw_0.s
 lw_1, stores and loads max sized int8_t, tests/mips/mem/lw_1.s
 lw_2, stores and loads max sized uint16_t, tests/mips/mem/lw_2.s
 lw_3, stores and loads max sized int16_t, tests/mips/mem/lw_3.s
 lw_4, stores and loads max sized uint32_t, tests/mips/mem/lw_4.s
 lw_5, stores and loads max sized int32_t, tests/mips/mem/lw_5.s
+lw_6, loads into $zero, tests/mips/mem/lw_6.s
 sb_0, stores in parts and loads, tests/mips/mem/sb_0.s
 sb_lbu_0, stores then loads a memory value, tests/mips/mem/sb_lbu_0.s
 sb_lbu_1, stores then loads a memory value multiple times, tests/mips/mem/sb_lbu_1.s
@@ -407,6 +496,46 @@ fibonacci(21), recursive fibonacci using stack, computes fib(21), tests/mips/per
 fibonacci(22), recursive fibonacci using stack, computes fib(22), tests/mips/perf/recursion/fibonacci/fibonacci_22.s
 fibonacci(23), recursive fibonacci using stack, computes fib(23), tests/mips/perf/recursion/fibonacci/fibonacci_23.s
 fibonacci(24), recursive fibonacci using stack, computes fib(24), tests/mips/perf/recursion/fibonacci/fibonacci_24.s
+fibonacci_rep[10](0), recursive fibonacci using stack, computes fib(0). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_00.s
+fibonacci_rep[10](1), recursive fibonacci using stack, computes fib(1). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_01.s
+fibonacci_rep[10](2), recursive fibonacci using stack, computes fib(2). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_02.s
+fibonacci_rep[10](3), recursive fibonacci using stack, computes fib(3). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_03.s
+fibonacci_rep[10](4), recursive fibonacci using stack, computes fib(4). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_04.s
+fibonacci_rep[10](5), recursive fibonacci using stack, computes fib(5). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_05.s
+fibonacci_rep[10](6), recursive fibonacci using stack, computes fib(6). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_06.s
+fibonacci_rep[10](7), recursive fibonacci using stack, computes fib(7). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_07.s
+fibonacci_rep[10](8), recursive fibonacci using stack, computes fib(8). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_08.s
+fibonacci_rep[10](9), recursive fibonacci using stack, computes fib(9). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_09.s
+fibonacci_rep[10](10), recursive fibonacci using stack, computes fib(10). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_10.s
+fibonacci_rep[10](11), recursive fibonacci using stack, computes fib(11). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_11.s
+fibonacci_rep[10](12), recursive fibonacci using stack, computes fib(12). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_12.s
+fibonacci_rep[10](13), recursive fibonacci using stack, computes fib(13). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_13.s
+fibonacci_rep[10](14), recursive fibonacci using stack, computes fib(14). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_14.s
+fibonacci_rep[10](15), recursive fibonacci using stack, computes fib(15). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_15.s
+fibonacci_rep[10](16), recursive fibonacci using stack, computes fib(16). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_16.s
+fibonacci_rep[10](17), recursive fibonacci using stack, computes fib(17). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_17.s
+fibonacci_rep[10](18), recursive fibonacci using stack, computes fib(18). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_18.s
+fibonacci_rep[10](19), recursive fibonacci using stack, computes fib(19). fibonacci code repeated 10 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_010_19.s
+fibonacci_rep[100](0), recursive fibonacci using stack, computes fib(0). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_00.s
+fibonacci_rep[100](1), recursive fibonacci using stack, computes fib(1). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_01.s
+fibonacci_rep[100](2), recursive fibonacci using stack, computes fib(2). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_02.s
+fibonacci_rep[100](3), recursive fibonacci using stack, computes fib(3). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_03.s
+fibonacci_rep[100](4), recursive fibonacci using stack, computes fib(4). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_04.s
+fibonacci_rep[100](5), recursive fibonacci using stack, computes fib(5). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_05.s
+fibonacci_rep[100](6), recursive fibonacci using stack, computes fib(6). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_06.s
+fibonacci_rep[100](7), recursive fibonacci using stack, computes fib(7). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_07.s
+fibonacci_rep[100](8), recursive fibonacci using stack, computes fib(8). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_08.s
+fibonacci_rep[100](9), recursive fibonacci using stack, computes fib(9). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_09.s
+fibonacci_rep[100](10), recursive fibonacci using stack, computes fib(10). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_10.s
+fibonacci_rep[100](11), recursive fibonacci using stack, computes fib(11). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_11.s
+fibonacci_rep[100](12), recursive fibonacci using stack, computes fib(12). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_12.s
+fibonacci_rep[100](13), recursive fibonacci using stack, computes fib(13). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_13.s
+fibonacci_rep[100](14), recursive fibonacci using stack, computes fib(14). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_14.s
+fibonacci_rep[100](15), recursive fibonacci using stack, computes fib(15). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_15.s
+fibonacci_rep[100](16), recursive fibonacci using stack, computes fib(16). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_16.s
+fibonacci_rep[100](17), recursive fibonacci using stack, computes fib(17). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_17.s
+fibonacci_rep[100](18), recursive fibonacci using stack, computes fib(18). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_18.s
+fibonacci_rep[100](19), recursive fibonacci using stack, computes fib(19). fibonacci code repeated 100 times, tests/mips/perf/recursion/fibonacci_rep/fibonacci_rep_100_19.s
 unroll(512/1), loop of 512 unrolled into chunks of 512, tests/mips/perf/unroll/unroll_0.s
 unroll(512/2), loop of 512 unrolled into chunks of 256, tests/mips/perf/unroll/unroll_1.s
 unroll(512/4), loop of 512 unrolled into chunks of 128, tests/mips/perf/unroll/unroll_2.s
@@ -417,3 +546,13 @@ unroll(512/64), loop of 512 unrolled into chunks of 8, tests/mips/perf/unroll/un
 unroll(512/128), loop of 512 unrolled into chunks of 4, tests/mips/perf/unroll/unroll_7.s
 unroll(512/256), loop of 512 unrolled into chunks of 2, tests/mips/perf/unroll/unroll_8.s
 unroll(512/512), loop of 512 unrolled into chunks of 1, tests/mips/perf/unroll/unroll_9.s
+bal_0, , tests/mips/pseudo/bal_0.s
+bal_1, tests that $ra is set, tests/mips/pseudo/bal_1.s
+b_0, , tests/mips/pseudo/b_0.s
+li_0, , tests/mips/pseudo/li_0.s
+li_1, , tests/mips/pseudo/li_1.s
+li_2, , tests/mips/pseudo/li_2.s
+move_0, , tests/mips/pseudo/move_0.s
+move_1, , tests/mips/pseudo/move_1.s
+subi_0, , tests/mips/pseudo/subi_0.s
+subi_1, , tests/mips/pseudo/subi_1.s
