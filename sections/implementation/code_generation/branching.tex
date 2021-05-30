@@ -1,9 +1,91 @@
 \subsubsection{Branching}
 
-\YIComment{General method of branch delay slot peeking to next instruction}
+As mentioned previously, a block terminates by returning the target MIPS address of the next block to execute; the exact code generated for this is different based on the type of branch involved. Due to the branch delay slot in MIPS, the instruction following the branch instruction is usually `peeked' and pre-emptively compiled.
 
-\YIComment{J/JAL: no further work needed}
+Under the \texttt{\_\_fastcall} calling convention, as described in \autoref{section:calling-convs}, the return register is \texttt{EAX}.
 
-\YIComment{JR/JALR: may need to preserve register}
+The simplest branches are the unconditional immediate jump instructions \texttt{J} and \texttt{JAL}. They have a single fixed compile time destination. The x86 generated for these instructions is detailed in \autoref{code:branch-x86-j}.
 
-\YIComment{Conditionals: preserving EFLAGS}
+\begin{lstfloat}[H]
+    \begin{lstlisting}
+compile delay slot
+
+MOV EAX, target
+RET
+    \end{lstlisting}
+    \caption{Psuedo-x86 generated for the MIPS instruction \texttt{J}.}
+    \label{code:branch-x86-j}
+\end{lstfloat}
+
+Following this are the jump register instructions \texttt{JR} and \texttt{JALR}. These use the contents of a specified MIPS register as the destination of the jump. This can be problematic when the delay slot is introduced, as the instruction in the delay slot could change the same register used for this jump.
+
+To work around this, the desired register value can be pushed onto the x86 stack before executing the delay slot, before popping it from the stack and performing the jump. This stack operation guarantees functional correctness but is wasteful if the delay slot does not change the contents of the register. The code generated with stack operations is detailed in \autoref{code:branch-x86-jr-stack}.
+
+A utility was introduced to determine if a given MIPS instruction writes to a given register; using this, the stack operations can only be emitted when the delay slot writes to the jump register, leading to better performance in most cases whilst guaranteeing correct functionality. This optimised code is shown in \autoref{code:branch-x86-jr}.
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}
+MOV  EAX, [jump_register]
+PUSH EAX
+
+compile delay slot
+
+POP  EAX
+RET
+    \end{lstlisting}
+    \caption{Psuedo-x86 generated for the MIPS instruction \texttt{JR} when the delay slot \textbf{does} overwrite \texttt{jump\_register}.}
+    \label{code:branch-x86-jr-stack}
+\end{lstfloat}
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}
+compile delay slot
+
+MOV ECX, [jump_register]
+RET
+    \end{lstlisting}
+    \caption{Psuedo-x86 generated for the MIPS instruction \texttt{JR} when the delay slot \textbf{does not} overwrite \texttt{jump\_register}.}
+    \label{code:branch-x86-jr}
+\end{lstfloat}
+
+The most complex family of branch instructions to emulate are the conditional branches such as \texttt{BEQ} and \texttt{BNE}. Since they are conditionally executed branches, the condition may evaluate to false and the branch should be skipped.
+
+Conditional execution in x86 can be performed by first using \texttt{CMP} \cite{x86-cmp} to compute the condition status stored in \texttt{EFLAGS}. A following conditional instruction using some condition code \texttt{cc} will then be predicated by the contents of \texttt{EFLAGS}.
+
+Unfortunately, the \texttt{RET} instruction does not have any conditional variants \cite{x86-ret}. This means that the termination of the block itself cannot be trivially predicated.
+
+We turn our attention to \texttt{CMOVcc}, which allows us to conditionally move a value from one register to another \cite{x86-cmovcc}. We can then compute two target destinations, \texttt{target\_true} for the actual destination of the branch instruction, and \texttt{target\_false} for the expected destination address after no branch is executed. \texttt{CMOVcc} can then be used to return the correct target based on the outcome of the comparison. The generated code for this is detailed in \autoref{code:branch-x86-branch}.
+
+In some cases, the delay slot instruction may cause \texttt{EFLAGS} to change, typically those that call other functions or use \texttt{CMP}. In these cases, the \texttt{CMOVcc} will then act on an incorrect condition status producing unpredictable behaviour. To work around this, the instructions \texttt{PUSHF} and \text{POPF} can be used to push and pop \texttt{EFLAGS} to the stack \cite{x86-pushf, x86-popf}. The variant that preserves \texttt{EFLAGS} is shown in \autoref{code:branch-x86-branch-stack}.
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}
+CMP [mips_reg_1], [mips_reg_2]
+
+compile delay slot
+
+MOV    EDX, target_true
+MOV    EAX, target_false
+CMOVcc EAX, EDX
+RET
+    \end{lstlisting}
+    \caption{Psuedo-x86 generated for the conditional branch MIPS instructions. \texttt{cc} denotes the selected x86 condition code.}
+    \label{code:branch-x86-branch}
+\end{lstfloat}
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}
+CMP [mips_reg_1], [mips_reg_2]
+
+PUSHF
+compile delay slot
+POPF
+
+MOV    EDX, target_true
+MOV    EAX, target_false
+CMOVcc EAX, EDX
+RET
+    \end{lstlisting}
+    \caption{Psuedo-x86 generated for the conditional branch MIPS instructions when \texttt{EFLAGS} must be preserved. \texttt{cc} denotes the selected x86 condition code.}
+    \label{code:branch-x86-branch-stack}
+\end{lstfloat}
