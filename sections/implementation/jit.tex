@@ -14,7 +14,7 @@ This architecture was chosen as compiled host blocks cannot have a jump compiled
 
 \subsubsection{Runtime}
 
-The runtime is the top level JIT emulation system and ties together all the other JIT components. When provided with a MIPS program the runtime will then emulate it by partitioning it into blocks and compiling them with the compiler. The current implementation terminates a source block when a jump instruction is encountered, but other partitioning schemes will be investigated. These compiled host blocks are stored in a cache and re-used on subsequent executions.
+The runtime is the top level JIT emulation system and ties together all the other JIT components. When provided with a MIPS program the runtime will then emulate it by partitioning it into blocks and compiling them with the compiler. These compiled host blocks are stored in a cache and re-used on subsequent executions.
 
 \subsubsection{Compiler}
 
@@ -26,7 +26,7 @@ The assembler is responsible for encoding the desired \texttt{x86} instructions 
 
 \subsubsection{Block Partitioner}
 
-\YIComment{Do this}
+The block partitioner is responsible for partitioning the program into a source block for a given address. Source blocks are terminated when a jump instruction is encountered, however the following instruction is also included in order to support the MIPS delay slot. Other partitioning schemes are possible such as a single instruction, however shorter blocks lead to more compilation overhead.
 
 \subsubsection{Register File}
 
