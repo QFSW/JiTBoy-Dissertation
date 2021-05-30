@@ -26,7 +26,9 @@ The assembler is responsible for encoding the desired \texttt{x86} instructions 
 
 \subsubsection{Register File}
 
-The register file provides the runtime and compiler with a means of emulating the MIPS register file. The current implementation uses an in memory model, where a C++ array represents the MIPS register bank. Translated x86 instructions load and store this array when they need to emulate a MIPS register modification. The special \texttt{hi} and \texttt{lo} registers in MIPS are mapped internal to \texttt{\$32} and \texttt{\$33} respectively so the same compilation architecture can be used. This memory model provides for fast compile times but subpar execution times, as the contents must be written back after every instruction, causing in some cases large overhead. Other solutions will be explored such as direct register mapping or a hybrid model \cite{mark-probst-dbt}; these should yield increase execution performance, but potentially at the cost of worse compiler performance.
+The register file described in \autoref{section:interpreter-reg-file} provides the runtime and compiler with a means of emulating the MIPS register file. The current implementation uses an in memory model, where a C++ array represents the MIPS register bank. Translated x86 instructions load and store this array when they need to emulate a MIPS register modification. The special \texttt{hi} and \texttt{lo} registers in MIPS are mapped internal to \texttt{\$32} and \texttt{\$33} respectively, so the same compilation architecture can be used. This memory model provides for fast compile times but subpar execution times, as the contents must be written back after every instruction, causing in some cases large overhead.
+
+Other solutions can be explored such as direct register mapping or a hybrid model \cite{mark-probst-dbt}; these should yield increase execution performance, but potentially at the cost of worse compiler performance. These will also increase the complexity of the solution.
 
 The compiler omits any instructions that would cause a write to \texttt{\$0}, preserving its constant zero value.
 

@@ -1,6 +1,6 @@
 \subsection{Interpreter Architecture}
 
-\YIComment{Explain how interpreter works}
+The interpreter operates by inspecting the source instruction at the current program counter (PC) and executing the appropriate C++ code to emulate the behaviour of the source instruction. It then increments the PC and repeats until program execution is complete.
 
 \begin{figure}[h]
     \centering
@@ -11,11 +11,12 @@
 
 \subsubsection{Interpreter Core}
 
-\YIComment{Do this}
+The core emulator component of the interpreter. It does not control the execution flow but is responsible for interpreting individual instructions. This was separated into its own modular component, so it could be reused in further emulators such as the hybrid emulator.
 
 \subsubsection{Register File}
+\label{section:interpreter-reg-file}
 
-\YIComment{Do this}
+The register file models the 32 general purpose registers found in MIPS-1 in addition to the special \texttt{\$hi} and \texttt{\$lo} registers. The register values are stored contiguously for better cache performance. All writes to \texttt{\$0} are ignored, preserving its constant zero value.
 
 \subsubsection{Memory Map}
 \label{section:interpreter-mem-map}

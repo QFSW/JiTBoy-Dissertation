@@ -1,6 +1,6 @@
 \subsection{Performance}
 
-The performance of the JIT will need to be evaluated in comparison to the JIT emulator to analyse and conclude if the JIT does indeed accelerate emulation. Given that different programs will give different performance characteristics, a range of program sizes and structures will need to be explored. These include:
+The performance of the JIT and hybrid emulators will need to be evaluated in comparison to the interpreter to analyse and conclude if they do indeed accelerate emulation. Given that different programs will give different performance characteristics, a range of program sizes and structures will need to be explored. These include:
 
 \begin{itemize}
     \item \textbf{Short Simple Programs}
@@ -13,7 +13,7 @@ The performance of the JIT will need to be evaluated in comparison to the JIT em
 
     \item \textbf{Memory Intensive}
     
-    Memory instructions can be difficult to accelerate due to the abstraction required to fully emulate the entire memory space whilst running in the same process as the emulator. Because of this, the JIT emulator may see little speedup over the emulator. Test suites such as \texttt{memcpy(n)} will be written to investigate the performance characteristics.
+    Memory instructions can be difficult to accelerate due to the abstraction required to fully emulate the entire memory space whilst running in the same process as the emulator. Because of this, the JIT emulator may see little speedup over the interpreter. Test suites such as \texttt{memcpy(n)} will be written to investigate the performance characteristics.
 
     \item \textbf{Arithmetic Intensive}
     
@@ -21,7 +21,7 @@ The performance of the JIT will need to be evaluated in comparison to the JIT em
 
     \item \textbf{Iteration}
     
-    Programs and functions with a high degree of iteration, such as those with hot loops, tend to invoke the same blocks of code over and over again. This will be interesting to investigate as it's expected that the JIT's relative performance to the interpreter will increase. To test this, test suites designed with hot loops, such as \texttt{primal(n)} will be designed. The suite will cover the same loops being executed from a few times to very many times, allowing us to see how the performance characteristics of the JIT and emulator systems evolve as the loops get more frequently executed, and at which point, if any, the JIT emulator surpasses the interpreter.
+    Programs and functions with a high degree of iteration, such as those with hot loops, tend to invoke the same blocks of code over and over again. This will be interesting to investigate as it's expected that the JIT emulator's relative performance to the interpreter will increase. To test this, test suites designed with hot loops, such as \texttt{primal(n)} will be designed. The suite will cover the same loops being executed from a few times to very many times, allowing us to see how the performance characteristics of emulators evolve as the loops get more frequently executed, and at which point, if any, the JIT emulator surpasses the interpreter.
 
     \item \textbf{Recursion}
     
