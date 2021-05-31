@@ -2,3 +2,4 @@
 {"rule":"A_INFINITIVE","sentence":"^\\QThe compiler omits any instructions that would cause a write to $0, preserving its constant zero value.\\E$"}
 {"rule":"PUNCTUATION_PARAGRAPH_END","sentence":"^\\QFor integer arguments, it is equivalent to fastcall\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qcdecl is required for vararg as it uses caller stack cleanup clrcall is only usable for managed function calls and thus is not a consideration stdcall is required for Win32 API calls thiscall is only usable for member function calls vectorcall has restricted argument types and is typically only useful for floating point and SIMD.\\E$"}
+{"rule":"ARTICLE_ADJECTIVE_OF","sentence":"^\\QThis is to be expected as each compiled block includes some setup and teardown instructions, and thus the bigger the block the less of an effect these have.\\E$"}

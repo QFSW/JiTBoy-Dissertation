@@ -1,5 +1,7 @@
 \subsubsection{Memory Intensive}
 
+\YIComment{Redo this}
+
 \autoref{figure:memcpyw-mips} shows the performance of the \texttt{memcpyw(n)} test suite. This is the first test suite discussed where performance is not monotonic with regard to \texttt{n} and starts to rapidly fall as \texttt{n} is sufficiently increased.
 
 This is because the more memory copied by the test, the more insertions and accesses are made to the internal hash table powering the memory map. Insertion and access time for the map implementation used becomes slower the more items present in the map \cite{tessil-benchmark}. This linear slowdown is true for all other major C++ unordered map implementations \cite{tessil-benchmark}. This slowdown affects both SUTs as they both internally use the same memory map.
