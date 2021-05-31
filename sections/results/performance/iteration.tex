@@ -8,7 +8,7 @@ The interpreter has higher initial performance but stabilizes at a lower peak pe
 
 The JIT emulator on the other hand sees a far higher peak performance, but much worse initial performance and takes longer to achieve high performance. This is because, in addition to the higher overhead costs for the JIT emulator, each block of source code also has a high associated compilation costs. As \texttt{n} increases the same blocks are executed many times, amortizing the fixed compilation costs. This allows the JIT emulator to achieve a very high performance due to its far superior execution performance.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/tests/all/primal/mips.png}
     \caption{Performance in mips of the primal test suite.}

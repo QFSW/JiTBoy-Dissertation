@@ -8,7 +8,7 @@ This is because the more memory copied by the test, the more insertions and acce
 
 Despite this continuous decrease in performance of the memory map, the overall emulator performance does not monotonically decrease and instead peaks. This is because, for low \texttt{n}, initialization and overhead costs are still being amortized, yielding a performance increase that outweighs the decrease in memory map performance. The JIT emulator has higher overhead costs and thus takes longer to peak. Overall the JIT emulator has higher performance once peaked due to its superior execution performance.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/tests/all/memcpyw/mips.png}
     \caption{Performance in mips of the memcpyw test suite.}

@@ -14,14 +14,14 @@
 
 \autoref{figure:hotness} illustrates the relationship between program hotness and emulation performance. It shows that for the JIT emulator, performance rapidly increases as the hotness does. This is because each block has a fixed compilation cost, which is further amortized the hotter it is, resulting in higher performance. The interpreter on the other hand is unable to see the same improvement as the associated costs for a given block are required for every execution and cannot be amortized.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT-vs-Interpreter-time.png}
     \caption{Execution time of all tests for the JIT against the interpreter.}
     \label{figure:time-jit-interpreter}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/scatter/emulators/hotness.png}
     \caption{Performance against hotness for all tests.}

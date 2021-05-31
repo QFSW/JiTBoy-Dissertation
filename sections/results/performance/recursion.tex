@@ -8,7 +8,7 @@ The overall performance for both SUTs is significantly lower. This is due to the
 
 The JIT emulator takes significantly longer to reach peak performance whereas the interpreter does not. This is because the interpreters fixed costs, such as initialization, do not change with the program being executed. The JIT emulator on the other hand has additional costs for every block that needs compiling, and the \texttt{fibonacci(n)} program contains more source blocks. This means there is a larger initial cost which takes longer to amortize.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/tests/all/fibonacci/mips.png}
     \caption{Performance in mips of the fibonacci test suite.}

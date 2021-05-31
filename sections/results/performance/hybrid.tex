@@ -10,7 +10,7 @@
 
 \YIComment{Write about different -T values}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/scatter/hybrid/hotness.png}
     \caption{Performance (mips) vs hotness for all tests on the hybrid emulators.}
@@ -24,3 +24,20 @@ This is because hybrid behaves like an interpreter for sufficiently cold tests, 
 Naturally, we should expect the location of this inflection point to change with \texttt{-T}. Since \texttt{-T} determines how many times a block must be executed before it is compiled, it roughly corresponds to how hot a block should be before the hybrid begins emulating like a JIT; given this, we would expect the inflection to occur at higher hotness values for higher \texttt{-T}.
 
 \YIComment{Show how that relationship changes with -T}
+
+The ideal configuration found for the Hybrid emulator is detailed in \autoref{tbl:hybrid-optimal}
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l|c}
+        \toprule
+        Option & Value \\
+        \midrule
+        \texttt{-L} & \cmark \\
+        \texttt{-S} & \xmark \\
+        \texttt{-T} & 10 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Optimal configuration found for the Hybrid emulator.}
+    \label{tbl:hybrid-optimal}
+\end{table}
