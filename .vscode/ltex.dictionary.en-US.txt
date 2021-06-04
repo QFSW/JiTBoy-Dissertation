@@ -39,3 +39,4 @@ ECX
 cdecl
 vectorcall
 clrcall
+partitioner

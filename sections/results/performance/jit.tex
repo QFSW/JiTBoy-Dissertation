@@ -1,6 +1,13 @@
 \subsubsection{JIT Emulator}
 
-\YIComment{Compare to interpreter}
+\autoref{figure:jit-vs-interpreter} shows the execution time of all tests for the JIT emulator vs the interpreter. It can be seen that, in general, the JIT emulator is able to significantly outperform the interpreter for longer tests, yet performs poorly on shorter tests. In specific, the execution time appears to have a `floor' of $\sim10\si{\micro\second}$ for the JIT emulator. For very short tests, the execution time for the interpreter falls while the JIT is not able to overcome this barrier. This property will be explored further in more depth.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT-vs-Interpreter-time.png}
+    \caption{Execution time of all tests for the JIT emulator vs the interpreter.}
+    \label{figure:jit-vs-interpreter}
+\end{figure}
 
 To investigate the performance characteristics of the JIT emulator, one factor of interest is the hotness of the tests; the performance vs hotness is shown in \autoref{figure:jit-hotness}.
 
@@ -31,7 +38,7 @@ It is evident that as \texttt{n} increases the performance of both SUTs increase
     \label{figure:jit-primal-time}
 \end{figure}
 
-The effects of the fixed costs and initial overheads is much more present in the execution times as illustrated by \autoref{figure:jit-primal-time}. It can clearly be seen that for small \texttt{n} the execution time remains relatively constant at $\sim 10\si{\micro\second}$. This would indicate that, under the circumstances tested, the JIT had a fixed cost of $\sim 10\si{\micro\second}$. As \texttt{n} increases the execution time becomes more significant than the overhead, and we start to see the total execution time rise significantly.
+The effects of the fixed costs and initial overheads is much more present in the execution times as illustrated by \autoref{figure:jit-primal-time}. It can clearly be seen that for small \texttt{n} the execution time remains relatively constant at $\sim10\si{\micro\second}$. This would indicate that, under the circumstances tested, the JIT had a fixed cost of $\sim10\si{\micro\second}$. As \texttt{n} increases the execution time becomes more significant than the overhead, and we start to see the total execution time rise significantly.
 
 While \texttt{-L} clearly gives superior results for hotter and more performance intensive tasks, we would expect lighter workloads to suffer; \texttt{-L} increases the overheads due to the relinking process, and the increased execution performance likely won't have time to make up for it.
 
@@ -44,13 +51,22 @@ While \texttt{-L} clearly gives superior results for hotter and more performance
 
 The test suite \texttt{factorial(n)} can only be used for small \texttt{n} due to how explosively $n!$ increases with $n$; the performance for this test suite is shown in \autoref{figure:jit-factorial-mips}. It can be seen that \texttt{-L} causes a slight, but consistent drop in performance compared to the standard vanilla \texttt{JIT} configuration. The performance in these scenarios is very poor even without \texttt{-L}, so this is not a compelling reason to disable \texttt{-L} as the high performance in heavier workloads more than makes up for it.
 
-A more general picture can be seen by comparing the execution time of all tests between \texttt{JIT -L} and the standard \texttt{JIT} as shown by \autoref{figure:jit-vs-jit-l}. It can be seen that most tests perform the same or better with \texttt{-L} enabled, with some tests performing orders of magnitude better.
+A more general picture can be seen by comparing the execution time of all tests between \texttt{JIT -L} and the standard \texttt{JIT} as shown by \autoref{figure:jit-l-vs-jit}. It can be seen that most tests perform the same or better with \texttt{-L} enabled, with some tests performing orders of magnitude better.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT -L-vs-JIT-time.png}
-    \caption{Execution time of all tests for \texttt{JIT -L} vs \texttt{JIT}}
-    \label{figure:jit-vs-jit-l}
+    \caption{Execution time of all tests for \texttt{JIT -L} vs \texttt{JIT}.}
+    \label{figure:jit-l-vs-jit}
+\end{figure}
+
+We can then compare \texttt{JIT -L} to the interpreter as shown in \autoref{figure:jit-l-vs-interpreter}. For short tests, \texttt{JIT -L} loses to the interpreter just as the standard \texttt{JIT} does (as shown by \autoref{figure:jit-vs-interpreter}). The clear difference with \texttt{-L} enabled is that the tests that already perform well without \texttt{-L} now perform even better, in some orders of magnitudes better. This is further reason to believe that \texttt{-L} is a beneficial feature despite not globally improving performance.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT -L-vs-Interpreter-time.png}
+    \caption{Execution time of all tests for \texttt{JIT -L} vs the interpreter.}
+    \label{figure:jit-l-vs-interpreter}
 \end{figure}
 
 Another metric of interest is the compilation inefficiency. A high compilation inefficiency would indicate that many host instructions are compiled to emulate a few source instructions; generally speaking, the fewer instructions used the better. Not only should they be faster to compile, as generating instructions has an associated overhead, but execution performance should also increase due to better cache utilisation. Having said this, there are many other factors at play such as the instructions themselves and how often they are executed, so we should not expect a strict relationship between compilation inefficiency and performance.
