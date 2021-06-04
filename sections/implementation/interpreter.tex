@@ -11,7 +11,7 @@ The interpreter operates by inspecting the source instruction at the current pro
 
 \subsubsection{Interpreter Core}
 
-The core emulator component of the interpreter. It does not control the execution flow but is responsible for interpreting individual instructions. This was separated into its own modular component, so it could be reused in further emulators such as the hybrid emulator.
+The core emulator \JW{These subsubsections are very short -- perhaps better as items in a bulleted description list like you had in Section 3.3?} component of the interpreter. It does not control the execution flow but is responsible for interpreting individual instructions. This was separated into its own modular component, so it could be reused in further emulators such as the hybrid emulator.
 
 \subsubsection{Register File}
 \label{section:interpreter-reg-file}
@@ -23,4 +23,4 @@ The register file models the 32 general purpose registers found in MIPS-1 in add
 
 The memory map uses an associative model powered by an unordered hash table. This allows for the entire 32-bit address space to be emulated without requiring it to be pre-allocated, something that might prove difficult in a 32 bit process. The current implementation allows for $\mathcal{O}(1)$ read and write times. Despite this, the performance is substandard compared to a raw array due to the extra overhead and being less cache friendly.
 
-After profiling, the \texttt{std::unordered\_map} originally used was found to be a bottleneck and thus was replaced with a 3rd party implementation Tessil/robin-map \cite{tessil-map, tessil-benchmark}.
+After profiling, the \texttt{std::unordered\_map} originally used was found to be a bottleneck and thus was replaced with a 3rd party implementation Tessil/robin-map \cite{tessil-map, tessil-benchmark}. \JW{Cool! Really nice detail to include.}
