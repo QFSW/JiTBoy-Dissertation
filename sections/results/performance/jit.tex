@@ -1,14 +1,8 @@
 \subsubsection{JIT Emulator}
 
-\YIComment{Do this}
-
 \YIComment{Compare to interpreter}
 
-\YIComment{General performance characteristics}
-
-\YIComment{Scatter of -L vs non -L?}
-
-To investigate the performance characteristics of the JIT emulator the first factor of interest is the hotness of the tests; the performance vs hotness is shown in \autoref{figure:jit-hotness}.
+To investigate the performance characteristics of the JIT emulator, one factor of interest is the hotness of the tests; the performance vs hotness is shown in \autoref{figure:jit-hotness}.
 
 \begin{figure}[H]
     \centering
@@ -48,7 +42,16 @@ While \texttt{-L} clearly gives superior results for hotter and more performance
     \label{figure:jit-factorial-mips}
 \end{figure}
 
-The test suite \texttt{factorial(n)} can only be used for small \texttt{n} due to how explosively $n!$ increases with $n$; the performance for this test suite is shown in \autoref{figure:jit-factorial-mips}. It can be seen that \texttt{-L} causes a slight, but consistent drop in performance compared to the standard vanilla \texttt{JIT} configuration. The performance in these scenarios is very poor even without \texttt{-L}, so this is not a strong reason to disable \texttt{-L} as the high performance in heavier workloads more than makes up for it.
+The test suite \texttt{factorial(n)} can only be used for small \texttt{n} due to how explosively $n!$ increases with $n$; the performance for this test suite is shown in \autoref{figure:jit-factorial-mips}. It can be seen that \texttt{-L} causes a slight, but consistent drop in performance compared to the standard vanilla \texttt{JIT} configuration. The performance in these scenarios is very poor even without \texttt{-L}, so this is not a compelling reason to disable \texttt{-L} as the high performance in heavier workloads more than makes up for it.
+
+A more general picture can be seen by comparing the execution time of all tests between \texttt{JIT -L} and the standard \texttt{JIT} as shown by \autoref{figure:jit-vs-jit-l}. It can be seen that most tests perform the same or better with \texttt{-L} enabled, with some tests performing orders of magnitude better.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT -L-vs-JIT-time.png}
+    \caption{Execution time of all tests for \texttt{JIT -L} vs \texttt{JIT}}
+    \label{figure:jit-vs-jit-l}
+\end{figure}
 
 Another metric of interest is the compilation inefficiency. A high compilation inefficiency would indicate that many host instructions are compiled to emulate a few source instructions; generally speaking, the fewer instructions used the better. Not only should they be faster to compile, as generating instructions has an associated overhead, but execution performance should also increase due to better cache utilisation. Having said this, there are many other factors at play such as the instructions themselves and how often they are executed, so we should not expect a strict relationship between compilation inefficiency and performance.
 
