@@ -22,14 +22,14 @@ This job system approach has a variety of benefits. It helps decouple the asynch
 
 \begin{lstfloat}[H]
     \begin{lstlisting}[language=c++]
-auto& thread_pool = common::Enviornment::get().thread_pool();
+auto& thread_pool = common::Environment::get().thread_pool();
 thread_pool.schedule_job(threading::Job([&]
 {
     // do work
     _result_queue.enqueue(/* results */);
 }));
     \end{lstlisting}
-    \caption{Typical caller code for scheduling a job on the thread pool. \JW{Typo: enviornment}}
+    \caption{Typical caller code for scheduling a job on the thread pool.}
     \label{code:schedule-job}
 \end{lstfloat}
 
