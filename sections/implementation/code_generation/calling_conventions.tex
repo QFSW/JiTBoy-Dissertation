@@ -5,7 +5,7 @@ The calling convention of a function specifies both how arguments are passed to 
 
 Typically, this detail is not of a concern to the programmer and is left as a compiler implementation detail, but this is not true in our case. The caller and callee must match their calling convention or else the function invocation will be catastrophic. Normally, this is guaranteed by the compiler, but since we are hand generating x86 code that needs to communicate with compiler generated C++ code, we are not afforded this luxury. Due to this, we need to pay close attention to the calling conventions used whenever we encounter one of these JIT - C++ interop barriers.
 
-Fundementally, there are two distinct cases that are of importance:
+Fundamentally, there are two distinct cases that are of importance:
 \begin{enumerate}
     \item The runtime executing blocks of JIT code
     
@@ -13,7 +13,7 @@ Fundementally, there are two distinct cases that are of importance:
     
     \item The JIT code making a call into the runtime
     
-    This is required as some aspects of the emulation may be provided by the C++ written runtime, as opposed to being replicated natively in the generated x86. In this case we are generating the caller code, and thus need to take care that the arguments passed to the callee are done correctly, as well as any \code{prolog-epilog} code. We can specify the calling convention on the C++ function, causing the compiler to generate function with the appropriate callee code, which we can then design our JIT caller code against appropriately.
+    This is required as some aspects of the emulation may be provided by the runtime written in C++, as opposed to being replicated natively in the generated x86. In this case we are generating the caller code, and thus need to take care that the arguments passed to the callee are done correctly, as well as any \code{prolog-epilog} code. We can specify the calling convention on the C++ function, causing the compiler to generate function with the appropriate callee code, which we can then design our JIT caller code against appropriately.
 \end{enumerate}
 
 \begin{table}[H] 
@@ -74,11 +74,11 @@ For example, if we had the following member function
 
 \code{int Runtime::func(float x);}
 
-We can generate the corresponding proxy function as follows
+we can generate the corresponding proxy function as follows
 
 \code{instance\_proxy<float>::call<Runtime, int, \&Runtime::func>}
 
-Which we can then link against and compile a call to from our JIT code, passing along a \code{Runtime*} and \code{int} as dictated by \code{CALLING\_CONV}
+which we can then link against and compile a call to from our JIT code, passing along a \code{Runtime*} and \code{int} as dictated by \code{CALLING\_CONV}.
 
 Initially, I decided to use the \code{\_\_fastcall} calling convention; by utilising registers over the stack when possible the generated caller code can be simpler and faster. To make a more informed decision, I analysed how fast \code{\_\_fastcall} would be compared to \code{\_\_stdcall}. \code{\_\_stdcall} was considered over \code{\_\_cdecl} as the callee cleans the stack, reducing the amount of code generation required in the caller. I analysed the cost of calling a 3 argument function, as this is required to invoke \code{memory\_map::write<T>(this, addr, value)}
 
@@ -88,7 +88,7 @@ Initially, I decided to use the \code{\_\_fastcall} calling convention; by utili
         \toprule
         \code{\_\_fastcall} & \code{\_\_stdcall} \\
         \midrule
-        \begin{lstlisting}[numbers=none]
+        \begin{lstlisting}[numbers=none,frame=none]
         MOV ECX this
         MOV EDX addr
         PUSH value
@@ -97,7 +97,7 @@ Initially, I decided to use the \code{\_\_fastcall} calling convention; by utili
         
         &
         
-        \begin{lstlisting}[numbers=none]
+        \begin{lstlisting}[numbers=none,frame=none]
         PUSH value
         PUSH addr
         PUSH this

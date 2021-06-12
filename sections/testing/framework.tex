@@ -13,11 +13,11 @@ In order to evaluate the functional correctness of the JIT and interpreter emula
 
     \item \texttt{\textbf{init:} \textit{x} = \textit{y}}
     
-    Initializes the register \textit{x} to the 32 bit constant literal \textit{y} before executing the MIPS program.
+    Initializes the register \textit{x} to the 32-bit constant literal \textit{y} before executing the MIPS program.
 
     \item \texttt{\textbf{assert:} \textit{x} == \textit{y}}
     
-    Asserts that the register \textit{x} is equal to the 32 bit constant literal \textit{y} after the MIPS program has terminated.
+    Asserts that the register \textit{x} is equal to the 32-bit constant literal \textit{y} after the MIPS program has terminated.
 \end{itemize}
 
 If the emulator throws an exception during program execution, then the test will \emph{fault}, and the exception will be printed in addition to the resultant register file and any logs produced by the emulator. If any assertions fail, then the test will \emph{fail}, and the failing assertions will be printed in addition to the resultant register file and any logs produced by the emulator.
