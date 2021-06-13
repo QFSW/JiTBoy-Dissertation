@@ -1,8 +1,62 @@
 \subsection{Technology Stack}
 
-The technology stack used to develop the project was the first major decision required before further work could take place; the component of the highest importance was the primary programming language. \autoref{list:req-features} details a list of requirements that the language must meet in order to be a good fit for the project.
+The technology stack used to develop the project was the first major decision required before further work could take place; the component of the highest importance was the primary programming language. The following list details a set of requirements that the language must meet in order to be a good fit for the project:
+
+\begin{itemize}
+    \item \textbf{Windows 10 and x86 Support}
+    
+    Cross-platform support and portability is highly desirable for the language of choice; given the project scope is restricted to Windows 10 and x86 these are the only strict requirements.
+
+    \item \textbf{Strong Typing}
+    
+    Due to the size, complexity and length of this project, I have included strong typing as a requirement. Strong typing greatly increases the readability by self documenting the codebase and the reliability improvements due to compile time type errors are paramount.
+
+    \item \textbf{No Garbage Collection}
+    
+    Garbage collection (GC) is an automatic memory management scheme that does not require the user to manually free resources. While this is very flexible and easy to use, the unreliable performance implications of a GC are unacceptable for this project.
+
+    \item \textbf{Unmanaged Function Pointers}
+    
+    The ability to create an unmanaged pointer to a function allows us to obtain the address of the native machine code for the function. This allows the JIT to compile direct function calls to runtime functions written in the programming language of choice.
+
+    \item \textbf{Executable Memory Allocation}
+    
+    Executable memory cannot be allocated through the typical means that languages and programmers use for general memory allocation such as \texttt{malloc}. Special OS APIs are required and thus the language must be able to use these APIs. A native call will give the highest performance however an interop call with marshalling would still be viable.
+
+    \item \textbf{Reinterpret Cast}
+    
+    The compiled block of x86 code will need to be reinterpreted as a function pointer and executed as a function in order to execute the output of the JIT compiler.
+\end{itemize}
 
 \autoref{tbl:lang-reqs} contains a matrix of many programming languages and which requirements they meet, including both languages that I have previous project experience in and popular \cite{stackoverflow-survey} but unfamiliar languages.
+
+\newcommand{\y}{\color{success-green}{\cmark}}
+\newcommand{\n}{\color{fail-red}{\xmark}}
+
+\begin{table}[h] 
+    \centering
+    \begin{tabular}{r|cccccc}
+        & \rot{45}{Windows 10 and x86 Support} & \rot{45}{Strong Typing} & \rot{45}{No Garbage Collection} & \rot{45}{Unmanaged Function Pointers} & \rot{45}{Executable Memory Allocation} & \rot{45}{Reinterpret Cast} \\
+        \midrule
+        x86 Assembly & \y & \n & \y & \y & \y & \y \\
+        C            & \y & \y & \y & \y & \y & \y \\
+        C++          & \y & \y & \y & \y & \y & \y \\
+        C\#          & \y & \y & \n & \y & \y & \y \\
+        Java         & \y & \y & \n & \n & \n & \n \\
+        JavaScript   & \y & \n & \n & \n & \n & \n \\
+        TypeScript   & \y & \y & \n & \n & \n & \n \\
+        Python       & \y & \n & \n & \n & \n & \n \\
+        Rust         & \y & \y & \y & \y & \y & \y \\
+        Haskell      & \y & \y & \n & \y & \y & \y \\
+        F\#          & \y & \y & \n & \y & \y & \y \\
+        Go           & \y & \y & \n & \n & \y & \y \\
+        Swift        & \n & \y & \n & \y & \y & \y \\
+        Objective-C  & \n & \y & \y & \y & \y & \y \\
+        \bottomrule
+    \end{tabular}
+    \caption{Various potential candidates for the language of implementation and the requirements they meet.}
+    \label{tbl:lang-reqs}
+\end{table}
 
 The only languages that met all of the requirements were Rust, C, and C++. Rust provides a very safe yet fast memory model via its ownership model \cite{rust-ownership} and has also recently become a community favourite \cite{stackoverflow-survey}. This said, it is a very new language with little industrial presence \cite{stackoverflow-survey}.  C provides little in the way of encapsulation making it difficult to write predictable and mantainable code.
 
@@ -13,55 +67,3 @@ As the project is scoped for Windows 10, MSVC \& Visual Studio 2019 was used as 
 Functional languages like Haskell and F\# were considered due to their natural affinity for developing components such as the parser or intermediate representation (IR) based optimisers; while they would have been a good fit for such components, they would have been less viable for core components such as the compiler due to reasons discussed previously. A multi-process solution was not desirable so they were not considered further.
 
 Python was utilised for the analysis and visualisation of the test results. Python is a very powerful scripting language with strong community support making it an ideal choice for smaller scripts that do not require high performance. The package matplotlib was used for visualisation due to its power and ease of use.
-
-\begin{table}[h]
-    \centering
-    \begin{tabularx}{\linewidth}{c|l|X}
-        \toprule
-        \textbf{\#} & \textbf{Requirement} & \textbf{Description} \\
-        \midrule
-        1 & Windows 10 and x86 Support & Cross-platform support and portability is highly desirable for the language of choice; given the project scope is restricted to Windows 10 and x86 these are the only strict requirements. \\
-        \midrule
-        2 & Strong Typing & Due to the size, complexity and length of this project, I have included strong typing as a requirement. Strong typing greatly increases the readability by self documenting the codebase and the reliability improvements due to compile time type errors are paramount. \\
-        \midrule
-        3 & No Garbage Collection & Garbage collection (GC) is an automatic memory management scheme that does not require the user to manually free resources. While this is very flexible and easy to use, the unreliable performance implications of a GC are unacceptable for this project. \\
-        \midrule
-        4 & Unmanaged Function Pointers & The ability to create an unmanaged pointer to a function allows us to obtain the address of the native machine code for the function. This allows the JIT to compile direct function calls to runtime functions written in the programming language of choice. \\
-        \midrule
-        5 & Executable Memory Allocation & Executable memory cannot be allocated through the typical means that languages and programmers use for general memory allocation such as \texttt{malloc}. Special OS APIs are required and thus the language must be able to use these APIs. A native call will give the highest performance however an interop call with marshalling would still be viable. \\
-        \midrule
-        6 & Reinterpret Cast & The compiled block of x86 code will need to be reinterpreted as a function pointer and executed as a function in order to execute the output of the JIT compiler. \\
-        \bottomrule
-    \end{tabularx}
-    \caption{The various requirements under consideration for the primary programming language of the project. \JW{Don Knuth would tell you to remove the vertical lines from the table.}}
-    \label{list:req-features}
-\end{table}
-
-\newcommand{\y}{\color{success-green}{\cmark}}
-\newcommand{\n}{\color{fail-red}{\xmark}}
-
-\begin{table}[h] 
-    \centering
-    \begin{tabular}{r|cccccc}
-        \toprule
-        & 1 & 2 & 3 & 4 & 5 & 6 \\
-        \midrule
-        Assembly    & \y & \n & \y & \y & \y & \y \\
-        C           & \y & \y & \y & \y & \y & \y \\
-        C++         & \y & \y & \y & \y & \y & \y \\
-        C\#         & \y & \y & \n & \y & \y & \y \\
-        Java        & \y & \y & \n & \n & \n & \n \\
-        JavaScript  & \y & \n & \n & \n & \n & \n \\
-        TypeScript  & \y & \y & \n & \n & \n & \n \\
-        Python      & \y & \n & \n & \n & \n & \n \\
-        Rust        & \y & \y & \y & \y & \y & \y \\
-        Haskell     & \y & \y & \n & \y & \y & \y \\
-        F\#         & \y & \y & \n & \y & \y & \y \\
-        Go          & \y & \y & \n & \n & \y & \y \\
-        Swift       & \n & \y & \n & \y & \y & \y \\
-        Objective-C & \n & \y & \y & \y & \y & \y \\
-        \bottomrule
-    \end{tabular}
-    \caption{Various potential candidates for the language of implementation and the requirements they meet. The requirements are detailed in \autoref{list:req-features}. \JW{The indirection via the 1--6 numbers is not ideal for the reader. It would be better to take the `Requirement' column from Table 1 and write the entries (maybe turned 90 degrees) along the top row of Table 2. Then you can get rid of the numbers altogether. In fact, at this point, you might as well ditch Table 1 and make it a bulleted description list just like in Section 3.3.}}
-    \label{tbl:lang-reqs}
-\end{table}

@@ -2,9 +2,9 @@
 
 This section will explore the performance characteristics shown by all of the SUTs and will answer the research questions proposed in \autoref{section:req-cap-performance}. Furthermore, the optimisations introduced in \autoref{section:optimisations} will be explored to determine which configurations are optimal and when.
 
-This investigation will be conducted in two steps. First, the generalised performance across all tests will be explored for each emulator; this can be done by observing the relationship between different test statistics (such as performance vs hotness). From this the ideal configuration for each emulator will be determined.
+This investigation will be conducted in two steps. First, the generalised performance across all tests will be explored for each emulator; this can be done by observing the relationship between different test statistics (such as performance vs hotness). From this the ideal configuration for each emulator will be determined. This will be covered in \Cref{section:perf-interpreter,section:perf-jit,section:perf-hybrid}.
 
-Next, the performance will be investigated more thoroughly on the bespoke set of test suites. Unlike the functionality tests, these test suites are specifically designed to stress the SUTs in different ways and have been designed to answer the various performance research questions. The test suites of interest are as follows:
+Next, in \Cref{section:perf-iteration,section:perf-recursion,section:perf-memory}, the performance will be investigated more thoroughly on the bespoke set of test suites. Unlike the functionality tests, these test suites are specifically designed to stress the SUTs in different ways and have been designed to answer the various performance research questions. The test suites of interest are as follows:
 
 \begin{itemize}
     \item \textbf{\texttt{fibonacci(n)}}
