@@ -11,13 +11,9 @@ Next, in \Cref{section:perf-iteration,section:perf-recursion,section:perf-memory
     
     Recursive program that computes \texttt{fibonacci(n)} designed to explore the performance of highly recursive program. Uses a mixture of ALU and memory operations. The computational complexity is $\mathcal{O}(2^n)$ and thus we can expect to see very long and intensive tests for larger $n$.
     
-    \item \textbf{\texttt{fibonacci\_rep[10](n)}}
+    \item \textbf{\texttt{fibonacci\_rep[k](n)}}
     
-    The same as \texttt{fibonacci(n)}, however 10 unique instantions of the \texttt{fibonacci} function are generated. This helps investigate how performance scales with more unique code.
-    
-    \item \textbf{\texttt{fibonacci\_rep[100](n)}}
-    
-    The same as \texttt{fibonacci\_rep[10](n)} but with 100 unique instantions.
+    The same as \texttt{fibonacci(n)}, however $k$ unique instantions of the \texttt{fibonacci} function are generated. This helps investigate how performance scales with more unique code. The values of $k$ used were $10$ and $100$.
     
     \item \textbf{\texttt{factorial(n)}}
     
