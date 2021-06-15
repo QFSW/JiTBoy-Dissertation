@@ -1,6 +1,5 @@
 \subsubsection{Binary Object Loader}
 
-The current binary loader assumes that the entire binary is instructions and decodes them as such, yielding a contiguous stream of instructions. An enhanced loader would understand the Execution
-and Linking Format (ELF) \cite{mips-guide} used by MIPS object file format for a given operating system. This would allow it to properly load the different sections present in a binary, such as \texttt{.text} and \texttt{.data} sections.
+The current binary loader assumes that the binary file is composed entirely of instructions and decodes them as such, yielding a contiguous stream of instructions. An enhanced loader would understand the `Execution and Linking Format' (ELF) \cite{mips-guide} used by the MIPS object file format for a given operating system. This would allow it to properly load the different sections present in a binary, such as \texttt{.text} and \texttt{.data} sections.
 
 This would allow the emulator to directly consume a prebuilt executable program; not only does this allow for far better testing, as now prebuilt executable benchmarks/tests can be used in addition to the output of common compilers such as GCC, but the utility of the project to an end user would be greatly increased.
