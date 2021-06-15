@@ -67,3 +67,23 @@ As the project is scoped for Windows 10, MSVC \& Visual Studio 2019 was used as 
 Functional languages like Haskell and F\# were considered due to their natural affinity for developing components such as the parser or intermediate representation (IR) based optimisers; while they would have been a good fit for such components, they would have been less viable for core components such as the compiler due to reasons discussed previously. A multi-process solution was not desirable so they were not considered further.
 
 Python was utilised for the analysis and visualisation of the test results. Python is a very powerful scripting language with strong community support making it an ideal choice for smaller scripts that do not require high performance. The package matplotlib was used for visualisation due to its power and ease of use.
+
+MIPS assembly was used for extensive testing as discussed in detail by \autoref{section:testing}.
+
+The usage of each language is detailed in \autoref{tbl:lang-lines}.
+
+\begin{table}[h] 
+    \centering
+    \begin{tabular}{l|rrrr}
+        \toprule
+        Language & Usage & Files & Lines of Code \\
+        \midrule
+        C++ & Core Project & 108 & 8031 \\
+        Python & Analysis & 14 & 791 \\
+        DOS Batch & Automation & 1 & 4 \\
+        MIPS Assembly & Testing & 567 & 123319 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Languages used in the project and the number of lines of code and file count for each language. Lines of code are inclusive of comments and blank lines. 3rd party libraries are not included.}
+    \label{tbl:lang-lines}
+\end{table}
