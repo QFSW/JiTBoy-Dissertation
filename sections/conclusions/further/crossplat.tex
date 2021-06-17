@@ -1,3 +1,17 @@
 \subsubsection{Cross-platform Support}
 
-\YIComment{Do this}
+To keep the scope limited, the current project was only developed to build for Windows x86; despite this, the vast majority of the codebase is still portable to other operating systems (such as macOS and Linux) and x86\_64. Other than the exceptions that will be stated otherwise, all code written is portable and compliant to the C++20 standard.
+
+\begin{itemize}
+    \item \textbf{Calling Conventions}
+    
+    As detailed by \autoref{section:calling-convs}, the project uses the Windows calling convention \texttt{\_\_fastcall}. In order to port it to UNIX like operating systems, the compiler will need to be able to generate code that respects a supported calling convention such as \texttt{cdecl} \cite{cpp-calling-convs}.
+
+    \item \textbf{Executable Memory Allocation}
+    
+    Executable memory allocation is not possible through the C++ standard library and thus is currently performed by utilising the \texttt{Win32} APIs such as \texttt{VirtualProtect} \cite{win32-VirtualProtect}; this can be replaced on UNIX like operating systems by using \texttt{mmap} \cite{cpp-mmap}.
+
+    \item \textbf{Pointers}
+    
+    All pointers are currently treated by the compiler as 32-bit and thus 32-bit registers and instructions are used by the assembler for pointers such as the register file location and function pointers. In a x86\_64 build this would not be true and pointers would be 64-bit large; modifications will be required to handle this appropriately.
+\end{itemize}
