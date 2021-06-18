@@ -1,11 +1,14 @@
 \subsection{Conclusions}
 
-The JIT emulator was shown to outperform the interpreter in many benchmarks as shown in \autoref{section:results-perf}; in some cases, the JIT emulator was able to achieve speeds as high as 2000 mips whereas the interpreter was unable to even exceed 60 mips. Despite the impressive performance, the JIT emulator was not a universal improvement over the interpreter.
+The JIT emulator was written fully in C++20 and was found to have functional parity with the interpreter. It was shown to outperform the interpreter in many benchmarks as shown in \autoref{section:results-perf}; in some cases, the JIT emulator was able to achieve speeds as high as 2000 mips whereas the interpreter was unable to even exceed 60 mips. Despite the impressive performance, the JIT emulator was not a universal improvement over the interpreter.
 
 More specifically, the JIT emulator was only able to beat the performance of the interpreter when the emulated blocks were sufficiently hot. If the blocks are not executed frequently enough then the increased execution speed of the compiled blocks is not enough to outweigh the high overhead associated with the compilation of the blocks; in these cases, the slow, but consistent performance of the interpreter is higher. As blocks get hotter however, the performance of the JIT emulator is able to far exceed that of the interpreter — especially with \texttt{-L} enabled, resulting in performance improvements by orders of magnitudes.
 
 The JIT emulator was able to see significant speedup from arithmetic heavy workloads; in the case of the interpreter, the overhead associated with executing an arithmetic instruction becomes significant relative to the near native performance of the JIT emulators translated blocks. The same cannot be said for memory intensive programs. Since both the interpreter and the JIT emulator use the same (and relatively slow) memory map, the execution overheads associated with either emulation technique becomes less relevant. In these cases the JIT emulator is only able to slightly outperform the interpreter. The JIT emulator was able to significantly outperform the interpreter for highly recursive workloads, due to the increased program hotness; programs containing hot loops saw even higher performance improvements as no stack operations are required, avoiding the slow memory instructions.
 
+These results are enough to demonstrate the utility and viability of JIT compilation as a technique for accelerated binary emulation; while it performs poorly for simple and short programs, it outperforms the traditional interpreter in heavier workloads, where performance is typically of a greater priority.
+
+\YIComment{Talk about implications of JIT performance}
 
 \YIComment{Conclude that while Hybrid couldn't outperform JIT for heavy workloads, it was able to act like an interpreter and outperform JIT for light workloads.}
 
