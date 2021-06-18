@@ -1,3 +1,9 @@
 \subsubsection{Tiered Compilation}
 
-\YIComment{Do this}
+JIT compilers provide an interesting conundrum that AOT compilers don't have to consider; more optimised code will run faster, but optimisations take time to perform. In a JIT compiler, the optimisations are happening at runtime and thus even if the compiled code is faster, it might not have been worth to spend the extra time performing those optimisations.
+
+This creates a trade-off where any extra time spent on the compilation process in turn reduces the overall performance unless the improvements are significant enough (or have enough time) to outweigh the increased overhead. This means that many traditional optimisations which take significant time to perform are either difficult or unviable to implement in a JIT compiler.
+
+Intuitively, it is clear that the JIT compiler should spend the time to aggressively optimise blocks that are used frequently; if they are executed many times, then the increased overhead of performing the optimisations becomes less significant and the increased execution performance becomes worth it. Unfortunately, we don't if a block will be executed frequently when it requires compilation.
+
+This can be circumvented through tiered compilation. Each compilation tier can have a different set of optimisations and code generation techniques enabled such that higher tiers spend more time generating code but produce faster code; any optimisations that do not increase compilation times should be included in all tiers. The JIT emulator can then re-compile an existing block to a higher tier once some criteria has been met (such as a minimum execution count). This allows the JIT compiler to minimise the overhead associated with compilation, but for the few blocks that are executed enough to warrant more aggressive optimisations, it is still possible for the JIT compiler to eventually produce more optimal code. This can provide significant performance improvements for heavy workloads with frequently executed hot blocks.
