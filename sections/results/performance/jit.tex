@@ -61,7 +61,7 @@ A more general picture can be seen by comparing the execution time of all tests 
     \label{figure:jit-l-vs-jit}
 \end{figure}
 
-We can then compare \texttt{JIT -L} to the interpreter as shown in \autoref{figure:jit-l-vs-interpreter}. For short tests, \texttt{JIT -L} loses to the interpreter just as the standard \texttt{JIT} does (as shown by \autoref{figure:jit-vs-interpreter}). The clear difference with \texttt{-L} enabled is that the tests that already perform well without \texttt{-L} now perform even better, in some orders of magnitudes better. This is further reason to believe that \texttt{-L} is a beneficial feature despite not globally improving performance.
+We can then compare \texttt{JIT -L} to the interpreter as shown in \autoref{figure:jit-l-vs-interpreter}. For short tests, \texttt{JIT -L} loses to the interpreter just as the standard \texttt{JIT} does (as shown by \autoref{figure:jit-vs-interpreter}). The clear difference with \texttt{-L} enabled is that the tests that already perform well without \texttt{-L} now perform even better, in some cases orders of magnitude better. This is further reason to believe that \texttt{-L} is a beneficial feature despite not globally improving performance.
 
 \begin{figure}[H]
     \centering
@@ -88,7 +88,7 @@ Another metric of interest is the compilation inefficiency. A high compilation i
     \label{figure:jit-c-inefficiency-mips}
 \end{figure}
 
-More importantly, however, if the relationship between compilation inefficiency and performance. \autoref{figure:jit-c-inefficiency-mips} shows that there is quite a clear reciprocal relationship between the performance and the compilation inefficiency; as compilation inefficiency rises the performance drops drastically for both \texttt{JIT} and \texttt{JIT -L}.
+More importantly, however, is the relationship between compilation inefficiency and performance. \autoref{figure:jit-c-inefficiency-mips} shows that there is quite a clear reciprocal relationship between the performance and the compilation inefficiency; as compilation inefficiency rises the performance drops drastically for both \texttt{JIT} and \texttt{JIT -L}.
 
 The ideal configuration found for the JIT emulator is detailed in \autoref{tbl:jit-optimal}
 

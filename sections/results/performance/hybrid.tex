@@ -1,12 +1,6 @@
 \subsubsection{Hybrid Emulator}
 \label{section:perf-hybrid}
 
-\YIComment{Do this}
-
-\YIComment{Do mips comparison with JIT: hybrid wins for low mips, loses for high mips}
-
-\YIComment{Do execution time comparison with JIT: hybrid wins for low time, loses for high time}
-
 \YIComment{Write about different hybrid variants and performance characteristics of -L and -LS: -L is great, -S is trash}
 
 \begin{figure}[H]
@@ -37,7 +31,7 @@ One might logically think that the minimum value of \texttt{-T1} would lead to t
 
 Interestingly, we observe that \texttt{-T10} has the highest performance for the intensive \texttt{primal(n)} tests; we might expect that \texttt{-T1} would hold this position as that would cause the most aggressive compilation which would eventually lead to the best performance. The most likely explanation is that \texttt{-T1} wastes too much time compiling cold blocks that are executed very infrequently and have no time to pay off (such as the entry point) causing the worker pool to be busy for longer. This would delay the compilation of the hot blocks causing the interpreter fallback to activate more frequently, despite the fact that more blocks are translated overall. We observe that larger values of \texttt{-T} cause steadily worse performance for the more intensive tests, as we might expect.
 
-\autoref{figure:hybrid-t-primal-time} shows the execution times for the same test suite, which helps paint a far clearer picture for the performance characteristics with small \texttt{n}. We observe that \texttt{-T1} is unable to benefit from the low overhead characteristic of the emulator and begins with a relatively high execution time. Furthermore, we can that the performance at low \texttt{n} is improved as \texttt{-T} is increased. We can see that each curve behaves characteristically like the interpreter, showing a direct proportionality between the performance and \texttt{n} up until an inflection point caused by the hybrid acting more like the JIT emulator. This inflection point is similar to the one observed when investigating the relationship with hotness. Once this point is hit, the execution time becomes fairly constant before eventually curving back into a line just like with the JIT emulator. We can also see that whilst \texttt{-T10} generally performs the best, this is not universal, and it has a sour spot where it has begun compiling more blocks without having any time for it to pay off.
+\autoref{figure:hybrid-t-primal-time} shows the execution times for the same test suite, which helps paint a far clearer picture for the performance characteristics with small \texttt{n}. We observe that \texttt{-T1} is unable to benefit from the low overhead characteristic of the emulator and begins with a relatively high execution time. Furthermore, we can see that the performance at low \texttt{n} is improved as \texttt{-T} is increased. We can see that each curve behaves characteristically like the interpreter, showing a direct proportionality between the performance and \texttt{n} up until an inflection point caused by the hybrid acting more like the JIT emulator. This inflection point is similar to the one observed when investigating the relationship with hotness. Once this point is hit, the execution time becomes fairly constant before eventually curving back into a line just like with the JIT emulator. We can also see that whilst \texttt{-T10} generally performs the best, this is not universal, and it has a sour spot where it has begun compiling more blocks without having any time for it to pay off.
 
 \begin{figure}[H]
     \centering
@@ -69,6 +63,24 @@ This general effect of \texttt{-T} on the performance characteristics was observ
     \includegraphics[scale=0.75]{output/graphs/scatter/vs/Hybrid -L-vs-Hybrid -LS-time.png}
     \caption{Execution time of all tests for \texttt{Hybrid -L} vs \texttt{Hybrid -LS}.}
     \label{figure:hybrid-l-vs-hybrid-ls}
+\end{figure}
+
+\YIComment{Do mips comparison with JIT: hybrid wins for low mips, loses for high mips}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT -L-vs-Hybrid -L-mips.png}
+    \caption{Performance in mips of all tests for \texttt{Hybrid -L} vs \texttt{JIT -L}.}
+    \label{figure:hybrid-l-vs-jit-l-mips}
+\end{figure}
+
+\YIComment{Do execution time comparison with JIT: hybrid wins for low time, loses for high time}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/scatter/vs/JIT -L-vs-Hybrid -L-time.png}
+    \caption{Execution time of all tests for \texttt{Hybrid -L} vs \texttt{JIT -L}.}
+    \label{figure:hybrid-l-vs-jit-l-time}
 \end{figure}
 
 The ideal configuration found for the Hybrid emulator is detailed in \autoref{tbl:hybrid-optimal}
