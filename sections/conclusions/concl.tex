@@ -8,8 +8,6 @@ The JIT emulator was able to see significant speedup from arithmetic heavy workl
 
 These results are enough to demonstrate the utility and viability of JIT compilation as a technique for accelerated binary emulation; while it performs poorly for simple and short programs, it outperforms the traditional interpreter in heavier workloads, where performance is typically of a greater priority.
 
-\YIComment{Talk about implications of JIT performance}
+Furthermore, the hybrid emulator was successful in capturing desirable properties from both the JIT and interpreter emulators. Whilst it was unable to outperform the JIT emulator in heavy workloads, it significantly outperformed the interpreter in these workloads whilst simultaneously able to outperform the JIT for light workloads; this combination allowed it to minimise the weakness of either technique by sacrificing the maximum performance, greatly improving it's viability for widespread general use.
 
-\YIComment{Conclude that while Hybrid couldn't outperform JIT for heavy workloads, it was able to act like an interpreter and outperform JIT for light workloads.}
-
-\YIComment{Talk about how hybrid could be the future with improved compilation heuristics.}
+Despite having access to additional logical processors, the hybrid emulator was unable to outperform the JIT emulator; this is likely due to the simple compilation threshold used to determine if blocks should be translated with JIT compilation — \autoref{section:further-hybrid} explores alternative techniques that could make better utilisation of the worker threads and ultimately push the peak performance of the hybrid emulator beyond that of the JIT emulator.
