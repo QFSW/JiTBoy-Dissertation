@@ -1,7 +1,7 @@
 \subsubsection{Hybrid Emulator}
 \label{section:perf-hybrid}
 
-\YIComment{Write about different hybrid variants and performance characteristics of -L and -LS: -L is great, -S is trash}
+\autoref{figure:hybrid-hotness} shows how the performance of the hybrid emulator changes with relationship to the hotness of the programs; unlike the JIT, which has a monotonic relationship, the hybrid shows a more complex relationship.
 
 \begin{figure}[H]
     \centering
@@ -9,8 +9,6 @@
     \caption{Performance (mips) vs hotness for all tests on the hybrid emulators.}
     \label{figure:hybrid-hotness}
 \end{figure}
-
-\autoref{figure:hybrid-hotness} shows how the performance of the hybrid emulator changes with relationship to the hotness of the programs; unlike the JIT, which has a monotonic relationship, the hybrid shows a more complex relationship.
 
 This is because hybrid behaves like an interpreter for sufficiently cold tests, but like a JIT for sufficiently hot tests. This causes it to exhibit the `flat' performance profile of the interpreter for low hotness, before dropping in performance then rising as the JIT would. The dip in performance or the inflection point is where the hybrid begins to act like a JIT, and thus takes on all the associated overheads of a JIT, without having time make them worthwhile. This region therefore performs worse than both the interpreter or the JIT.
 
@@ -56,7 +54,9 @@ This general effect of \texttt{-T} on the performance characteristics was observ
     \label{figure:hybrid-t-memcpy-mips}
 \end{figure}
 
-\YIComment{Talk about -S}
+\YIComment{Talk about -L}
+
+The next aspect to investigate is the performance characteristics of the hybrid emulator with speculative compilation (\texttt{-S}) enabled. One would expect that it might improve the performance in heavy workloads, as the hybrid will be capable of speculatively compiling blocks before they are first required. 
 
 \begin{figure}[H]
     \centering
@@ -64,6 +64,26 @@ This general effect of \texttt{-T} on the performance characteristics was observ
     \caption{Execution time of all tests for \texttt{Hybrid -L} vs \texttt{Hybrid -LS}.}
     \label{figure:hybrid-l-vs-hybrid-ls}
 \end{figure}
+
+The execution time of all tests run on the hybrid emulator with and without \texttt{-S} is shown in \autoref{figure:hybrid-l-vs-hybrid-ls}; it is unclear from this what difference, if any, \texttt{-S} makes to the performance. In some instances, we see noticeably worse performance with \texttt{-S} enabled, however in the majority of cases there is no significant difference. To obtain a clearer picture, we turn our attention to individual test suites.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/tests/hybrid/primal/mips.png}
+    \caption{Performance in mips of the primal test suite run on the hybrid emulator with different optimisations enabled.}
+    \label{figure:hybrid-primal-mips}
+\end{figure}
+
+\autoref{figure:hybrid-primal-mips} shows the performance of the \texttt{primal(n)} test suite for different configurations of the hybrid emulator. From this, it is clearer that the effect of \texttt{-S} is detrmimental; this may seem counter intuitive, but it is likely for the same reason that \texttt{-T10} was better than \texttt{-T1} even for hot workloads. \texttt{-S} is likely overloading the worker pool with unimportant blocks (even more so, since they may never be executed at all) which delays the compilation of the important hot blocks, despite increasing the total number of compiled blocks.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{output/graphs/tests/hybrid/fibonacci_rep[100]/mips.png}
+    \caption{Performance in mips of the fibonacci\_rep[100] test suite run on the hybrid emulator with different optimisations enabled.}
+    \label{figure:hybrid-fibonacci-100-mips}
+\end{figure}
+
+In order to determine if \texttt{-S} shows benefit in larger programs we observe the results of the \texttt{fibonacci\_rep[100](n)} test suite shown by \autoref{figure:hybrid-fibonacci-100-mips}. Despite the much larger program size, \texttt{-S} appears to either make no difference or degrade the overall performance. For these reasons, \texttt{-S} should be considered detrimental in its current state and disabled.
 
 \YIComment{Do mips comparison with JIT: hybrid wins for low mips, loses for high mips}
 
