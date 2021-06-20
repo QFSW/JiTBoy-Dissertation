@@ -72,7 +72,7 @@ The execution time of all tests run on the hybrid emulator with and without \tex
     \label{figure:hybrid-primal-mips}
 \end{figure}
 
-\autoref{figure:hybrid-primal-mips} shows the performance of the \texttt{primal(n)} test suite for different configurations of the hybrid emulator. From this, it is clearer that the effect of \texttt{-S} is detrmimental; this may seem counter intuitive, but it is likely for the same reason that \texttt{-T10} was better than \texttt{-T1} even for hot workloads. \texttt{-S} is likely overloading the worker pool with unimportant blocks (even more so, since they may never be executed at all) which delays the compilation of the important hot blocks, despite increasing the total number of compiled blocks.
+\autoref{figure:hybrid-primal-mips} shows the performance of the \texttt{primal(n)} test suite for different configurations of the hybrid emulator. From this, it is clearer that the effect of \texttt{-S} is detrimental; this may seem counterintuitive, but it is likely for the same reason that \texttt{-T10} was better than \texttt{-T1} even for hot workloads. \texttt{-S} is likely overloading the worker pool with unimportant blocks (even more so, since they may never be executed at all) which delays the compilation of the important hot blocks, despite increasing the total number of compiled blocks.
 
 \begin{figure}[H]
     \centering
