@@ -65,7 +65,7 @@ The next stage in generating the final regex string is further type substitution
     \label{tbl:parser-exp-subs}
 \end{table}
 
-In the end, the simple and human readable pattern \texttt{\textbackslash w+ ??, ??, ??} is automatically converted to the final but completely unreadable regex pattern shown below:
+In the end, the simple and human-readable pattern \texttt{\textbackslash w+ ??, ??, ??} is automatically converted to the final but completely unreadable regex pattern shown below:
 
 \texttt{\^{}\textbackslash s*\textbackslash w+\textbackslash s+\textbackslash (\$[A-Za-z0-9]+),\textbackslash s*\textbackslash (\$[A-Za-z0-9]+),\textbackslash s*\textbackslash (\$[A-Za-z0-9]+)\textbackslash s*\$}
 
@@ -82,6 +82,6 @@ T parse(const std::string&)
     \label{code:regex-parser-inner}
 \end{lstfloat}
 
-This function can then be implemented for each supported type (such as \texttt{Register}) through template specialization. With this, the regex parser is able to parse each of the individual components automatically without sacrificing static typing at any stage. Furthemore, the parser uses several caches internally to accelerate performance at no extra work of the user.
+This function can then be implemented for each supported type (such as \texttt{Register}) through template specialization. With this, the regex parser is able to parse each of the individual components automatically without sacrificing static typing at any stage. Furthermore, the parser uses several caches internally to accelerate performance at no extra work of the user.
 
 Finally, the example in \autoref{code:regex-parser-rtype} is able to use the tuple components to construct the instruction object.
