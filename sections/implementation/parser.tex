@@ -1,5 +1,87 @@
 \subsection{Assembly Parser}
 
-\YIComment{Talk about regex based parser system}
+The parser for the MIPS assembly could easily become unmanageable and messy if not handled with proper care. While it is a very simple language syntactically and there is no real difficulty with parsing any given instruction, it is eliminating redundancy that poses the biggest challenge. Regex expressions can quickly become verbose and unwieldy and many of the instruction parsers would require the same implementation for their inner parsers, such as to parse a register.
 
-\YIComment{Talk about label resolution}
+To preserve the elegance and readability of the code-base, a semi-automatic approach to writing parsers was developed that preserved full type safety. \autoref{code:regex-parser-rtype} shows an example of this system in action for parsing canonical R type MIPS instructions such as `\texttt{ADD \$1, \$2, \$3}'.
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}[language=c++]
+static thread_local const auto parser =
+    generate_parser<Register, Register, Register>
+        (R"(\w+ ??, ??, ??)");
+
+const auto [dst, src1, src2] = parser.evaluate(instr);
+
+return InstructionR
+{
+    .op = opcode,
+    .rd = dst,
+    .rs = src1,
+    .rt = src2,
+    .sa = 0
+};
+    \end{lstlisting}
+    \caption{Parser function responsible for parsing basic R type instructions such as \texttt{ADD} and \texttt{SUB}.}
+    \label{code:regex-parser-rtype}
+\end{lstfloat}
+
+To begin, the parser is generated: this is only performed once per thread as denoted by \texttt{static thread\_local} to improve performance. The function \texttt{generate\_parser} is first supplied with the types of the components to parse from the expression as a variadic parameter pack. By utilising templates the parser object created is fully typed. Next, the regex expression for the parser is supplied, however this is not a typical regex expression.
+
+First, the expression contains these \texttt{??} sequences which are not part of the standard regex specification. These have been used to denote the `component' that is being parsed. When generating the parser, the \texttt{??} will be replaced by a regex pattern in a capturing group based on the types provided. \autoref{tbl:parser-type-subs} shows the type substitutions provided to the parser system by the MIPS parser. In this example, all three \texttt{??}s correspond to \texttt{Register}s as determined by the type signature and thus are substituted with \texttt{\textbackslash \$[A-Za-z0-9]+}. It is important to note that at this stage, the substituted regex is not responsible for ensuring that the format is correct and the parse may still fail; the job of the regex is to ensure that the correct substring is provided to the inner parser at each stage.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l|l}
+        \toprule
+        Type & Substitution \\
+        \midrule
+        \texttt{std::string} & \texttt{\textbackslash S+} \\
+        \texttt{Register} & \texttt{\textbackslash \$[A-Za-z0-9]+} \\
+        \texttt{uint32\_t} & \texttt{[-+]?[A-Za-z0-9]+} \\
+        \texttt{uint16\_t} & \texttt{[-+]?[A-Za-z0-9]+} \\
+        \texttt{uint8\_t} & \texttt{[-+]?[A-Za-z0-9]+} \\
+        \texttt{int32\_t} & \texttt{[-+]?[A-Za-z0-9]+} \\
+        \texttt{int16\_t} & \texttt{[-+]?[A-Za-z0-9]+} \\
+        \texttt{int8\_t} & \texttt{[-+]?[A-Za-z0-9]+} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Automatic pattern substitutions supported by the MIPS assembly parser.}
+    \label{tbl:parser-type-subs}
+\end{table}
+
+The next stage in generating the final regex string is further type substitutions. In MIPS assembly, it is valid to have any number of spaces following a comma, and hence we should support that. To do that we would need to write the appropriate regex each time, which becomes overly verbose. Instead, the parser generator has a set of expansion substitutions that it can detect instances of, which it will then replace with the full comprehensive regex pattern. These are detailed in \autoref{tbl:parser-exp-subs}.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l}
+        \toprule
+        Substitution \\
+        \midrule
+        \texttt{,\textbackslash s*} \\
+        \texttt{\textbackslash s+} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Automatic expansion substitutions supported by the MIPS assembly parser.}
+    \label{tbl:parser-exp-subs}
+\end{table}
+
+In the end, the simple and human readable pattern \texttt{\textbackslash w+ ??, ??, ??} is automatically converted to the final but completely unreadable regex pattern shown below:
+
+\texttt{\^{}\textbackslash s*\textbackslash w+\textbackslash s+\textbackslash (\$[A-Za-z0-9]+),\textbackslash s*\textbackslash (\$[A-Za-z0-9]+),\textbackslash s*\textbackslash (\$[A-Za-z0-9]+)\textbackslash s*\$}
+
+With the automatic pattern generation covered, we can now return to the example in \autoref{code:regex-parser-rtype}. With the parser constructed, we can now evaluate the input string on the parser; this returns a strongly typed tuple, where each element corresponds to the pattern and type signature used to generate the parser. The parser first uses the regex pattern with its capturing groups to split the input into several substrings, each of which corresponds to the types provided; in this case, each of them is a \texttt{Register}. The inner parser converts each substring into the desired type, which is then packaged together into a tuple by the regex parser.
+
+How is the parser able to dispatch to the correct inner parser functions for each type? When generating the parser, it is provided with an \texttt{InnerParser} as one of the type parameters; this type must contain a template function of the signature shown in \autoref{code:regex-parser-inner}.
+
+\begin{lstfloat}[H]
+    \begin{lstlisting}[language=c++]
+template <typename T>
+T parse(const std::string&)
+    \end{lstlisting}
+    \caption{\texttt{parse} function of the \texttt{InnerParser} type required by the regex parser.}
+    \label{code:regex-parser-inner}
+\end{lstfloat}
+
+This function can then be implemented for each supported type (such as \texttt{Register}) through template specialization. With this, the regex parser is able to parse each of the individual components automatically without sacrificing static typing at any stage.
+
+Finally, the example in \autoref{code:regex-parser-rtype} is able to use the tuple components to construct the instruction object.
