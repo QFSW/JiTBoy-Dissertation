@@ -1,4 +1,12 @@
 \subsubsection{Improved Compilation Heuristics}
 \label{section:further-hybrid}
 
-\YIComment{Do this}
+Due to the limited number of worker threads (constraint by the number of logical processors on the system), we must be selective when determining which blocks should be compiled. If we are too aggressive and compile everything, performance is degraded due to overloading the worker pool, as shown in \autoref{section:perf-hybrid}.
+
+The current compilation heuristic is a simple threshold controlled by \texttt{-T}: if a block has been requested more times than the threshold, it is scheduled for compilation. A sufficiently large value of \texttt{-T} will ensure that only important blocks are eventually compiled and unimportant blocks are ignored, but at a cost; the larger the value of \texttt{-T}, the longer it will take to compile the correct blocks and the interpreter fallback will be required more frequently.
+
+In a perfect world, the hybrid emulator would immediately know the importance of every block as well as how soon each one would be needed, allowing it to prioritise the compilation so that higher priority blocks are scheduled before moving onto lower priority blocks. This would maximise the performance as we would maximise the utilisation of the worker pool whilst simultaneously avoiding the issue of overloading the system with unimportant jobs. Sadly, we do not live in a perfect world.
+
+In order to improve the hybrid emulator a myriad of techniques can be explored to provide a more intelligent compilation heuristic, many of which could be adopted from cache pre-fetching and branch prediction. Whilst they aren't exactly the same, they aim to solve the same fundamental problem of working out what the system needs \textit{before} it actually needs it; solving the same problem for the hybrid emulator's compilation heuristic would allow it to schedule the correct blocks for compilation before they are required, maximising performance.
+
+One such technique that could be adopted from branch prediction is a simple static branch predictor: if the branch is forwards, assume it is not taken, and if it is backwards, assume it is taken. This technique may seem simplistic to the point of uselessness, and indeed modern branch predictors adopt far more complex techniques, but the fundamental strategy still has merit; backwards branches are commonly indicative of a loop, in which case it will be taken many times, whereas forwards branches can indicate a loop exit, which will be taken far less frequently. This could be adapted and used as a compilation heuristic; if the requested block is at a lower PC than the current PC, schedule it for compilation more aggressively (such as with a lower threshold).
