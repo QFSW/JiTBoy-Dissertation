@@ -21,7 +21,7 @@ return InstructionR
     .sa = 0
 };
     \end{lstlisting}
-    \caption{Parser function responsible for parsing basic R type instructions such as \texttt{ADD} and \texttt{SUB}.}
+    \caption{Parser function responsible for parsing basic R type instructions such as \texttt{ADD} and \texttt{SUB}. Parsing the opcode is handled before this function, as the opcode determines the instruction format.}
     \label{code:regex-parser-rtype}
 \end{lstfloat}
 
@@ -49,7 +49,7 @@ First, the expression contains these \texttt{??} sequences which are not part of
     \label{tbl:parser-type-subs}
 \end{table}
 
-The next stage in generating the final regex string is further type substitutions. In MIPS assembly, it is valid to have any number of spaces following a comma, and hence we should support that. To do that we would need to write the appropriate regex each time, which becomes overly verbose. Instead, the parser generator has a set of expansion substitutions that it can detect instances of, which it will then replace with the full comprehensive regex pattern. These are detailed in \autoref{tbl:parser-exp-subs}.
+The next stage in generating the final regex string is further type substitutions. In MIPS assembly, it is valid to have any number of spaces following a comma, and hence we should support that. To do that we would need to write the appropriate regex each time, which becomes overly verbose. Instead, the parser generator has a set of expansion substitutions that it can detect instances of, which it will then replace with the full comprehensive regex pattern. These are detailed in \autoref{tbl:parser-exp-subs}. This allows the parser to replace instances of a general pattern with the pattern itself, and in our case the `\texttt{, }' becomes `\texttt{,\textbackslash s*}'.
 
 \begin{table}[H] 
     \centering
@@ -65,7 +65,7 @@ The next stage in generating the final regex string is further type substitution
     \label{tbl:parser-exp-subs}
 \end{table}
 
-In the end, the simple and human-readable pattern \texttt{\textbackslash w+ ??, ??, ??} is automatically converted to the final but completely unreadable regex pattern shown below:
+Finally, some extra boilerplate is added to the regex pattern to handle leading and trailling whitespace. In the end, the simple and human-readable pattern \texttt{\textbackslash w+ ??, ??, ??} is automatically converted to the final but completely unreadable regex pattern shown below:
 
 \texttt{\^{}\textbackslash s*\textbackslash w+\textbackslash s+\textbackslash (\$[A-Za-z0-9]+),\textbackslash s*\textbackslash (\$[A-Za-z0-9]+),\textbackslash s*\textbackslash (\$[A-Za-z0-9]+)\textbackslash s*\$}
 

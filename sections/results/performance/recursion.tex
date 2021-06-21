@@ -1,6 +1,10 @@
 \subsubsection{Recursion}
 \label{section:perf-recursion}
 
+The next question to explore is the performance characteristics of the SUTs when executing a recursion heavy program. To begin, we will look at the \texttt{fibonacci(n)} test suite. At first glance, this will seem very similar to the \texttt{primal(n)} test suite: as \texttt{n} increases the program hotness will increase. The fact that \texttt{fibonacci(n)} is recursive has some important implications.
+
+Firstly, the proportion of memory instructions will be much higher. As memory operations are required for the stack, the program will have a lower arithmetic intensity. Secondly, the recursive function must use \texttt{JR} to unwind the stack, a variable jump that cannot be relinked by \texttt{-L} as explained in \autoref{section:direct-linking}. These factors will help us determine which aspects of the performance characteristics observed previously were due to program hotness, and what was due to arithmetic intensity.
+
 \YIComment{Redo this}
 
 \autoref{figure:fibonacci-mips} shows the performance of the \texttt{fibonacci(n)} test suite. It has a very similar performance characteristic to the \texttt{primal(n)} test suite with some notable differences.
