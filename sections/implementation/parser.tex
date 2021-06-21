@@ -76,7 +76,7 @@ How is the parser able to dispatch to the correct inner parser functions for eac
 \begin{lstfloat}[H]
     \begin{lstlisting}[language=c++]
 template <typename T>
-T parse(const std::string&)
+T parse(const std::string& raw)
     \end{lstlisting}
     \caption{\texttt{parse} function of the \texttt{InnerParser} type required by the regex parser.}
     \label{code:regex-parser-inner}
