@@ -5,20 +5,24 @@ The next question to explore is the performance characteristics of the SUTs when
 
 Firstly, the proportion of memory instructions will be much higher. As memory operations are required for the stack, the program will have a lower arithmetic intensity. Secondly, the recursive function must use \texttt{JR} to unwind the stack, a variable jump that cannot be relinked by \texttt{-L} as explained in \autoref{section:direct-linking}. These factors will help us determine which aspects of the performance characteristics observed previously were due to program hotness, and what was due to arithmetic intensity.
 
-\YIComment{Redo this}
-
-\autoref{figure:fibonacci-mips} shows the performance of the \texttt{fibonacci(n)} test suite. It has a very similar performance characteristic to the \texttt{primal(n)} test suite with some notable differences.
-
-The overall performance for both SUTs is significantly lower. This is due to the memory instructions required for pushing and popping the stack, which have much lower emulation performance compared to arithmetic instructions.
-
-The JIT emulator takes significantly longer to reach peak performance whereas the interpreter does not. This is because the interpreters fixed costs, such as initialization, do not change with the program being executed. The JIT emulator on the other hand has additional costs for every block that needs compiling, and the \texttt{fibonacci(n)} program contains more source blocks. This means there is a larger initial cost which takes longer to amortize.
-
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{output/graphs/tests/all/fibonacci/mips.png}
     \caption{Performance in mips of the fibonacci test suite.}
     \label{figure:fibonacci-mips}
 \end{figure}
+
+The performance of the \texttt{fibonacci(n)} test suite is shown in \autoref{figure:fibonacci-mips}. The pecking order of the different SUTs' peak performance remains the same as for the \texttt{primal(n)} test suite explored in \autoref{section:perf-iteration} and is as shown below:
+
+$\texttt{JIT -L} > \texttt{Hybrid -L} > \texttt{JIT} > \texttt{Hybrid} > \text{Interpreter}$
+
+While we can see that the general shape is the same for each SUT, the magnitude of the performance achieved is drastically different in some cases. As \texttt{n} increases, the performance of the JIT and hybrid emulators is able to rise significantly due to the increased program hotness, however it peaks at an order of magnitude lower than for \texttt{primal(n)} due to the significantly lower arithmetic intensity of the recursive test suite. This helps confirm that while hotness is the underlying factor giving rise the shape of the performance curve in both cases, the high arithmetic intensity of the \texttt{primal(n)} test suite significantly amplifies the potential peak performance of the JIT and hybrid emulators, particularly with \texttt{-L} enabled.
+
+Under all SUTs, the performance of the recursive test suite is lower than for iterative test suite. This is because, no matter the emulator used, the memory instruction emulation is slow due to the comparatively slow memory map powering the emulators. Emulators with higher execution performance, such as \texttt{JIT -L}, suffer from this the most. The interpreter is relatively unaffected due to its generally poor performance.
+
+One peculiarity of interest is how the performance characteristics change for the highest values of \texttt{n}; unlike with \texttt{primal(n)}, the performance is not actually monotonic, and instead of plateuing it begins to slightly drop. This is due to the memory map and will be explored in \autoref{section:perf-memory}.
+
+We can confidently conclude that the JIT and hybrid emulator have a significant advantage over the interpreter for recursion heavy workloads, just not as large of a lead as with heavily iterative workloads.
 
 \YIComment{Talk about factorial}
 
