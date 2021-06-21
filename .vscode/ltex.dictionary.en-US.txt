@@ -40,3 +40,4 @@ cdecl
 vectorcall
 clrcall
 partitioner
+fibonacci
