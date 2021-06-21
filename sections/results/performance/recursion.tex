@@ -24,7 +24,7 @@ One peculiarity of interest is how the performance characteristics change for th
 
 We can confidently conclude that the JIT and hybrid emulator have a significant advantage over the interpreter for recursion heavy workloads, just not as large of a lead as with heavily iterative workloads.
 
-\YIComment{Talk about factorial}
+The next recursive test suite of interest is \texttt{factorial(n)}. While it is recursive, it is not a heavy workload and is very light compared to \texttt{primal(n)} and \texttt{factorial(n)}.
 
 \begin{figure}[H]
     \centering
@@ -32,3 +32,7 @@ We can confidently conclude that the JIT and hybrid emulator have a significant 
     \caption{Performance in mips of the factorial test suite.}
     \label{figure:factorial-mips}
 \end{figure}
+
+The performance for the test suite is shown in \autoref{figure:factorial-mips}. We see a rather clear reversal in the pecking order of the various SUTs. The program is simply not hot enough for the JIT emulator to overcome its overheads and outperform the interpreter, which remains the best performer for all \texttt{n}. Theoretically, if we were able to increase \texttt{n} exponentially, we would see the same curves as with \texttt{fibonacci(n)}, but the explosively larger values of \texttt{n!} prevent us from doing so with a 32-bit result.
+
+The performance behaviour of the hybrid emulator is more interesting. We can clearly see the point at which it starts compiling blocks, causing its performance to plummet lower than that of the JIT emulator; again, if we could increase \texttt{n} we would expect the hybrid to eventually climb back up in performance and outperform the interpreter.
