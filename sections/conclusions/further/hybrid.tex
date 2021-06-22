@@ -1,7 +1,7 @@
 \subsubsection{Improved Compilation Heuristics}
 \label{section:further-hybrid}
 
-Due to the limited number of worker threads (constraint by the number of logical processors on the system), we must be selective when determining which blocks should be compiled. If we are too aggressive and compile everything, performance is degraded due to overloading the worker pool, as shown in \autoref{section:perf-hybrid}.
+Due to the limited number of worker threads (constrained by the number of logical processors on the system), we must be selective when determining which blocks should be compiled. If we are too aggressive and compile everything, performance is degraded due to overloading the worker pool, as shown in \autoref{section:perf-hybrid}.
 
 The current compilation heuristic is a simple threshold controlled by \texttt{-T}: if a block has been requested more times than the threshold, it is scheduled for compilation. A sufficiently large value of \texttt{-T} will ensure that only important blocks are eventually compiled and unimportant blocks are ignored, but at a cost; the larger the value of \texttt{-T}, the longer it will take to compile the correct blocks and the interpreter fallback will be required more frequently.
 

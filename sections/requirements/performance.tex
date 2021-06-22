@@ -14,7 +14,7 @@ The performance of the JIT and hybrid emulators will need to be evaluated in com
 
     \item \textbf{Memory Intensive}
     
-    Memory instructions can be difficult to accelerate due to the abstraction required to fully emulate the entire memory space whilst running in the same process as the emulator. Because of this, the JIT emulator may see little speedup over the interpreter. Test suites such as \texttt{memcpy(n)} will be written to investigate the performance characteristics.
+    Memory instructions can be difficult to accelerate due to the abstraction required to fully emulate the entire memory space whilst running in the same process as the emulator. If this is the case, the JIT emulator may see little speedup over the interpreter. Test suites such as \texttt{memcpy(n)} will be written to investigate the performance characteristics.
 
     \item \textbf{Arithmetic Intensive}
     

@@ -52,7 +52,7 @@ This general effect of \texttt{-T} on the performance characteristics was observ
     \label{figure:hybrid-t-memcpy-mips}
 \end{figure}
 
-The optimisation \texttt{-L} was enabled for the hybrid emulator as it produced the same favourable results as with the JIT emulator, as explored in \autoref{section:perf-jit}, for reasons already discussed. The majority of tests saw performance improvements with \texttt{-L} enabled with hotter tests seeing improvements by orders of magnitudes whereas shorter tests saw very slight performance degradation.
+The optimisation \texttt{-L} was enabled for the hybrid emulator as it produced the same favourable results as with the JIT emulator, as explored in \autoref{section:perf-jit}, for reasons already discussed. The majority of tests saw performance improvements with \texttt{-L} enabled with hotter tests seeing improvements by orders of magnitude whereas shorter tests saw very slight performance degradation.
 
 The next aspect to investigate is the performance characteristics of the hybrid emulator with speculative compilation (\texttt{-S}) enabled. One would expect that it might improve the performance in heavy workloads, as the hybrid will be capable of speculatively compiling blocks before they are first required. 
 
@@ -72,7 +72,7 @@ The execution time of all tests run on the hybrid emulator with and without \tex
     \label{figure:hybrid-primal-mips}
 \end{figure}
 
-\autoref{figure:hybrid-primal-mips} shows the performance of the \texttt{primal(n)} test suite for different configurations of the hybrid emulator. From this, it is clearer that the effect of \texttt{-S} is detrimental; this may seem counterintuitive, but it is likely for the same reason that \texttt{-T10} was better than \texttt{-T1} even for hot workloads. \texttt{-S} is likely overloading the worker pool with unimportant blocks (even more so, since they may never be executed at all) which delays the compilation of the important hot blocks, despite increasing the total number of compiled blocks.
+\autoref{figure:hybrid-primal-mips} shows the performance of the \texttt{primal(n)} test suite for different configurations of the hybrid emulator. From this, it is clearer that the effect of \texttt{-S} is detrimental; this may seem counterintuitive, but it is likely for the same reason that \texttt{-T10} was better than \texttt{-T1} even for hot workloads, as discussed previously. \texttt{-S} is likely overloading the worker pool with unimportant blocks (even more so, since they may never be executed at all) which delays the compilation of the important hot blocks, despite increasing the total number of compiled blocks.
 
 \begin{figure}[H]
     \centering
@@ -92,7 +92,7 @@ With the configuration investigated, we can now move onto comparing the performa
     \label{figure:hybrid-l-vs-jit-l-mips}
 \end{figure}
 
-The interesting trend we see in the plot is caused by the same inflection point we observed when comparing the hybrid emulator's performance to program hotness. Programs with lower performance on both the JIT and hybrid emulators tend to have lower program hotness, causing the hybrid to behave more like an interpreter and outperform the JIT emulator. Likewise, programs with higher performance tend to also have higher hotness, and thus the hybrid acts more like a JIT emulator again. This stops the JIT emulator from beating the hybrid by orders of magnitudes like it does to the interpreter.
+The interesting trend we see in the plot is caused by the same inflection point we observed when comparing the hybrid emulator's performance to program hotness. Programs with lower performance on both the JIT and hybrid emulators tend to have lower program hotness, causing the hybrid to behave more like an interpreter and outperform the JIT emulator. Likewise, programs with higher performance tend to also have higher hotness, and thus the hybrid acts more like a JIT emulator again. This stops the JIT emulator from beating the hybrid by orders of magnitude like it does to the interpreter.
 
 Despite acting like a JIT emulator for hotter tests, we see that the hybrid still performs worse than the JIT emulator (but not nearly as bad as the interpreter); this due to the added overheads and complexities associated with the hybrid emulator. It appears that the utilisation of the worker thread to asynchronously JIT compile blocks whilst executing the program is not able to make up for the increased overheads.
 

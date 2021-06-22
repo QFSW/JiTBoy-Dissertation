@@ -30,11 +30,11 @@ Next, in \Cref{section:perf-iteration,section:perf-recursion,section:perf-memory
     
     \item \textbf{\texttt{primal(n)}}
     
-    An iterative program that determines if $n$ is primal. With no memory instructions present this should result in a very hot ALU heavy loop. Since the complexity is $\mathcal{O}(n)$, the values of $n$ supplied to the test suite will grow on the order of $2^n$; all values of $n$ used will be primal.
+    An iterative program that determines if $n$ is prime. With no memory instructions present this should result in a very hot ALU heavy loop. Since the complexity is $\mathcal{O}(n)$, the values of $n$ supplied to the test suite will grow on the order of $2^n$; all values of $n$ used will be prime.
     
     \item \textbf{\texttt{unroll(n/m)}}
     
-    A program loop of $n$ iterations that has been unrolled into $n/m$ chunks such that the unrolled program has $m$ iterations. Designed to investigate how the trade-off of unrolling varies with each SUT.
+    A program loop of $n$ iterations that has been unrolled into $n/m$ chunks such that the unrolled program has $m$ iterations. Designed to investigate how the trade-off of unrolling varies with each SUT. All values of $n$ and $m$ used were powers of 2 where $m \leq n$.
 \end{itemize}
 
 \subfile{interpreter}

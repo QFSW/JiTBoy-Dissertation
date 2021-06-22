@@ -56,7 +56,7 @@ Unfortunately, the \texttt{RET} instruction does not have any conditional varian
 
 We turn our attention to \texttt{CMOVcc}, which allows us to conditionally move a value from one register to another \cite{x86-cmovcc}. We can then compute two target destinations, \texttt{target\_true} for the actual destination of the branch instruction, and \texttt{target\_false} for the expected destination address after no branch is executed. \texttt{CMOVcc} can then be used to return the correct target based on the outcome of the comparison. The generated code for this is detailed in \autoref{code:branch-x86-branch}.
 
-In some cases, the delay slot instruction may cause \texttt{EFLAGS} to change, typically those that call other functions or use \texttt{CMP}. In these cases, the \texttt{CMOVcc} will then act on an incorrect condition status producing unpredictable behaviour. To work around this, the instructions \texttt{PUSHF} and \text{POPF} can be used to push and pop \texttt{EFLAGS} to the stack \cite{x86-pushf, x86-popf}. The variant that preserves \texttt{EFLAGS} is shown in \autoref{code:branch-x86-branch-stack}.
+In some cases, the delay slot instruction may cause \texttt{EFLAGS} to change, typically those that call other functions or use \texttt{CMP}. In these cases, the \texttt{CMOVcc} will then act on an incorrect condition status producing unpredictable behaviour. To work around this, the instructions \texttt{PUSHF} and \texttt{POPF} can be used to push and pop \texttt{EFLAGS} to the stack \cite{x86-pushf, x86-popf}. The variant that preserves \texttt{EFLAGS} is shown in \autoref{code:branch-x86-branch-stack}.
 
 \begin{lstfloat}[H]
     \begin{lstlisting}

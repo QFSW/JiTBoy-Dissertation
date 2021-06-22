@@ -50,7 +50,7 @@ While \texttt{-L} clearly gives superior results for hotter and more performance
     \label{figure:jit-factorial-mips}
 \end{figure}
 
-The test suite \texttt{factorial(n)} can only be used for small \texttt{n} due to how explosively $n!$ increases with $n$; the performance for this test suite is shown in \autoref{figure:jit-factorial-mips}. It can be seen that \texttt{-L} causes a slight, but consistent drop in performance compared to the standard vanilla \texttt{JIT} configuration. The performance in these scenarios is very poor even without \texttt{-L}, so this is not a compelling reason to disable \texttt{-L} as the high performance in heavier workloads more than makes up for it.
+The test suite \texttt{factorial(n)} can only be used for small \texttt{n} due to how explosively $n!$ increases with $n$; the performance for this test suite is shown in \autoref{figure:jit-factorial-mips}. It can be seen that \texttt{-L} causes a slight, but consistent drop in performance compared to the vanilla \texttt{JIT} configuration. The performance in these scenarios is very poor even without \texttt{-L}, so this is not a compelling reason to disable \texttt{-L} as the high performance in heavier workloads more than makes up for it.
 
 A more general picture can be seen by comparing the execution time of all tests between \texttt{JIT -L} and the standard \texttt{JIT} as shown by \autoref{figure:jit-l-vs-jit}. It can be seen that most tests perform the same or better with \texttt{-L} enabled, with some tests performing orders of magnitude better.
 
