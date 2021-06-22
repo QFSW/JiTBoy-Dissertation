@@ -1,0 +1,29 @@
+\subsection{Challenges and Reflection}
+
+Despite the success of the project, it was not without a great deal of challenges and problems encountered on the way. The following outlines a few of the biggest challenges encountered during the development of the project:
+
+\begin{itemize}
+    \item \textbf{Micro-optimisations}
+    
+    In most cases, only algorithmic changes have a significant impact on the final performance and micro-optimisations are generally advised against; in this project, that couldn't be further from the case. Operations that would be considered trivial under normal circumstances (such as an extra hash table lookup) would cause significant performance degradation due to the extremely small scale of execution time involved.
+    
+    One such example that was a surprise was that \texttt{std} implementations of containers such as \texttt{std::unordered\_map} were relatively slow compared to 3rd party implementations, as mentioned in \autoref{section:interpreter-mem-map}.
+    
+    By combining profiling, manual inspection of the code, experimentation, and a strong understanding of the language I was able to shave off microseconds here and there resulting in significant performance improvements.
+
+    \item \textbf{Lock-free Multithreading}
+    
+    While multithreading sounds great on paper, making extra utilisation of the existing hardware, it isn't without its share of issues. Many painful and transient race conditions were encountered during development which conveniently were not reproducable with logging or debugging enabled.
+    
+    Furthermore, the difficulty of multithreading is amplified when everything is made lock-free, something that is required for high performance. For macro scale tasks, such as IO or long jobs, locks are an acceptable means of safe synchronisation between threads. Given that the jobs in the hybrid emulator took only microseconds to execute, the overhead of locking would defeat the point of distributing the work to multiple threads, as the lock overhead would be on a similar order of magnitude to the job itself. Examples of lock-free synchronisation include the results queue optimisation mentioned in \autoref{section:job-system}.
+    
+    Effectively optimising was unfortunately not a trivial task as profiling becomes far less viable when analysing a multithreaded system on such a small scale.
+
+    \item \textbf{x86 Assembly}
+
+    Despite the popularity of x86 as an ISA, it is not nearly as well designed as one might expect. As it has evolved heavily from the 8-bit era whilst maintaining a high level of backwards compatibility, it has resulted in some \textit{interesting} instruction encodings and peculiarities. While the official Intel x86 guide \textit{is} comprehensive, it is over 2000 pages long and not particularly digestible. This made it quite difficult to find and extract the relevant information required to build the assembler in an optimal fashion.
+\end{itemize}
+
+On reflection, one of the biggest achievements of the project was how well the JIT and hybrid emulators were able to perform, especially for light workloads. This may seem like a strange takeaway, given the JIT and hybrid emulators far superior performance for heavy workloads, yet relatively poor performance for light workloads compared to the interpreter.
+
+Stopping to consider the sheer amount of work that the JIT emulator must perform to translate a block of MIPS to x86, compared to the trivial emulation required by the interpreter, one would expect the JIT emulator to perform significantly worse than it actually does. Very tight optimisation and design was required at every stage of the process, in addition to the high level algorithm and architectural design in order to achieve the performance it is capable of.
