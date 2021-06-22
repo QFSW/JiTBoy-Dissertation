@@ -1,0 +1,16 @@
+\subsection{Building JiTBoy}
+
+The JiTBoy project can be built by building the solution \texttt{JiTBoy.sln} either through Visual Studio 2019 or with MSBuild.
+
+JiTBoy has two different build configurations that can be used:
+
+\begin{itemize}
+    \item \textbf{Release}
+    
+    Release builds give the highest performance but take longer to build; furthermore, no logs are produced from release builds. Use Release for running mass tests or collecting performance data.
+
+    \item \textbf{Debug}
+    
+    Debug builds enable debugging in addition to producing more detailed logs of the emulator execution, but the performance is significantly worse. Use Debug builds for running single tests or investigating test failures and errors.
+
+\end{itemize}

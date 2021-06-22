@@ -1,0 +1,91 @@
+\subsection{Running JiTBoy}
+
+JiTBoy can be run by executing \texttt{JiTBoy.exe} in a command line interface (CLI) such as \texttt{cmd}. The executable will be in either \texttt{Release} or \texttt{Debug} depending on which configuration the project was built with.
+
+By default, JiTBoy will run all tests on all emulator configurations with no performance data collected. To collect performance data, provide one of the following \texttt{-{}-timing} arguments in \autoref{tbl:user-guide-timing}.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l|l}
+        \toprule
+        Argument & Configuration \\
+        \midrule
+
+        \texttt{-{}-timing=none} &
+        \begin{tabular}{ll}
+            \texttt{batch\_size} & 1 \\
+            \texttt{threshold}   & 0 \\
+            \texttt{precision}   & 1 \\
+        \end{tabular} \\
+        \midrule
+
+        \texttt{-{}-timing=fast} &
+        \begin{tabular}{ll}
+            \texttt{batch\_size} & 1 \\
+            \texttt{threshold}   & 2 \\
+            \texttt{precision}   & 0.1 \\
+        \end{tabular} \\
+        \midrule
+
+        \texttt{-{}-timing=accurate} &
+        \begin{tabular}{ll}
+            \texttt{batch\_size} & 10 \\
+            \texttt{threshold}   & 10 \\
+            \texttt{precision}   & 0.01 \\
+        \end{tabular} \\
+        \midrule
+
+        \texttt{-{}-timing=final} &
+        \begin{tabular}{ll}
+            \texttt{batch\_size} & 100 \\
+            \texttt{threshold}   & 10 \\
+            \texttt{precision}   & 0.0001 \\
+        \end{tabular} \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Supported timing configurations for the test runner CLI.}
+    \label{tbl:user-guide-timing}
+\end{table}
+
+JiTBoy can also be run on a single test with an emulator config of choice by using \texttt{-{}-single}; it is recommended to build with the \texttt{Debug} configuration for improved logging. To use \texttt{-{}-single}, invoke JiTBoy with the following format:
+
+\texttt{JiTBoy.exe -{}-single test\_path emulator\_config}
+
+\texttt{test\_path} must be a relative or absolute path to the test file desired. If a normal assembly file is provided, then no test validation will be performed. Emulator config must be one of the following emulators in \autoref{tbl:user-guide-single}. The emulator config is case insensitive.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{l|l}
+        \toprule
+        Emulator & Argument Options \\
+        \midrule
+
+        \texttt{JIT} &
+        \begin{tabular}{ll}
+            \texttt{-L } & Enables direct linking \\
+        \end{tabular} \\
+        \midrule
+
+        \texttt{Hybrid} &
+        \begin{tabular}{ll}
+            \texttt{-L}  & Enables direct linking \\
+            \texttt{-S}  & Enables speculative compilation \\
+            \texttt{-Tx} & Sets the compilation threshold to \texttt{x} \\
+        \end{tabular} \\
+        \midrule
+
+        \texttt{Interpreter} &
+        \begin{tabular}{ll}
+            None & \\
+        \end{tabular} \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Supported emulator configurations for JiTBoy's \texttt{-{}-single} mode.}
+    \label{tbl:user-guide-single}
+\end{table}
+
+For example, the following would invoke the test \texttt{long\_mul.s} under the JIT emulator with direct linking enabled:
+
+\texttt{JiTBoy.exe -{}-single tests/mips/func/long\_mul.s JIT -L}
