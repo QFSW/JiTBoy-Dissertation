@@ -44,7 +44,7 @@ There are some unique points of interest concerning the different calling conven
     \item \code{\_\_vectorcall} has restricted argument types and is typically only useful for floating point and SIMD. For integer arguments, it is equivalent to \code{\_\_fastcall}
 \end{itemize}
 
-Outside previously aforementioned unique cases and properties, the calling convention used was of little importance, as long as both the caller and callee are consistent with one another. All calling conventions available under MSVC utilised \code{EAX} as the return register. I introduced a set of macros in the config that would define a symbol, \code{CALLING\_CONV}, to match the selected calling convention. This symbol was then used throughout the project, whenever a JIT - C++ interop barrier occurred, allowing me to globally change the calling convention with ease if required.
+Outside previously aforementioned unique cases and properties, the calling convention used was of little importance, as long as both the caller and callee are consistent with one another. All calling conventions available under MSVC utilised \code{EAX} as the return register. A set of macros were introduced in the config that would define a symbol, \code{CALLING\_CONV}, to match the selected calling convention. This symbol was then used throughout the project, whenever a JIT - C++ interop barrier occurred, allowing the calling convention to be globally changed with ease if required.
 
 Furthermore, these calling conventions are specifically for x86, and are ignored when compiling for x64. x64 uses a \code{\_\_fastcall} like calling convention \cite{msvc-x64-calling-conv} and thus generated caller code will need to be modified if built for x64 platforms.
 

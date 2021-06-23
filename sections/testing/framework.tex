@@ -1,6 +1,6 @@
 \subsection{Framework}
 
-In order to evaluate the functional correctness of the JIT and interpreter emulators I created a directive based test framework that allows me to create MIPS assembly files with special test directives included in the initial comment block. The following directives are supported:
+In order to evaluate the functional correctness of the emulators a directive based test framework was developed that allows us to create MIPS assembly files with special test directives included in the initial comment block. The following directives are supported:
 
 \begin{itemize}
     \item \texttt{\textbf{name:} \textit{value}}
@@ -22,7 +22,7 @@ In order to evaluate the functional correctness of the JIT and interpreter emula
 
 If the emulator throws an exception during program execution, then the test will \emph{fault}, and the exception will be printed in addition to the resultant register file and any logs produced by the emulator. If any assertions fail, then the test will \emph{fail}, and the failing assertions will be printed in addition to the resultant register file and any logs produced by the emulator.
 
-This testing framework has been highly flexible and invaluable in writing a large amount of functionality tests to provide me with proper regression testing for both the JIT and interpreter. Tests are automatically found and loaded from a test directory, meaning the program does not need to be rebuilt to add new tests to the suite. Given that the test runner is templated by the SUT, the same framework can be easily used for any future emulators designed. By creating the directive system I have allowed myself to bring the setup and assertion code out of the MIPS program itself, simplifying and improving the robustness of the MIPS tests. Further directives will be developed as necessary.
+This testing framework has been highly flexible and invaluable in writing a large amount of functionality tests to provide us with proper regression testing for both the JIT and interpreter. Tests are automatically found and loaded from a test directory, meaning the program does not need to be rebuilt to add new tests to the suite. Given that the test runner is templated by the SUT, the same framework can be easily used for any future emulators designed. By creating the directive system I have allowed myself to bring the setup and assertion code out of the MIPS program itself, simplifying and improving the robustness of the MIPS tests. Further directives will be developed as necessary.
 
 \autoref{code:test-simple} contains an example of a test under this framework.
 
